@@ -1,0 +1,22 @@
+/* unicode形式引入 */
+@font-face {
+    font-family: 'iconfont';  /* project id 644851 */
+    src: url('//at.alicdn.com/t/font_644851_vtvmf8jq74f.eot');
+    src: url('//at.alicdn.com/t/font_644851_vtvmf8jq74f.eot?#iefix') format('embedded-opentype'),
+    url('//at.alicdn.com/t/font_644851_vtvmf8jq74f.woff2') format('woff2'),
+    url('//at.alicdn.com/t/font_644851_vtvmf8jq74f.woff') format('woff'),
+    url('//at.alicdn.com/t/font_644851_vtvmf8jq74f.ttf') format('truetype'),
+    url('//at.alicdn.com/t/font_644851_vtvmf8jq74f.svg#iconfont') format('svg');
+}
+
+.iconfont{
+    font-family:"iconfont" !important;
+    font-size:16px;font-style:normal;
+    -webkit-font-smoothing: antialiased;
+    -webkit-text-stroke-width: 0.2px;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+
+/* font class形式引入 */
+/* @import url(//at.alicdn.com/t/font_644851_vtvmf8jq74f.css) */

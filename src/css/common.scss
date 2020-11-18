@@ -1,0 +1,20 @@
+@media only screen and (min-width: 768px){
+    //sm
+}
+
+@media only screen and (min-width: 992px){
+    //md
+}
+
+@media only screen and (min-width: 1200px){
+    //lg
+}
+
+@media only screen and (min-width: 1920px){
+    //xl
+}
+
+.form-item_half{width:50%; float:left;
+    & /deep/ .el-input__inner{border-top-right-radius:0; border-bottom-right-radius:0;}
+    & + & /deep/ .el-input__inner{border-top-left-radius:0; border-bottom-left-radius:0;}
+}

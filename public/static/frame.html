@@ -1,0 +1,74 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>标题</title>
+	<meta name="keywords" content="">
+	<meta name="description" content="">
+</head>
+<body>
+	<div id="app">
+		<div v-for="item in tableData" :key="item">
+			{{item}}
+		</div>
+		<todo-list ref="root">
+			<template v-slot:default="slotProps">
+				<i class="fas fa-check"></i>
+				<span class="green">{{ slotProps.item }}</span>	
+			</template>
+
+			<template v-slot:other="otherSlotProps">
+				slotProps is NOT available here
+			</template>
+		</todo-list>
+	</div>
+
+	<script src="https://unpkg.com/vue@next"></script>
+	<script type="text/javascript">
+	var app = Vue.createApp({
+		setup() {
+			var tableData = Vue.reactive([1, 2, 3]);
+			Vue.onMounted(() => {
+				tableData.push(4);
+			});
+
+			const root =  Vue.ref(null);
+			Vue.onMounted(() => {
+				console.log(root.value.items);
+			});
+
+			return {
+				tableData,
+				root
+			}
+		},
+		data() {
+			return {
+				text: 'hello'
+			}
+		},
+		mounted() {
+			console.log(this.$refs.root);
+		}
+	});
+
+	app.component('todo-list', {
+		data() {
+			return {
+				items: ['Feed a cat', 'Buy milk']
+			}
+		},
+		template: `
+			<ul>
+				<li v-for="(item, index) in items">
+					<h1><slot name="other">{{index}}</slot></h1>
+					<slot :item="item"></slot>
+				</li>
+			</ul>
+			`
+	})
+
+	app.mount('#app');
+	</script>
+</body>
+</html>

@@ -1,0 +1,61 @@
+$whiteColor: #FFFFFF;
+
+$primaryColor: #409EFF;
+    $primaryColor9: mix($whiteColor, $primaryColor, 10%);
+    $primaryColor8: mix($whiteColor, $primaryColor, 20%);
+    $primaryColor7: mix($whiteColor, $primaryColor, 30%);
+    $primaryColor6: mix($whiteColor, $primaryColor, 40%);
+    $primaryColor5: mix($whiteColor, $primaryColor, 50%);
+    $primaryColor4: mix($whiteColor, $primaryColor, 60%);
+    $primaryColor3: mix($whiteColor, $primaryColor, 70%);
+    $primaryColor2: mix($whiteColor, $primaryColor, 80%);
+    $primaryColor1: mix($whiteColor, $primaryColor, 90%);
+$successColor: #67C23A;
+    $successColor9: mix($whiteColor, $successColor, 80%);
+    $successColor8: mix($whiteColor, $successColor, 90%);
+$warningColor: #E6A23C;
+    $warningColor9: mix($whiteColor, $warningColor, 80%);
+    $warningColor8: mix($whiteColor, $warningColor, 90%);
+$dangerColor: #F56C6C;
+    $dangerColor9: mix($whiteColor, $dangerColor, 80%);
+    $dangerColor8: mix($whiteColor, $dangerColor, 90%);
+$infoColor: #909399;
+    $infoColor9: mix($whiteColor, $infoColor, 80%);
+    $infoColor8: mix($whiteColor, $infoColor, 90%);
+
+$navBgColor: #304156;
+    $navTextColor: #BFCBD9;
+    $navTextActiveColor: #ffd04b;
+
+:export {
+    primaryColor: $primaryColor;
+    primaryColor9: $primaryColor9;
+    primaryColor8: $primaryColor8;
+    primaryColor7: $primaryColor7;
+    primaryColor6: $primaryColor6;
+    primaryColor5: $primaryColor5;
+    primaryColor4: $primaryColor4;
+    primaryColor3: $primaryColor3;
+    primaryColor2: $primaryColor2;
+    primaryColor1: $primaryColor1;
+
+    successColor: $successColor;
+    successColor9: $successColor9;
+    successColor8: $successColor8;
+
+    warningColor: $warningColor;
+    warningColor9: $warningColor9;
+    warningColor8: $warningColor8;
+
+    dangerColor: $dangerColor;
+    dangerColor9: $dangerColor9;
+    dangerColor8: $dangerColor8;
+
+    infoColor: $infoColor;
+    infoColor9: $infoColor9;
+    infoColor8: $infoColor8;
+
+    navBgColor: $navBgColor;
+    navTextColor: $navTextColor;
+    navTextActiveColor: $navTextActiveColor;
+}

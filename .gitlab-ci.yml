@@ -1,0 +1,21 @@
+cache:
+  untracked: true
+  key: "$CI_BUILD_REF_NAME"
+  paths:
+    - node_modules/
+before_script:
+  - chcp 65001
+stages:
+  - build
+build:
+  stage: build
+  script:
+    - Copy-Item -Path "*" -Destination "\porcupine-cli\fe\src" -Force -Recurse
+    - cd \porcupine-cli\fe\src
+    - yarn install
+    - yarn build
+    - Copy-Item -Path "dist\*" -Destination "\porcupine-cli\fe\dist" -Force -Recurse
+  only:
+    - master
+  tags:
+    - porcupine-cli

@@ -1,0 +1,46 @@
+.DS_Store
+node_modules
+/dist
+
+
+# local env files
+.env.local
+.env.*.local
+
+# Log files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Editor directories and files
+.idea
+.vscode
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Lock Files
+/package-lock.json
+/yarn.lock
+
+# project Module Files
+# /src/views/pc/
+# !/src/views/pc/css
+# !/src/views/pc/layout
+# !/src/views/pc/login
+# !/src/views/pc/mixins
+# !/src/views/pc/router.js
+# !/src/views/pc/store.js
+# !/src/views/pc/README.md
+
+# /src/views/mobile/
+# !/src/views/mobile/css
+# !/src/views/mobile/layout
+# !/src/views/mobile/login
+# !/src/views/mobile/mixins
+# !/src/views/mobile/router.js
+# !/src/views/mobile/store.js
+# !/src/views/mobile/README.md

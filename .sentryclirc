@@ -1,0 +1,6 @@
+[defaults]
+url = https://sentry.io/
+org = zhong-hui-tec
+project = zhong-hui-tec
+[auth]
+token = a400da33c3ed46b29ac80e18caad94ccdcdbbd77a6374d029b7f0c1e10d5ddc3
