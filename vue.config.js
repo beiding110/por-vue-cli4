@@ -2,11 +2,11 @@ const util = require('./build/util.js');
 const webpack = require('webpack');
 const path = require('path');
 
-const SENTRY_ENABLED = true;
 const CONFIG = {
     sentryEnabled: false,
     assetsDir: 'static'
 };
+
 module.exports = {
     publicPath: process.env.NODE_ENV === "production" ? "./" : "/",
     devServer: {
