@@ -17,8 +17,9 @@ export default {
     },
     computed: {
         frameSrc() {
-            var ip = window.location.origin
-            return ('https://view.officeapps.live.com/op/view.aspx?src=' + ip + this.src);
+            return (`
+                https://view.officeapps.live.com/op/view.aspx?src=${this.src}&ts=${new Date().getTime()}
+            `);
         }
     },
     methods: {
