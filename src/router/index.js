@@ -6,11 +6,16 @@ import _ from './tools.js'
 
 Vue.use(Router);
 
-var routerArr = [];
-routerArr.push.apply(routerArr, _.init());
+const autoMountRoutes = _.init();
 
 var router = new Router({
-    routes: routerArr
+    routes: [
+        {
+            path: '/demo/vcm',
+            component: () => import(/*webpackChunkName: 'demo-vcm'*/ '@components/example')
+        },
+        ...autoMountRoutes,
+    ]
 });
 
 guards(router);
