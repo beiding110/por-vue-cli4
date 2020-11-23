@@ -69,7 +69,7 @@ export default {
             }
         },
         ueconfig() {
-            var url = '/teamwork';
+            var url = '/pms';
             return [
                 `${url}/uedtior/ueditor.config.js`,
                 `${url}/uedtior/ueditor.all.js`,
