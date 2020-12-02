@@ -1,5 +1,4 @@
 import Vue from 'vue'
-import { MessageBox } from 'element-ui';
 import qs from 'qs';
 import resCheck from './res-check';
 
