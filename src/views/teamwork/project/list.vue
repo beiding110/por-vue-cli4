@@ -74,7 +74,7 @@
 </template>
 
 <script>
-import LIST_MIXIN from '@pc/mixins/list-page'
+import LIST_MIXIN from '@views/mixins/list-page'
 
 import BTN_CONFIG from './config/btn-list'
 

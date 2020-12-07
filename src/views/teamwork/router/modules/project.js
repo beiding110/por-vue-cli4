@@ -1,12 +1,7 @@
 const B_1 = [
     {
         title: '项目列表',
-        bread: [
-            {
-                title: '项目列表',
-                path: '/pc/teamwork/project/list'
-            }
-        ]
+        path: '/teamwork/project/list'
     }
 ];
 
@@ -16,34 +11,35 @@ export default {
     children: [
         {
             path: 'list',
-            component: () => import(/*webpackChunkName: 'pc-tw-project'*/ '@views/pc/teamwork/project/list'),
+            component: () => import(/*webpackChunkName: 'pc-tw-project'*/ '@views/teamwork/project/list'),
             meta: {
                 title: '项目列表',
+                tagNav: true,
                 bread: [
                     ...B_1
                 ]
             }
         }, {
             path: 'form',
-            component: () => import(/*webpackChunkName: 'pc-tw-project'*/ '@views/pc/teamwork/project/form'),
+            component: () => import(/*webpackChunkName: 'pc-tw-project'*/ '@views/teamwork/project/form'),
             meta: {
                 title: '项目表单',
                 bread: [
                     ...B_1, {
                         title: '项目表单',
-                        path: '/pc/teamwork/project/form'
+                        path: '/teamwork/project/form'
                     }
                 ]
             }
         }, {
             path: 'detail',
-            component: () => import(/*webpackChunkName: 'pc-tw-project'*/ '@views/pc/teamwork/project/detail'),
+            component: () => import(/*webpackChunkName: 'pc-tw-project'*/ '@views/teamwork/project/detail'),
             meta: {
                 title: '项目表单',
                 bread: [
                     ...B_1, {
                         title: '项目详情',
-                        path: '/pc/teamwork/project/detail'
+                        path: '/teamwork/project/detail'
                     }
                 ]
             }

@@ -14,7 +14,7 @@
                 <my-nav-menu :list="menuList"></my-nav-menu>
             </el-menu>
     </div>
-    <div class="top-nav" :class="{collapse:collapseController}" v-if="!viewOnly">
+    <div class="top-nav" :class="{collapse:collapseController,'with-tag-nav':tagNav}" v-if="!viewOnly">
         <div class="btn-coll btn_top-nav" @click="toggleCollapse" v-if="!mobile">
             <i :class="{'el-icon-s-fold':!collapseController,'el-icon-s-unfold':collapseController}"></i>
         </div>
@@ -28,8 +28,10 @@
         <my-breadcrumb></my-breadcrumb>
 
         <user-info></user-info>
+
+        <tag-nav v-if="tagNav"></tag-nav>
     </div>
-    <div class="view" :class="{collapse:collapseController}" id="view-content">
+    <div class="view" :class="{collapse:collapseController,'with-tag-nav':tagNav}" id="view-content">
         <router-view :key="$route.fullPath" />
     </div>
 </div>
@@ -39,20 +41,24 @@
 import MyBreadcrumb from './components/breadcrumb'
 import UserInfo from './components/user-info'
 import LogoImg from './components/logo-img'
+import TagNav from './components/tag-nav'
 
 import lessVars from '@/css/var.scss'
 
 import NAV_DATA from '@config/nav'
 
 export default {
-    components: {MyBreadcrumb, UserInfo, LogoImg},
+    components: {MyBreadcrumb, UserInfo, LogoImg, TagNav},
     data () {
         return {
             collapseController: false,
             showController: false,
+
             menuList: NAV_DATA,
+
             mobile: false,
             viewOnly: false,
+            tagNav: true,
 
             colors: lessVars
         }
@@ -112,6 +118,8 @@ export default {
 
 $leftWidth: 200px;
 $colLeftWidth: 64px;
+$topNavHeight: 50px;
+$topNavWithTagNavHeight: 80px;
 
 .layout{position:relative; width:100%; height:100%;
     .left-nav{width:$leftWidth; height:100%; position:absolute; left:0; top:0; background:$navBgColor; transition:all .3s; overflow-x:hidden;
@@ -126,17 +134,20 @@ $colLeftWidth: 64px;
 
 
     }
-    .top-nav{height:50px; position:absolute; left:$leftWidth; top:0; right:0; box-shadow:0 1px 4px rgba(0,21,41,.08); transition:all .3s; overflow:hidden;
+    .top-nav{height:$topNavHeight; position:absolute; left:$leftWidth; top:0; right:0; box-shadow:0 1px 4px rgba(0,21,41,.08); transition:all .3s; overflow:hidden;
         &.collapse{left:$colLeftWidth;}
 
-        .btn_top-nav{cursor:pointer; height:100%; display:inline-block; line-height:50px; padding:0 1em; float:left; transition:.2s all;
+        &.with-tag-nav{height:$topNavWithTagNavHeight;}
+
+        .btn_top-nav{cursor:pointer; height:100%; display:inline-block; line-height:$topNavHeight; padding:0 1em; float:left; transition:.2s all;
             &:hover{background:#efefef;}
             i{font-size:22px;}
             &.circle{border-radius:50%; width:2em; height:2em; line-height:2em; text-align:center; padding:0; margin-top:9px;}
         }
     }
-    .view{position:absolute; left:$leftWidth; top:50px; right:0; bottom:0; padding:10px; overflow:auto; transition:all .3s;
+    .view{position:absolute; left:$leftWidth; top:$topNavHeight; right:0; bottom:0; padding:10px; overflow:auto; transition:all .3s;
         &.collapse{left:$colLeftWidth;}
+        &.with-tag-nav{top:$topNavWithTagNavHeight;}
     }
 }
 

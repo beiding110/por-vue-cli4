@@ -14,7 +14,7 @@ export default {
                 icon: 'el-icon-switch-button',
                 command: () => {
                     Vue.prototype.$get(`${store.getters.sysUrl}/logout`, () => {
-                        router.push('/pc/login');
+                        router.push('/login');
                         store.commit('setUser', {});
                         store.commit('setSystem', {});
                     });
@@ -49,7 +49,7 @@ export default {
                         type: state.system
                     });
 
-                    router.replace('/pc/teamwork/project/list');
+                    router.replace('/teamwork/project/list');
                 });
             };
         },
