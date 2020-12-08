@@ -74,11 +74,11 @@ export default {
     actions: {
         routeToggleTagNav({ getters, commit }, to) {
             if(to.meta.bread) {
-                if(getters.tagNav_tagNavList.some(navItem => {
+                if(getters.tagNavList.some(navItem => {
                     return to.meta.bread.some(breadItem => {
                         return navItem.path === breadItem.path;
                     });
-                }) || getters.tagNav_tagNavList.some(navItem => {
+                }) || getters.tagNavList.some(navItem => {
                     return navItem.meta.bread.some(breadItem => {
                         return to.path === breadItem.path;
                     });

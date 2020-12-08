@@ -2,7 +2,7 @@
      <el-breadcrumb 
      class="top-nav-breadcrumb"
      >
-        <template v-for="item in $store.getters.pc_bread">
+        <template v-for="item in $store.getters.views_bread">
             <el-breadcrumb-item 
             :key="item.path"
             :to="{ path: item.path, query:$route.query }"

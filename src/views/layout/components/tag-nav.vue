@@ -29,7 +29,7 @@ export default {
     },
     computed: {
         list() {
-            return this.$store.getters.tagNav_tagNavList;
+            return this.$store.getters.tagNavList;
         }
     },
     methods: {

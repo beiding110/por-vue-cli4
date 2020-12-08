@@ -7,7 +7,7 @@ export default {
     state: {
         bread: [],
 
-        system: 'pc',
+        system: 'views',
         navDropDown: [
             {
                 text: '退出登录',
@@ -45,6 +45,7 @@ export default {
                     pwd: pwd
                 }, function (data, res) {
                     store.commit('setUser', data.user);
+
                     store.commit('setSystem', {
                         type: state.system
                     });
