@@ -70,5 +70,26 @@ export default {
 
             storage.setSession('tagNavList', innerList);
         }
+    },
+    actions: {
+        routeToggleTagNav({ getters, commit }, to) {
+            if(to.meta.bread) {
+                if(getters.tagNav_tagNavList.some(navItem => {
+                    return to.meta.bread.some(breadItem => {
+                        return navItem.path === breadItem.path;
+                    });
+                }) || getters.tagNav_tagNavList.some(navItem => {
+                    return navItem.meta.bread.some(breadItem => {
+                        return to.path === breadItem.path;
+                    });
+                })) {
+                    commit('updataTagNav', to);
+                } else {
+                    if(to.meta.tagNav) {
+                        commit('addTagNav', to);
+                    };
+                }
+            }
+        },
     }
 }
