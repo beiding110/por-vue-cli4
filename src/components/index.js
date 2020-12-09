@@ -16,6 +16,7 @@ export default{
         Vue.component('my-radio', function(){return import(/*webpackChunkName: 'coms'*/ './my-radio')});
         Vue.component('my-select', function(){return import(/*webpackChunkName: 'coms'*/ './my-select')});
         Vue.component('my-cascader', function(){return import(/*webpackChunkName: 'coms'*/ './my-cascader')});
+        Vue.component('my-transfer', function(){return import(/*webpackChunkName: 'coms'*/ './my-transfer')});
         Vue.component('my-upload', function(){return import(/*webpackChunkName: 'coms'*/ './my-upload')});
 
         Vue.component('my-dialog', function(){return import(/*webpackChunkName: 'coms'*/ './my-dialog')});
