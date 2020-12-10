@@ -5,6 +5,7 @@
             :key="index"
             :is="item.tag"
             :type="item.type"
+            :icon="item.icon"
             @click="item.click"
             >
                 {{item.text}}
@@ -36,7 +37,7 @@ export default {
     }),
     computed: {
         btnList() {
-            var that = this.$parent || this;
+            var that = this;
 
             var row = this.row,
                 model = this.model;
@@ -47,6 +48,7 @@ export default {
                 text: getType(item.text) === 'function' ? item.text(this.row) : item.text,
                 type: item.type,
                 tag: item.tag,
+                icon: item.icon,
                 click() {
                     if(item.click) {
                         item.click.call(that, row, model);
