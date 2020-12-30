@@ -1,5 +1,5 @@
 <template>
-    <span id='cnzz_stat_icon_1275340054' :style="conStype"></span>
+    <span :id='`cnzz_stat_icon_${cid}`' :style="conStype"></span>
 </template>
 
 <script>
@@ -20,7 +20,10 @@ export default {
         conStype() {
             return {
                 display: this.hide ? 'none' : ''
-            }
+            };
+        },
+        cid() {
+            return config.cnzz.id;
         }
     },
     watch: {
@@ -37,7 +40,7 @@ export default {
         setCnzz() {
             var script = document.createElement('script'),
             protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
-            script.src = (protocol + `s5.cnzz.com/z_stat.php?id=${config.cnzz.id}&show=${config.cnzz.show}`);
+            script.src = (protocol + `s5.cnzz.com/z_stat.php?id=${this.cid}&show=pic1`);
             script.language = 'javascript';
             document.body.appendChild(script)
         }
