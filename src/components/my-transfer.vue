@@ -1,7 +1,7 @@
 <template>
     <el-transfer
         v-model="model"
-        :data="data"
+        :data="action ? innerData : data"
         :titles="[title1, title2]"
         :props="reprops"
         filterable
