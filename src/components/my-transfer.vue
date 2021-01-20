@@ -1,16 +1,23 @@
 <template>
-    <el-transfer
-        v-model="model"
-        :data="action ? innerData : data"
-        :titles="[title1, title2]"
-        :props="reprops"
-        filterable
-        :filter-method="filterMethod"
-        filter-placeholder="快速搜索"
-        class="my-transfer"
-        :style="{ margin: position === 'center' ? '0 auto' : '' }"
-        @change="changeHandler"
-    ></el-transfer>
+    <div>
+        <el-transfer
+            v-if="!readonly"
+            v-model="model"
+            :data="action ? innerData : data"
+            :titles="[title1, title2]"
+            :props="reprops"
+            filterable
+            :filter-method="filterMethod"
+            filter-placeholder="快速搜索"
+            class="my-transfer"
+            :style="{ margin: position === 'center' ? '0 auto' : '' }"
+            @change="changeHandler"
+        ></el-transfer>
+
+        <template v-else>
+            {{selectedLabel}}
+        </template>
+    </div>
 </template>
 
 <script>
@@ -62,7 +69,11 @@ export default {
         '2way': {
             type: String,
             default: ''
-        }
+        },
+        readonly: {
+            type: Boolean,
+            default: false
+        },
     },
     data: function () {
         return {
@@ -72,6 +83,8 @@ export default {
                 label: !!this.props ? this.props.label : "label",
             },
             map: {},
+
+            selectedLabel: '',
         };
     },
     computed: {
@@ -115,6 +128,16 @@ export default {
         },
         data: function(n) {
             this.dataInit(n);
+        },
+        innerData: {
+            handler() {
+                this.calcReadonly()
+            }, deep: true
+        },
+        model: {
+            handler() {
+                this.calcReadonly()
+            }, deep: true
         }
     },
     methods: {
@@ -157,6 +180,17 @@ export default {
             data.forEach(item => {
                 this.map[item[this.reprops.key]] = item;
             });
+        },
+        calcReadonly() {
+            this.selectedLabel = this.model.reduce((arr, item) => {
+                var mapItem = this.map[item];
+
+                if(mapItem) {
+                    arr.push(mapItem[this.reprops.label]);
+                }
+
+                return arr
+            }, []).join(this.strSpliter);
         }
     },
     mounted: function () {
