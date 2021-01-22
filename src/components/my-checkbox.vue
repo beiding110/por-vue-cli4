@@ -98,14 +98,20 @@ export default {
             set: function (val) {
                 if(this.modelStr) {
                     this.$emit('input', val.join(this.strSpliter));
-                    this.$emit('change', val.join(this.strSpliter));
+                    
+                    this.$nextTick(() => {
+                        this.$emit('change', val.join(this.strSpliter));
+                    });
                 } else {
                     if (this.other) {
                         var res = clone(val);
                         res.push(this.input);
                     };
                     this.$emit('input', this.other ? res : val);
-                    this.$emit('change', this.other ? res : val);
+                    
+                    this.$nextTick(() => {
+                        this.$emit('change', val.join(this.strSpliter));
+                    });
                 };
             }
         },
@@ -121,7 +127,10 @@ export default {
                     res.push(n);
                 };
                 this.$emit('input', this.other ? res : val);
-                this.$emit('change', this.other ? res : val);
+                
+                this.$nextTick(() => {
+                    this.$emit('change', val.join(this.strSpliter));
+                });
             }
         },
     },
