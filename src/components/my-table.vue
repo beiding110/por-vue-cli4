@@ -3,7 +3,7 @@
         ref="table"
         class="my__table"
         :border="border"
-        :data.sync="!!url ? innerData : data"
+        :data.sync="tableData"
         @selection-change="handleSelectionChange"
         @sort-change="sortChange"
         :height="height"
@@ -84,23 +84,33 @@ export default {
     },
     data () {
         return {
-            innerData: []
+            innerData: [],
+
+            valueWatchLock: false,
         }
     },
     computed: {
-        model: {
-            get: function() {
-                return this.value;
-            },
-            set: function(e) {
-                this.$emit('input', e)
-            }
+        tableData() {
+            return this.url ? this.innerData : this.data;
+        }
+    },
+    watch: {
+        value: {
+            handler(n, o) {
+                if(n === o || !n) return;
+                if(!this.tableData.length) return;
+                if(this.valueWatchLock) return;
+
+                this.$nextTick(() => {
+                    this.setRowSelection(n);
+                })
+            }, deep: true
         }
     },
     methods: {
         //表格选中项变化
         handleSelectionChange: function(node) {
-            this.model = node;
+            this.$emit('input',node);
             this.$emit('selectchange',node);
         },
         /*表格排序事件*/
@@ -119,7 +129,21 @@ export default {
                 });
                 this.innerData = data;
             })
-        }
+        },
+        setRowSelection(rows) {
+            if (rows) {
+                rows.forEach(row => {
+                    var index = this.data.indexOf(row),
+                        data = this.tableData;
+
+                    this.$refs.table.toggleRowSelection(data[index]);
+                });
+            } else {
+                this.$refs.table.clearSelection();
+            }
+
+            this.valueWatchLock = true;
+        },
     },
     mounted: function() {
         this.queryData();
