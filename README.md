@@ -82,3 +82,27 @@ yarn lint
 ### Customize configuration
 
 See [Configuration Reference](https://cli.vuejs.org/config/).
+
+## 整体样式修改
+
+### 登录页面
+
+`logo` src/assets/logo.png
+
+`背景图` 对应login模块的images文件夹中
+
+### 系统面板
+
+`logo（大）` src/assets/logo.png
+
+`logo（小）` src/assets/logo-small.png
+
+`系统主题色` src/css/var.scss
+
+### 其他
+
+`.ico` public/favicon.ico
+
+`title` src/config/index.js
+
+`其他样式重写及覆盖` src/css/common.scss
