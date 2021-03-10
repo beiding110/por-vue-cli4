@@ -1,14 +1,15 @@
-$leftWidth: 220px;
-
 @import './common.scss';
 
 .layout {
 
     .left-nav {
         box-shadow: 0 0px 4px rgba(0, 21, 41, .08), 0 50px 0 $navTextActiveColor inset;
-        padding: 0 10px;
-        box-sizing: border-box;
         background: $navBgColor;
+
+        .menu-con{
+            padding: 0 10px;
+            box-sizing: border-box;
+        }
 
         /deep/ {
             .el-menu-item, .el-submenu, .el-submenu__title{
