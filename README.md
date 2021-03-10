@@ -31,7 +31,7 @@
     |-views             所有页面及功能
     |-App.vue           入口页面
     |-main.js           入口文件、加载组件、样式、初始化配置等
-|-static        不打包编译的静态文件
+|-public        不打包编译的静态文件
 ...
 
 ```
@@ -42,9 +42,9 @@
 * 是否使用多项目开发，是则取消`.gitignore`中的注释；
 * 修改`vue.config.js`中项目配置，包含：devServer.proxy（开发代理）、CONFIG.sentryEnabled（是否启用sentry错误收集）；
 * 修改`src/config/index`中相关参数（如需要），包含：sentry（错误收集相关）、cnzz（运营收集相关）、router（基础根路由）等；
-* 判断是否使用统一login页面，决定登录页面`src/views/login`，及相关方法`src/views/store`，继续在原位置维护（使用统一登录），或移至子项目文件夹中维护（非统一）；
-* 修改`src/views/store`中的上导航相关操作；
-* 根据需要配置`src/views/layout`中导航菜单（如本示例中将菜单项进行配置抽离，实际生产中应该是以接口形式获取菜单）；
+* 判断是否使用统一login页面，决定登录页面`src/views/pc/login`，及相关方法`src/views/pc/store`，继续在原位置维护（使用统一登录），或移至子项目文件夹中维护（非统一）；
+* 修改`src/views/pc/store`中的上导航相关操作；
+* 根据需要配置`src/views/pc/layout`中导航菜单（如本示例中将菜单项进行配置抽离，实际生产中应该是以接口形式获取菜单）；
 * 如使用多项目开发，则应在此位置提交git，并将该项目作为base项目，禁止管理员外其他成员提交修改；
 * 在以上基础上进行开发；
 
@@ -85,11 +85,17 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 
 ## 整体样式修改
 
-### 登录页面
+### 通用修改
 
 `logo` src/assets/logo.png
 
-`背景图` 对应login模块的images文件夹中
+`.ico` public/favicon.ico
+
+`title` src/config/index.js
+
+`其他样式重写及覆盖` src/css/common.scss
+
+`组件库级别修改（如my-btn）` 修改对应组件文件即可（如src/components-sys/my-btn.vue）
 
 ### 系统面板
 
@@ -99,10 +105,4 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 
 `系统主题色` src/css/var.scss
 
-### 其他
-
-`.ico` public/favicon.ico
-
-`title` src/config/index.js
-
-`其他样式重写及覆盖` src/css/common.scss
+`面板主题` src/views/pc/layout/index.vue，在style标签中选择引用`common.scss`或`pop.scss`
