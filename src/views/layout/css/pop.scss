@@ -1,0 +1,67 @@
+$leftWidth: 220px;
+
+@import './common.scss';
+
+.layout {
+
+    .left-nav {
+        box-shadow: 0 0px 4px rgba(0, 21, 41, .08), 0 50px 0 $navTextActiveColor inset;
+        padding: 0 10px;
+        box-sizing: border-box;
+        background: $navBgColor;
+
+        /deep/ {
+            .el-menu-item, .el-submenu, .el-submenu__title{
+                border-radius: 25px;
+                line-height: 50px;
+                margin: 3px 0;
+            }
+
+            // .el-submenu.is-opened{
+            //     background: none !important;
+            // }
+
+            .el-menu-item{
+                height: 50px;
+            }
+
+            .is-active:not(.el-submenu){
+                background-color: $navTextActiveColor !important;
+                color: $navBgColor !important;
+            }
+
+            .el-submenu .el-menu-item{
+                min-width: auto;
+            }
+        }
+
+    }
+
+    .top-nav{
+        background: mix($whiteColor, $navTextActiveColor, 10%);
+        color: $navBgColor;
+
+        .top-nav-breadcrumb /deep/ {
+            .el-breadcrumb__item {
+                .el-breadcrumb__inner, .el-breadcrumb__separator {
+                    color: $navBgColor;
+                }
+            }
+        }
+
+        .user-info-dropdown /deep/{
+            .user-header{
+                background: $navBgColor;
+                color: $navTextActiveColor;
+            }
+            .user-name {
+                color: $navBgColor;
+            }
+        }
+    }
+
+    .view{
+        
+    }
+
+}
