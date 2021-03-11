@@ -7,9 +7,10 @@ import api from './modules/api.js'
 import dictionary from './modules/dictionary.js'
 import system from './modules/system.js'
 import tagNav from './modules/tag-nav.js'
+import bread from './modules/bread.js'
 
 const {modules, getters} = _.init({
-    modules: [{user}, {api}, {dictionary}, {system}, {tagNav}]
+    modules: [{user}, {api}, {dictionary}, {system}, {tagNav}, {bread }]
 });
 
 Vue.use(Vuex)
