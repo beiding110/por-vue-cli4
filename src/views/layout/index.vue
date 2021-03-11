@@ -112,7 +112,7 @@ export default {
         this.checkFrameChild();
     },
     mounted: function() {
-        // this.queryMenu();
+        // this.$store.dispatch('queryUserInfo');
     },
     beforeDestroy() {
         window.removeEventListener('resize', this.resizeHandler);

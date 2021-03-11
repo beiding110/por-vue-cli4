@@ -34,7 +34,7 @@ export default {
         }
     },
     actions: {
-        login({commit, getters, state}, {loginname, pwd}) {
+        login({commit, getters, state, dispatch}, {loginname, pwd}) {
             if (loginname == '' || loginname == undefined) {
                 ShowMsg('请输入账号', 'error')
             } else if (pwd == '' || pwd == undefined) {
@@ -47,20 +47,43 @@ export default {
                     store.commit('setUser', data.user);
 
                     store.commit('setSystem', {
-                        type: state.system
+                        type: state.system,
+                        api: store.getters.ageUrl
                     });
+
+                    dispatch('getMenu');
 
                     router.replace('/teamwork/project/list');
                 });
             };
         },
-        queryUserInfo() {
-            // var userInfo = store.getters.user;
-            // if(Object.keys(userInfo).length) return;
-            //
+        queryUserInfo({state, dispatch}, requery) {
+            // if(!requery) {
+            //     var userInfo = store.getters.user;
+            //     if(Object.keys(userInfo).length) {
+            //         dispatch('updateNavDropDown', userInfo);
+            //         return;
+            //     };
+            // };
+
             // Vue.prototype.$get(`${store.getters.ageUrl}/getuserinfo`, data => {
             //     store.commit('setUser', data);
+            //     store.commit('setSystem', {
+            //         type: state.system,
+            //         api: store.getters.ageUrl
+            //     });
+
+            //     dispatch('updateNavDropDown', data);
+            //     dispatch('getMenu');
             // });
+        },
+        getMenu({commit, state}) {
+            // Vue.prototype.$get(`${store.getters.ageUrl}/tree/get_menu.json`, data => {
+            //     commit('setNavList', data);
+            // });
+        },
+        updateNavDropDown({commit, state}, {user}) {
+            // commit('setNavDropDown', []);
         }
     }
 }
