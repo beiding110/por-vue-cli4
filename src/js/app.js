@@ -1192,7 +1192,7 @@ import storage from './storage'
         }
 
         function argHandler() {
-            callback = (typeof(arguments[arguments.length-1])==='function') ? arguments[arguments.length-1] : function() {};
+            var callback = (typeof(arguments[arguments.length-1])==='function') ? arguments[arguments.length-1] : function() {};
             var url = '';
             if(typeof(arguments[0]) === 'string'){
                 url = arguments[0];
