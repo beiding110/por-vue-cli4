@@ -154,7 +154,18 @@ export default {
         setTableHeight() {
             this.tableHeight = (window.innerHeight - 210);
         },
-
+        /**
+         * 缓存搜索条件
+         */
+        storeSearch(key) {
+            this.$router.replace({
+                path: this.$route.path,
+                query: {
+                    ...this.$route.query,
+                    [key]: this.pgData[key]
+                }
+            });
+        },
     },
     created() {
         this.setTableHeight();
