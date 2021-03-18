@@ -24,6 +24,33 @@ var router = new Router({
             },
             children: indexs
         }
+
+        // {
+        //     path: '/login',
+        //     component: () => import(/*webpackChunkName: 'pc-login'*/ '@views/login/index'),
+        //     meta: {
+        //         title: `${CONFIG.router['title']}·登录`
+        //     }
+        // },
+        // {
+        //     path: `/${CONFIG.router['base-name']}`,
+        //     component: () => import(/*webpackChunkName: 'pc'*/ '@views/layout/index'),
+        //     meta: {
+        //         title: CONFIG.router['title']
+        //     },
+        //     children: [
+        //         {
+        //             path: 'iframe',
+        //             component: () => import(/*webpackChunkName: 'iframe'*/ '@views/iframe'),
+        //             meta: {
+        //                 title: '',
+        //                 bread: []
+        //             }
+        //         },
+
+        //         ...indexs
+        //     ]
+        // }
     ]
 });
 
