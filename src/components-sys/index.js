@@ -6,5 +6,8 @@ export default{
 
         Vue.component('action-row', function(){return import(/*webpackChunkName: 'coms-sys'*/ './action-row')});
         Vue.component('info-tip', function(){return import(/*webpackChunkName: 'coms-sys'*/ './info-tip')});
+
+        Vue.component('state-list', function(){return import(/*webpackChunkName: 'coms-sys'*/ './state-list')});
+        Vue.component('btn-list', function(){return import(/*webpackChunkName: 'coms-sys'*/ './btn-list')});
     }
 }
