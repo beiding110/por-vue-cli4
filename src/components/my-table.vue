@@ -110,6 +110,8 @@ export default {
     methods: {
         //表格选中项变化
         handleSelectionChange: function(node) {
+            this.valueWatchLock = true;
+
             this.$emit('input',node);
             this.$emit('selectchange',node);
         },

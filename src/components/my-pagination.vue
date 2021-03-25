@@ -15,6 +15,8 @@
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
 
+import { Loading } from 'element-ui';
+
 export default {
     props: {
         value: {
@@ -56,6 +58,10 @@ export default {
         loading: {
             type: Boolean,
             default: false
+        },
+        useLoading: {
+            type: Boolean,
+            default: true,
         }
     },
     data () {
@@ -66,7 +72,9 @@ export default {
                 sortname: 'addtime',
                 sortorder: 'desc',
                 pagesize: 20
-            }
+            },
+
+            elLoading: null
         }
     },
     computed: {
@@ -83,6 +91,19 @@ export default {
         queryData: function (page) {
             var that = this;
             NProgress.start();
+
+            if(this.useLoading) {
+                var table = this.$parent.$children.filter(item => {
+                    return /el-table/.test(item.$el.className)
+                })[0];
+                var target = table ? table.$el : '#view-content';
+                this.elLoading = Loading.service({
+                    target,
+                    lock: true,
+                    text: '数据加载中...'
+                });
+            }
+
             this.$nextTick(function () {
                 if (!that.action) {
                     throw new Error('请绑定action属性（数据api请求地址）');
@@ -120,6 +141,10 @@ export default {
                         },
                         complete() {
                             NProgress.done();
+
+                            if(that.useLoading) {
+                                that.elLoading.close();
+                            }
                         }
                     });
                 }
