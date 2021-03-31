@@ -140,6 +140,11 @@ export default {
                     var htmlContent = that.ue.getContent();
                     that.model = htmlContent;
                 });
+
+                that.ue.addListener("blur", function () {
+                    var htmlContent = that.ue.getContent();
+                    that.model = htmlContent;
+                });
             });
         });
     },
