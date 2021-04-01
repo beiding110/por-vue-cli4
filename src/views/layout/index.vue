@@ -40,8 +40,6 @@
 </template>
 
 <script>
-import '../css/common.scss'
-
 import MyBreadcrumb from './components/breadcrumb'
 import UserInfo from './components/user-info'
 import LogoImg from './components/logo-img'

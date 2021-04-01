@@ -1,0 +1,84 @@
+[v-cloak] {display:none !important;}
+
+* {list-style:none; font-family: '微软雅黑'; margin:0; padding:0;}
+html, body, #app{width:100%; height:100%;}
+html, body{overflow:hidden; margin:0; padding:0;}
+body{background-size:cover;}
+
+iframe {border:none;box-shadow:none;}
+a {cursor:pointer; text-decoration:none;}
+
+/*滚动条样式*//*定义滚动条宽高及背景，宽高分别对应横竖滚动条的尺寸*/
+::-webkit-scrollbar {width:8px;height:8px;}
+/* 这是针对缺省样式 (必须的) */::-webkit-scrollbar-track {background-color:rgba(255,255,255,0);}
+/* 滚动条的滑轨背景颜色 */::-webkit-scrollbar-thumb {background-color:#737375;border-radius:4px;}
+/* 滑块颜色 */::-webkit-scrollbar-button {display:none;}
+/* 滑轨两头的监听按钮颜色 */::-webkit-scrollbar-corner {opacity:0;}
+/* 横向滚动条和纵向滚动条相交处尖角的颜色 *//*vis样式类*/.vis-item.success {background:#67C23A;border-color:#67C23A;}
+
+// 搜索栏样式
+.my-search{
+    .el-form-item{margin-bottom:10px;}
+}
+
+// 操作按钮行样式
+.zh-action-row{
+    .el-form-item{margin-bottom:10px;}
+}
+
+.my__table{
+    &.el-table {
+        td, .el-table th{padding:10px 0;}
+        .cell{
+            line-height:1.5em;
+
+            .el-button--text{padding:0;}
+        }
+    }
+}
+
+// 全屏表单页样式
+.form-page{
+    width:1100px; margin:0 auto;
+    @media only screen and (max-width: 1100px){
+        width:auto;
+    }
+}
+
+.form-item_half{width:50%; float:left;
+    & /deep/ .el-input__inner{border-top-right-radius:0; border-bottom-right-radius:0;}
+    & + & /deep/ .el-input__inner{border-top-left-radius:0; border-bottom-left-radius:0;}
+}
+
+// 占整行的tableform项样式
+.table-full-row{width:100% !important;}
+
+@media only screen and (min-width: 768px){
+    //sm
+}
+
+@media only screen and (min-width: 992px){
+    //md
+}
+
+@media only screen and (min-width: 1200px){
+    //lg
+}
+
+@media only screen and (min-width: 1920px){
+    //xl
+}
+
+@media print {
+    @page {
+      size: A4 portrait;
+    }
+
+    .no-print{display:none !important;}
+
+    .left-nav, .top-nav{display:none !important;}
+    .layout .view{left:0 !important; top:0 !important; padding:0 !important;}
+
+    body, html, #app{width:auto !important; height:auto !important; overflow:auto !important;}
+    .layout .view{position:relative !important;}
+}
