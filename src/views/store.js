@@ -5,8 +5,6 @@ import store from '@store/index'
 export default {
     // namespaced: true,
     state: {
-        bread: [],
-
         system: 'views',
         navDropDown: [
             {
@@ -29,9 +27,6 @@ export default {
         setState: function(state, n){
             mixin(n, state, true);
         },
-        setBread(state, n) {
-            state.bread = n;
-        }
     },
     actions: {
         login({commit, getters, state, dispatch}, {loginname, pwd}) {

@@ -11,7 +11,8 @@ export default function(router) {
         //设置面包屑
         var title = to.meta.title;
         document.title = `${title ? (title + '·') : ''}${CONFIG.router['title']}`;
-        store.commit('setBread', to.meta.bread || []);
+        // store.commit('setBread', to.meta.bread || []);
+        store.commit('updateBread', {to, from});
 
         //设置tag导航
         store.dispatch('routeToggleTagNav', to);

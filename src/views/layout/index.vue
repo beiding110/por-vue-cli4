@@ -31,8 +31,6 @@
 
             <user-info></user-info>
 
-            <top-nav-right-btns></top-nav-right-btns>
-
             <tag-nav v-if="tagNav"></tag-nav>
         </div>
         <div class="view" :class="{collapse:collapseController,'with-tag-nav':tagNav}" id="view-content">
@@ -47,13 +45,12 @@ import '../css/common.scss'
 import MyBreadcrumb from './components/breadcrumb'
 import UserInfo from './components/user-info'
 import LogoImg from './components/logo-img'
-import TopNavRightBtns from './components/top-nav-right-btns'
 import TagNav from './components/tag-nav'
 
 import lessVars from '@/css/var.scss'
 
 export default {
-    components: {MyBreadcrumb, UserInfo, LogoImg, TopNavRightBtns, TagNav},
+    components: {MyBreadcrumb, UserInfo, LogoImg, TagNav},
     data () {
         return {
             collapseController: false,
@@ -122,5 +119,5 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
-@import './css/pop.scss';
+@import './css/common.scss';
 </style>

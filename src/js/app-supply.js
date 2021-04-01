@@ -58,6 +58,32 @@ import Vue from 'vue'
     };
 
     /**
+     * 跳转至frame页（有历史记录）
+     * 并设置面包屑导航
+     * @return {null} 无返回值
+     */
+     owner.gotoFrame = function ({title, url, ...query}) {
+        const framePath = '/iframe';
+
+        const queryRebuild = {
+            title,
+            url,
+            ...query,
+        };
+
+        this.goto({
+            path: framePath,
+            query: queryRebuild
+        });
+
+        this.$store.commit('pushBread', {
+            path: framePath,
+            query: queryRebuild,
+            title: title,
+        });
+    };
+
+    /**
      * 参数是否存在
      * @param  {String} e 参数名
      * @return {Boolean}   是否存在
@@ -165,17 +191,17 @@ import Vue from 'vue'
                             return callback(new Error('不是有效的统一社会信用编码'));
                         } else {
                             var Ancode;//统一社会信用代码的每一个值
-                            var Ancodevalue;//统一社会信用代码每一个值的权重
+                            var Ancodevalue;//统一社会信用代码每一个值的权重 
                             var total = 0;
-                            var weightedfactors = [1, 3, 9, 27, 19, 26, 16, 17, 20, 29, 25, 13, 8, 24, 10, 30, 28];//加权因子
+                            var weightedfactors = [1, 3, 9, 27, 19, 26, 16, 17, 20, 29, 25, 13, 8, 24, 10, 30, 28];//加权因子 
                             var str = '0123456789ABCDEFGHJKLMNPQRTUWXY';
 
-                            //不用I、O、S、V、Z
+                            //不用I、O、S、V、Z 
                             for (var i = 0; i < value.length - 1; i++) {
                                 Ancode = value.substring(i, i + 1);
                                 Ancodevalue = str.indexOf(Ancode);
                                 total = total + Ancodevalue * weightedfactors[i];
-                                //权重与加权因子相乘之和
+                                //权重与加权因子相乘之和 
                             }
                             var logiccheckcode = 31 - total % 31;
                             if (logiccheckcode == 31) {
