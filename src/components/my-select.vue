@@ -129,14 +129,12 @@ export default {
                         throw new Error(e)
                     }
                 })
-            } else if(this.data.length > 0) {
+            } else {
                 try {
                     that.options = that.list2map(this.data || []);
                 } catch (e) {
                     throw new Error(e)
                 }
-            } else {
-                // throw new Error('my-select 未绑定字典数据url')
             }
         },
         list2map: function (list) {

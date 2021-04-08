@@ -120,14 +120,19 @@ export default {
                     ShowMsg.call(obj, '提交过快，请稍后重试');
                     return;
                 };
+
+                obj.lockSubmit();
+
                 next();
             }).link(function (obj, next) {
                 if (obj.submitLoadingController) {
                     return;
                 };
+
+                obj.submitLoadingController = true;
+
                 next();
             }).link(function (obj, next) {
-                obj.submitLoadingController = true;
                 // obj.shadebox.show();
 
                 obj.$nextTick(function () {
@@ -208,8 +213,10 @@ export default {
         },
         submitEnd: function () {
             this.submitLoadingController = false;
-            this.submitLock = true;
             // this.shadebox.hide();
+        },
+        lockSubmit() {
+            this.submitLock = true;
 
             setTimeout(function () {
                 this.submitLock = false;
