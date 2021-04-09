@@ -127,10 +127,7 @@ export default {
             var config = this.config;
 
             var dom = this.$refs["_UEditor"];
-            var randomID = '_UEditor-' + Math.floor(Math.random() * 10000);
-            dom.setAttribute('id', randomID);
-
-            this.ue = UE.getEditor(randomID, config);
+            this.ue = UE.getEditor(dom, config);
 
             var that = this;
             this.ue.addListener("ready", function () {
