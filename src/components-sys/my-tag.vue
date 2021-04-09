@@ -1,6 +1,8 @@
 <template>
     <el-tag :size="size" :icon="icon" :type="type" @click="$emit('click')">
-        <slot></slot>
+        <div class="my-tag_inner">
+            <slot></slot>
+        </div>
     </el-tag>
 </template>
 
@@ -27,4 +29,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.my-tag_inner{
+    white-space: pre-wrap;
+}
 </style>
