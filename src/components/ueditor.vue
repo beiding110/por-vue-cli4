@@ -1,12 +1,12 @@
 <template>
     <div>
-        <script
+        <script 
             v-if="!readonly"
-            id=""
-            name="_UEditor"
-            type="text/plain"
-            class="my-ueditor"
-            style="height:300px;"
+            id="" 
+            name="_UEditor" 
+            type="text/plain" 
+            class="my-ueditor" 
+            style="height:300px;" 
             ref="_UEditor"
         ></script>
         <div
@@ -31,10 +31,11 @@ export default {
                     [
                         'fullscreen', 'source', 'undo', 'redo', 'fontfamily', 'fontsize', 'forecolor', 'bold', 'italic', 'underline', 'justifyleft', 'justifycenter',
                         'justifyright', 'justifyjustify', 'backcolor', 'inserttable', 'inserttable', 'link', 'preview', 'unlink', 'inserttitle', 'date', 'time', 'formatmatch',
-                        'simpleupload', 'insertimage'
+                        'simpleupload'
                     ]
                 ],
-                wordCount: false
+                wordCount: false,
+                elementPathEnabled: false,
             })
         },
         readonly: {
@@ -94,8 +95,10 @@ export default {
                 var scripts = document.querySelectorAll('script');
                 var scriptArr = [];
                 scriptArr.push.apply(scriptArr, scripts);
+
                 if(scriptArr.some(item => item.src.indexOf(this.ueconfig[0]) > -1)) {
-                    cb && cb();
+                    this.fileLoadedCheck(cb);
+
                     return;
                 };
 
@@ -109,15 +112,39 @@ export default {
                 scriptAll.charset = 'utf-8';
                 scriptAll.type = 'text/javascript';
 
-                scriptConfig.onload = function() {
-                     document.body.appendChild(scriptAll);
-                };
-                scriptAll.onload = function() {
+                scriptConfig.addEventListener('load', () => {
+                    document.body.appendChild(scriptAll);
+                });
+
+                scriptAll.addEventListener('load', () => {
                     cb && cb();
-                };
+                });
 
                 document.body.appendChild(scriptConfig);
             };
+        },
+        fileLoadedCheck(cb) {
+            var scripts = document.querySelectorAll('script');
+            var scriptArr = [];
+            scriptArr.push.apply(scriptArr, scripts);
+
+            var scriptConfig = scriptArr.filter(item => ~item.src.indexOf(this.ueconfig[0]))[0],
+                scriptAll = scriptArr.filter(item => ~item.src.indexOf(this.ueconfig[1]))[0];
+            
+            if(window.UE && window.UE.getEditor) {
+                cb();
+            } else if(scriptConfig && !scriptAll) {
+                scriptConfig.addEventListener('load', () => {
+                    this.fileLoadedCheck(cb);
+                });
+            } else if(scriptConfig && scriptAll) {
+                scriptAll.addEventListener('load', () => {
+                    cb();
+                });
+            } else {
+                cb();
+            }
+            
         }
     },
     mounted: function () {
@@ -127,20 +154,22 @@ export default {
             var config = this.config;
 
             var dom = this.$refs["_UEditor"];
-            this.ue = UE.getEditor(dom, config);
+            var randomID = '_UEditor-' + Math.floor(Math.random() * 10000);
+            dom.setAttribute('id', randomID);
 
-            var that = this;
-            this.ue.addListener("ready", function () {
-                that.ue.setContent(that.model || ""); // 确保UE加载完成后，放入内容。
+            this.ue = window.UE.getEditor(randomID, config);
 
-                that.ue.addListener("contentChange", function () {
-                    var htmlContent = that.ue.getContent();
-                    that.model = htmlContent;
+            this.ue.addListener("ready", () => {
+                this.ue.setContent(this.model || ""); // 确保UE加载完成后，放入内容。
+
+                this.ue.addListener("contentChange", () => {
+                    var htmlContent = this.ue.getContent();
+                    this.model = htmlContent;
                 });
 
-                that.ue.addListener("blur", function () {
-                    var htmlContent = that.ue.getContent();
-                    that.model = htmlContent;
+                this.ue.addListener("blur", () => {
+                    var htmlContent = this.ue.getContent();
+                    this.model = htmlContent;
                 });
             });
         });
