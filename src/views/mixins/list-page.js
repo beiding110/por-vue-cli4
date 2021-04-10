@@ -147,6 +147,8 @@ export default {
          */
         searchHandler() {
             this.$refs.page.queryData();
+
+            this.storeSearch();
         },
         /**
          * 设置table高度
@@ -157,15 +159,10 @@ export default {
         /**
          * 缓存搜索条件
          */
-        storeSearch(key) {
-            this.$router.replace({
-                path: this.$route.path,
-                query: {
-                    ...this.$route.query,
-                    [key]: this.pgData[key]
-                }
-            });
+        storeSearch() {
+            window.setSession('search[' + window.location.hash + ']', this.pgData);
         },
+
     },
     created() {
         this.setTableHeight();

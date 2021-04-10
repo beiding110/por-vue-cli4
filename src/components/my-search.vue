@@ -58,7 +58,7 @@ export default {
     },
     watch: {
         pgData: {
-            handler: function (val, old) {
+            handler: function (val) {
                 this.valReCalc(val)
             },
             deep: true
@@ -66,26 +66,25 @@ export default {
     },
     methods: {
         onSearchSubmit: function () {
-            setSession('search[' + window.location.hash + ']', this.value);
+            this.storeSearch();
             this.$emit('search');
         },
+        storeSearch: function() {
+            window.setSession('search[' + window.location.hash + ']', this.value);
+        },
         valReCalc: function (val) {
-            var that = this;
+            var n = window.clone(val);
+            window.mixin(this.value, n);
 
-            var n = clone(val);
-            Object.keys(this.value).forEach(function (item) {
-                n[item] = that.value[item];
-            });
-
-            n.starttime = !!val.time ? val.time[0] || '' : '';
-            n.endtime = !!val.time ? val.time[1] || '' : '';
+            n.starttime = val.time ? val.time[0] || '' : '';
+            n.endtime = val.time ? val.time[1] || '' : '';
             n.title = val.title;
             delete n.time;
 
-            n.sortname = !!n.sortname || n.sortname === '' ? n.sortname : 'addtime';
-            n.sortorder = !!n.sortorder ? n.sortorder : 'desc';
+            n.sortname = (n.sortname || n.sortname === '') ? n.sortname : 'addtime';
+            n.sortorder = n.sortorder ? n.sortorder : 'desc';
 
-            n.pagesize = n.pagesize || 10;
+            n.pagesize = Number(n.pagesize) || 20;
 
             this.$emit('input', n);
 
@@ -94,16 +93,19 @@ export default {
     },
     created: function () {
         if (this.alive) {
-            var searchSession = getSession('search[' + window.location.hash + ']');
-            if (!!searchSession) {
+            var searchSession = window.getSession('search[' + window.location.hash + ']');
+
+            if (searchSession) {
                 searchSession.time = (!!searchSession.starttime && !!searchSession.endtime) ? [searchSession.starttime, searchSession.endtime] : [];
+
                 this.pgData = searchSession;
-                this.$emit('input', searchSession);
-            };
+            }
+        } else {
+            this.valReCalc(this.pgData);
         }
     },
     mounted: function () {
-        this.valReCalc(this.pgData);
+        // this.valReCalc(this.pgData);
     }
 }
 </script>
