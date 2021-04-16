@@ -20,6 +20,8 @@
 </template>
 
 <script>
+import { Loading } from 'element-ui';
+
 export default {
     props: {
         labelWidth: {
@@ -92,7 +94,7 @@ export default {
             submitLoadingController: false,
             submitLock: false,
 
-            shadebox: null
+            elLoading: null
         }
     },
     computed: {
@@ -100,7 +102,7 @@ export default {
             get: function () {
                 return this.value
             },
-            set: function (n, o) {
+            set: function (n) {
                 this.$emit('input', n);
             }
         },
@@ -112,14 +114,13 @@ export default {
     },
     methods: {
         onSubmit: function (e, callback) {
-            var that = this,
-                ajaxRes;
+            var ajaxRes;
 
-            new Chain().link(function (obj, next) {
+            new window.Chain().link(function (obj, next) {
                 if (obj.submitLock) {
-                    ShowMsg.call(obj, '提交过快，请稍后重试');
+                    window.ShowMsg.call(obj, '提交过快，请稍后重试');
                     return;
-                };
+                }
 
                 obj.lockSubmit();
 
@@ -127,14 +128,12 @@ export default {
             }).link(function (obj, next) {
                 if (obj.submitLoadingController) {
                     return;
-                };
+                }
 
                 obj.submitLoadingController = true;
-
+                
                 next();
             }).link(function (obj, next) {
-                // obj.shadebox.show();
-
                 obj.$nextTick(function () {
                     next()
                 });
@@ -160,7 +159,7 @@ export default {
                             obj.form[key];
                         });
 
-                        if (!!obj.submitUrl) {
+                        if (obj.submitUrl) {
                             obj.$ajax({
                                 type: 'post',
                                 url: obj.submitUrl,
@@ -168,7 +167,7 @@ export default {
                                 callback: function (data, res) {
                                     ajaxRes = res;
                                     obj.$emit('submit');
-                                    ShowMsg.call(obj, res.msg || '保存成功', 'success');
+                                    window.ShowMsg.call(obj, res.msg || '保存成功', 'success');
 
                                     obj.close();
 
@@ -182,11 +181,11 @@ export default {
                         } else {
                             obj.$emit('submit');
                             next();
-                        };
+                        }
                     } else {
                         obj.submitEnd();
                         return false;
-                    };
+                    }
                 });
             }).link(function (obj, next) {
                 !!obj.afterSend && obj.afterSend(ajaxRes);
@@ -204,7 +203,6 @@ export default {
             this.$emit('cancle');
         },
         close: function () {
-            var that = this;
             try {
                 this.onCancle();
 
@@ -213,7 +211,6 @@ export default {
         },
         submitEnd: function () {
             this.submitLoadingController = false;
-            // this.shadebox.hide();
         },
         lockSubmit() {
             this.submitLock = true;
@@ -223,12 +220,21 @@ export default {
             }.bind(this), 1000);
         },
         queryDetail: function () {
-            if (!!this.detailUrl) {
+            if (this.detailUrl) {
                 var that = this;
+
+                this.elLoading = Loading.service({
+                    target: this.$el,
+                    lock: true,
+                    text: '数据加载中...'
+                });
+
                 if (this.file) {
                     this.$get(this.detailUrl, this.detailExtra, function (data) {
                         !!this.afterDetail && this.afterDetail(data);
                         this.form = data;
+
+                        this.elLoading.close();
                     })
                 } else {
                     var extra = true;
@@ -239,6 +245,8 @@ export default {
                         this.$get(this.detailUrl, this.detailExtra, function (data) {
                             !!this.afterDetail && this.afterDetail(data);
                             this.form = data;
+
+                            this.elLoading.close();
                         })
                     } else {
                         !!this.afterDetail && this.afterDetail();
@@ -251,7 +259,6 @@ export default {
         }
     },
     mounted: function () {
-        var that = this;
         this.queryDetail();
     }
 }
