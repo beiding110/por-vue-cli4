@@ -250,6 +250,8 @@ export default {
                         })
                     } else {
                         !!this.afterDetail && this.afterDetail();
+
+                        this.elLoading.close();
                     }
                 }
             }
