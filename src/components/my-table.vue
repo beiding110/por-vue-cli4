@@ -11,9 +11,10 @@
         :summary-method="summaryMethod"
         :show-summary="showSummary"
         :span-method="spanMethod"
+        :row-key="rowKey"
         >
             <el-table-column type="selection" width="55" v-if="select" :selectable="selectable"></el-table-column>
-        	<slot></slot>
+            <slot></slot>
         </el-table>
 </template>
 
@@ -81,6 +82,10 @@ export default {
             type: Function,
             default: function() {}
         },
+        rowKey: {
+            type: String,
+            default: '',
+        }
     },
     data () {
         return {
@@ -125,7 +130,7 @@ export default {
             if (!this.url) return;
             this.$get(this.url, this.search, function (data) {
                 !!this.after && this.after(data, function (newData) {
-                    if (!!newData) {
+                    if (newData) {
                         data = newData;
                     }
                 });
