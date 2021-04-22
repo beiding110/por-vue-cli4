@@ -238,9 +238,21 @@ export default {
                     })
                 } else {
                     var extra = true;
-                    !!this.detailExtra && Object.keys(this.detailExtra).forEach(function (item) {
-                        if (!that.detailExtra[item]) extra = false;
-                    })
+
+                    if(this.detailExtra) {
+                        var queryKeys = Object.keys(this.detailExtra);
+
+                        if(!queryKeys.length) {
+                            extra = false;
+                        } else {
+                            queryKeys.forEach(function (item) {
+                                if (!that.detailExtra[item]) extra = false;
+                            });
+                        }
+                    } else {
+                        extra = false;
+                    }
+
                     if (extra) {
                         this.$get(this.detailUrl, this.detailExtra, function (data) {
                             !!this.afterDetail && this.afterDetail(data);
