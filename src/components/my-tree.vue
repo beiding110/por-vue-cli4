@@ -1,22 +1,28 @@
 <template>
     <el-tree 
-        :default-checked-keys="value" 
-        @check-change="checkChange" 
-        ref="tree" 
-        :show-checkbox="checkbox" 
-        :node-key="treeProps.id||'id'" 
-        :default-expand-all="false" 
-        :data="treeData" 
-        :props="treeProps"
-        :expand-on-click-node="true" 
-        @node-click="nodeClick" 
-        :filter-node-method="filterNode"
-    ></el-tree>
+    :default-checked-keys="value" 
+    @check-change="checkChange" 
+    ref="tree" 
+    :show-checkbox="checkbox" 
+    :node-key="treeProps.id||'id'" 
+    :default-expand-all="defaultExpandAll" 
+    :data="treeData" 
+    :props="treeProps"
+    :expand-on-click-node="true" 
+    @node-click="nodeClick" 
+    :filter-node-method="filterNode"
+    >
+        <template slot-scope="scope">
+            <slot :data="scope.data" :node="scope.node">
+                {{scope.node.label}}
+            </slot>
+        </template>
+    </el-tree>
 </template>
 
 <script>
 export default {
-    props: ['value', 'disabled', 'url', 'checkbox', 'top', 'props', 'filtertext', 'data'],
+    props: ['value', 'disabled', 'url', 'checkbox', 'top', 'props', 'filtertext', 'data', 'defaultExpandAll'],
     data: function () {
         return {
             treeData: [],
