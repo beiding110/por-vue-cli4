@@ -24,6 +24,13 @@ export default {
     },
     methods: {
         /**
+         * 添加操作
+         */
+         addHandler() {
+            this.form = {};
+            this.dialogShow();
+        },
+        /**
          * 展示my-dialog组件
          */
         dialogShow() {
