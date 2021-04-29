@@ -97,6 +97,11 @@ export default {
                     return /el-table/.test(item.$el.className)
                 })[0];
                 var target = table ? table.$el : '#view-content';
+
+                try{
+                    this.elLoading.close();
+                } catch(e) {};
+                
                 this.elLoading = Loading.service({
                     target,
                     lock: true,
