@@ -1,5 +1,7 @@
 var owner = {};
 
+const NAME_SPACE = '';
+
 /**
  * 设置storage基方法
  * @param  {string} type sessionStorage或localStorage
@@ -7,12 +9,16 @@ var owner = {};
  * @return {string|Object}      对应存储的数据
  */
 function getStorage(type, key) {
-    var res = !!key ?
-        window[type][key] ?
-        ((/{|}|%7B|%7D|\[|\]|%5B|%5D/.test(window[type][key]) ?
-            JSON.parse(unescape(window[type][key])) :
-            unescape(window[type][key]))) : undefined :
-        window[type];
+    var storageKey = `${NAME_SPACE}${key}`,
+        storageData = window[type][storageKey];
+
+    var res = !!key 
+    ? storageData 
+        ? ((/{|}|%7B|%7D|\[|\]|%5B|%5D/.test(storageData) 
+            ? JSON.parse(unescape(storageData)) 
+            : unescape(storageData))) 
+        : undefined 
+    : window[type];
     return res || false;
 }
 /**
@@ -23,10 +29,15 @@ function getStorage(type, key) {
  */
 function setStorage(type, key, value) {
     if (typeof key === 'string') {
-        window[type][key] = (typeof value === 'object') ? escape(JSON.stringify(value)) : escape(value);
+        window[type][`${NAME_SPACE}${key}`] = (typeof value === 'object') 
+            ? escape(JSON.stringify(value)) 
+            : escape(value);
     } else if (typeof key === 'object') {
         Object.keys(key).forEach(function (item) {
-            window[type][item] = (typeof value === 'object') ? escape(JSON.stringify(key[item])) : escape(key[item]);
+            var value = key[item];
+            window[type][`${NAME_SPACE}${item}`] = (typeof value === 'object') 
+                ? escape(JSON.stringify(value)) 
+                : escape(value);
         });
     };
     return window[type];
