@@ -10,21 +10,28 @@ export default  {
 
     data() {
         return {
-            src: ''
+            src: '',
+            blackList: [
+                'url',
+                'hash',
+                'title'
+            ],
         }
     },
     created() {
         var url = this.detailExtra.url,
+            hash = this.detailExtra.hash ? `#${this.detailExtra.hash}` : '',
             title = this.detailExtra.title;
 
         var query = clone(this.detailExtra);
-        delete query.url;
-        delete query.title;
+        this.blackList.forEach(item => {
+            delete query[item]
+        });
         var search = toSearch(query);
 
         document.title = title;
 
-        this.src = `${url}${search}`;
+        this.src = `${url}${hash}${search}`;
     }
 }
 </script>
