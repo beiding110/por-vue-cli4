@@ -66,7 +66,9 @@ export default {
     },
     methods: {
         onSearchSubmit: function () {
-            this.storeSearch();
+            if(this.alive) {
+                this.storeSearch();
+            }
             this.$emit('search');
         },
         storeSearch: function() {
