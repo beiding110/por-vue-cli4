@@ -45,7 +45,7 @@ var baseConfig = {
                 options[0] = {
                     release: process.env.RELEASE_VERSION,
                     configFile: 'sentry.properties',
-                    include: path.join(__dirname, `./dist/${CONFIG.project.assetsDir}/js/`),
+                    include: path.join(__dirname, `../dist/${CONFIG.project.assetsDir}/js/`),
                     urlPrefix: `~/${CONFIG.project.assetsDir}/js`
                 };
                 return options;
