@@ -8,7 +8,7 @@ var isMobile = /iPhone|Android/i.test(window.navigator.userAgent.toLowerCase());
 *** msg 提示信息
 *** type 消息类型
 ******************/
-window.ShowMsgBox = function(msg, type, callback) {
+window.ShowMsgBox = window.showMsgBox = function(msg, type, callback) {
     callback = callback || function () { }
     if(isMobile){
         mintMB.alert(msg, '提示').then(function(a) {
@@ -28,7 +28,7 @@ window.ShowMsgBox = function(msg, type, callback) {
 *** msg 提示信息
 *** type 消息类型
 ******************/
-window.ShowMsg = function(msg, type) {
+window.ShowMsg = window.showMsg = function(msg, type) {
     if(isMobile){
         Toast({
             message: msg,
@@ -51,7 +51,7 @@ window.ShowMsg = function(msg, type) {
  * @param  {Function} cb2  取消回调
  * @return {null}      无返回值
  */
-window.ShowConfirm = function (msg, type, cb1, cb2) {
+ window.ShowConfirm = window.showConfirm = function (msg, type, cb1, cb2) {
     cb1 = cb1 || function () {};
     cb2 = cb2 || function () {};
 
