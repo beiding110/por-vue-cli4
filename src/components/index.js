@@ -1,6 +1,6 @@
 export default{
     install: function(Vue){
-        // Vue.component('echarts', function(){return import(/*webpackChunkName: 'coms'*/ './echarts')});
+        Vue.component('echarts', function(){return import(/*webpackChunkName: 'coms-echarts'*/ './echarts')});
         // Vue.component('time-line', function(){return import(/*webpackChunkName: 'coms'*/ './time-line')});
 
         Vue.component('my-nav-menu', function(){return import(/*webpackChunkName: 'coms'*/ './my-nav-menu')});

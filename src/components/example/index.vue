@@ -6,6 +6,8 @@
 
         <demo-dialog class="demo-item"></demo-dialog>
 
+        <demo-echarts class="demo-item"></demo-echarts>
+
         <demo-form class="demo-item"></demo-form>
 
         <demo-frame class="demo-item"></demo-frame>
@@ -38,6 +40,7 @@ export default {
         DemoCascader: () => import('./modules/cascader'),
         DemoCheckbox: () => import('./modules/checkbox'),
         DemoDialog: () => import('./modules/dialog'),
+        DemoEcharts: () => import('./modules/echarts'),
         DemoForm: () => import('./modules/form'),
         DemoFrame: () => import('./modules/frame'),
         DemoPagination: () => import('./modules/pagination'),

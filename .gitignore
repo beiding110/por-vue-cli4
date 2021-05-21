@@ -23,8 +23,8 @@ pnpm-debug.log*
 *.sw?
 
 # Lock Files
-/package-lock.json
-/yarn.lock
+# /package-lock.json
+# /yarn.lock
 
 # project Module Files
 # /src/views/

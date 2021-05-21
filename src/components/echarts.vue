@@ -3,7 +3,8 @@
 </template>
 
 <script>
-import echarts from 'echarts'
+import * as echarts from 'echarts';
+
 export default {
     props: ["data", "height"],
     data () {
@@ -24,7 +25,7 @@ export default {
                 "textStyle": {},
                 "title": {
                     "textStyle": {
-                        "color": "#A7FFFE"
+                        "color": ""
                     },
                     "subtextStyle": {
                         "color": "#aaa"
@@ -514,6 +515,7 @@ export default {
     },
     mounted: function () {
         var that = this;
+        
         this.init();
 
         window.addEventListener("resize", function() {
@@ -522,7 +524,6 @@ export default {
     },
     watch: {
         data: function (e) {
-            var that = this;
             this.myChart.setOption(e);
         }
     }
