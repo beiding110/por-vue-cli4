@@ -53,7 +53,7 @@ export default {
 
         return {
             pgData: {
-                time: [that.value.starttime, that.value.endtime],
+                time: [that.value.starttime || '', that.value.endtime || ''],
                 title: '',
             }
         }
