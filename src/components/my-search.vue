@@ -49,9 +49,11 @@ export default {
         }
     },
     data () {
+        var that = this;
+
         return {
             pgData: {
-                time: [],
+                time: [that.value.starttime, that.value.endtime],
                 title: '',
             }
         }
