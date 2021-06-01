@@ -1,13 +1,14 @@
 import Vue from 'vue'
+import configs from '~/configs'
+import { MessageBox } from 'element-ui';
 import qs from 'qs';
-import resCheck from './res-check';
 
 /**
- * 判断是否为服务器端
- * @param  {Function}  cb1 服务器端回调函数
- * @param  {Function}  cb2 非服务器端回调函数
- * @return {null}     无返回值
- */
+* 判断是否为服务器端
+* @param  {Function}  cb1 服务器端回调函数
+* @param  {Function}  cb2 非服务器端回调函数
+* @return {null}     无返回值
+*/
 function isNode(cb1, cb2) {
     if(typeof window === 'undefined') {
         cb1 && cb1();
@@ -24,23 +25,27 @@ function argsCheck(a, b, c, d) {
         fztype: false
     };
 
-	if (arguments.length == 2 && typeof (b) == 'function') {
-		obj.callback = b;
-	} else if (arguments.length == 2 && typeof (b) != 'function') {
-		obj.data = b;
-	} else if (arguments.length == 3) {
-		if (typeof (arguments[arguments.length - 1]) == 'boolean') {
-			obj.data = b;
-			obj.fztype = c;
-		} else {
-			obj.data = b;
-			obj.callback = c;
-		}
-	} else if (arguments.length == 4) {
-		obj.data = b;
-		obj.callback = c;
-		obj.fztype = d;
-	}
+    var args = [];
+    args.push.apply(args, arguments);
+    args = args.filter(item => item);
+
+    if (args.length == 2 && typeof b == 'function') {
+        obj.callback = b;
+    } else if (args.length == 2 && typeof b != 'function') {
+        obj.data = b;
+    } else if (args.length == 3) {
+        if (typeof args[args.length - 1] == 'boolean') {
+            obj.data = b;
+            obj.fztype = c;
+        } else {
+            obj.data = b;
+            obj.callback = c;
+        }
+    } else if (args.length == 4) {
+        obj.data = b;
+        obj.callback = c;
+        obj.fztype = d;
+    }
 
     return obj
 };
@@ -58,7 +63,7 @@ var ajaxKeyMap = function(type) {
 }
 
 var mixin = (axios) => {
-    Vue.prototype.$get = function(a, b, c, d) {
+    function $get(a, b, c, d) {
         var settings = argsCheck(a, b, c, d);
 
         axios.get(settings.url, {
@@ -68,7 +73,7 @@ var mixin = (axios) => {
         });
     };
 
-    Vue.prototype.$post = function(a, b, c, d) {
+    function $post(a, b, c, d) {
         var settings = argsCheck(a, b, c, d);
 
         let data = settings.data;
@@ -83,7 +88,7 @@ var mixin = (axios) => {
         });
     };
 
-    Vue.prototype.$ajax = function(settings) {
+    function $ajax(settings) {
         var keyMap = ajaxKeyMap(settings.type),
         axiosSetting = {};
 
@@ -102,6 +107,10 @@ var mixin = (axios) => {
             axiosSetting.complete && axiosSetting.complete.call(this);
         });
     };
+
+    Vue.prototype.$get = $get;
+    Vue.prototype.$post = $post;
+    Vue.prototype.$ajax = $ajax;
 };
 
 var resInterceptors = (data, config, headers) => {

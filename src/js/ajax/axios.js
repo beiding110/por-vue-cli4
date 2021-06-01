@@ -11,6 +11,8 @@ $axios.defaults.withCredentials = true;
 //request拦截器
 $axios.interceptors.request.use(config => {
     return new Promise((resolve) => {
+        config.url += (/\?/.test(config.url) ? `&ts=${new Date().getTime()}` : `?ts=${new Date().getTime()}`);
+
         resolve(config);
     });
 }, function (error) {
