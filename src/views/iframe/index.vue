@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import FORM_MIXIN from '@views/mixins/form-page'
+import FORM_MIXIN from '@mixins/form-page'
 
 export default  {
     mixins: [FORM_MIXIN],

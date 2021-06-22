@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import FORM_PAGE_MIXIN from '@views/mixins/form-page'
+import FORM_PAGE_MIXIN from '@mixins/form-page'
 
 export default {
     mixins: [ FORM_PAGE_MIXIN ],

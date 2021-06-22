@@ -6,12 +6,6 @@
 
 ...
 views
-    |-css           平台独有样式（如有）
-    |-components    平台独有组件库（如有）
-    |-js            平台独有方法（如有）
-    |-layout        平台独有layout组件
-    |-mixins        平台独有mixins文件（如有）
-
     ...             各个与后台包对应的“包文件夹”
     |-teamwork(包名称)
         |-css           包独有样式（如有）
