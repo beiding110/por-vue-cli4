@@ -1,7 +1,6 @@
 import Vue from 'vue'
-import configs from '~/configs'
-import { MessageBox } from 'element-ui';
 import qs from 'qs';
+import resCheck from './res-check';
 
 /**
 * 判断是否为服务器端
