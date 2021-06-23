@@ -12,6 +12,8 @@
 
         <demo-frame class="demo-item"></demo-frame>
 
+        <demo-img class="demo-item"></demo-img>
+
         <demo-pagination class="demo-item"></demo-pagination>
 
         <demo-radio class="demo-item"></demo-radio>
@@ -43,6 +45,7 @@ export default {
         DemoEcharts: () => import('./modules/echarts'),
         DemoForm: () => import('./modules/form'),
         DemoFrame: () => import('./modules/frame'),
+        DemoImg: () => import('./modules/img'),
         DemoPagination: () => import('./modules/pagination'),
         DemoRadio: () => import('./modules/radio'),
         DemoSearch: () => import('./modules/search'),
