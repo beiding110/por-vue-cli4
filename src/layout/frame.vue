@@ -69,11 +69,6 @@ export default {
         }
     },
     methods: {
-        queryMenu() {
-            this.$get(this.getGetters('sysUrl') + '/menu/list', function (data) {
-                this.menuList = data;
-            })
-        },
         toggleCollapse() {
             if(this.mobile) {
                 this.toggleShowController();

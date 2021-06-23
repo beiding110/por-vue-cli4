@@ -29,28 +29,18 @@ export default {
         },
     },
     actions: {
-        login({commit, getters, state, dispatch}, {loginname, pwd}) {
-            if (loginname == '' || loginname == undefined) {
-                ShowMsg('请输入账号', 'error')
-            } else if (pwd == '' || pwd == undefined) {
-                ShowMsg('请输入密码', 'error')
-            } else {
-                Vue.prototype.$post(`/pms/login`, {
-                    loginname: loginname,
-                    pwd: pwd
-                }, function (data, res) {
-                    store.commit('setUser', data.user);
+        login({commit, getters, state, dispatch}, form) {
+            Vue.prototype.$post(`/pms/login`, form, function (data, res) {
+                store.commit('setUser', data.user);
 
-                    store.commit('setSystem', {
-                        type: state.system,
-                        api: store.getters.ageUrl
-                    });
-
-                    dispatch('getMenu');
-
-                    router.replace('/teamwork/project/list');
+                store.commit('setSystem', {
+                    type: state.system,
                 });
-            };
+
+                dispatch('getMenu');
+
+                router.replace('/teamwork/project/list');
+            });
         },
         queryUserInfo({state, dispatch}, requery) {
             // if(!requery) {
@@ -73,7 +63,7 @@ export default {
             // });
         },
         getMenu({commit, state}) {
-            // Vue.prototype.$get(`${store.getters.ageUrl}/tree/get_menu.json`, data => {
+            // Vue.prototype.$get(`${store.getters.sysUrl}/menu/list`, data => {
             //     commit('setNavList', data);
             // });
         },
