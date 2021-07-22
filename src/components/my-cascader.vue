@@ -8,6 +8,7 @@
 		:props="mixedProps"
 		clearable
 		@change="changeHandler"
+        :filterable="filterable"
 	></el-cascader>
 </template>
 
@@ -16,7 +17,7 @@ export default {
     mixins: [],
     props: {
         value: {
-            type: [Array, String],
+            type: [Array, String, Number],
             default: ''
         },
         disabled:{
@@ -58,6 +59,10 @@ export default {
         },
         '2way': {
             type: String
+        },
+        filterable: {
+            type: Boolean,
+            default: false,
         },
     },
     data() {
