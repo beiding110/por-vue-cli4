@@ -5,7 +5,7 @@
 		v-model="model"
 		:placeholder="placeholder"
 		:options="options"
-		:props="props"
+		:props="mixedProps"
 		clearable
 		@change="changeHandler"
 	></el-cascader>
@@ -13,8 +13,8 @@
 
 <script>
 export default {
-    mixins: [ ],
-	props: {
+    mixins: [],
+    props: {
         value: {
             type: [Array, String],
             default: ''
@@ -27,9 +27,9 @@ export default {
             type:Boolean,
             default:true
         },
-		placeholder: {
-			type: String,
-			default: ''
+        placeholder: {
+            type: String,
+            default: ''
         },
         props: {
             type: Object,
@@ -38,7 +38,7 @@ export default {
                     emitPath: false,
                     value: 'id',
                     label: 'text'
-                }
+                };
             }
         },
         data: {
@@ -59,26 +59,28 @@ export default {
         '2way': {
             type: String
         },
-	},
-	data() {
-		return {
-			options: [],
-            leafs: []
-		};
+    },
+    data() {
+        return {
+            options: [],
+            leafs: [],
+        };
     },
     computed: {
         model: {
             get() {
-                if(this.modelStr) {
+                if (this.modelStr) {
                     return this.getFullPath(this.value, this.leafs).reverse();
-                } else {
-                    return this.value;
                 }
+                
+                return this.value;
+                    
             },
             set(val) {
-                if(this.modelStr) {
+                if (this.modelStr) {
                     var length = val.length;
-                    if(length) {
+
+                    if (length) {
                         this.$emit('input', val[length - 1]);
                     } else {
                         this.$emit('input', '');
@@ -87,7 +89,14 @@ export default {
                     this.$emit('input', val);
                 }
             }
-        }
+        },
+        mixedProps() {
+            return mixin(this.props, {
+                emitPath: false,
+                value: 'id',
+                label: 'text'
+            }, true);
+        },
     },
     watch: {
         url() {
@@ -99,32 +108,32 @@ export default {
             }, deep: true
         }
     },
-	methods: {
-		queryData() {
-            if(this.url) {
+    methods: {
+        queryData() {
+            if (this.url) {
                 this.$get(this.url, data => {
                     this.options = data;
                     this.dataRebuild(data, this.props.value);
                 });
             }
-            if(this.data.length) {
+            if (this.data.length) {
                 this.options = this.data;
                 this.dataRebuild(this.data, this.props.value);
             }
-		},
-		changeHandler() {
-			// console.log(row)
-			this.$nextTick(() => {
+        },
+        changeHandler() {
+            this.$nextTick(() => {
                 const selNodes = this.$refs.cascader.getCheckedNodes();
                 const selNode = selNodes[0];
+
                 selNode && this.twoWayHandler(selNode);
 
                 this.$emit('change', selNodes);
-			})
-		},
+            });
+        },
         dataRebuild(obj, key) {
             obj.forEach(item => {
-                if(item.children) {
+                if (item.children) {
                     item.children.forEach(child => {
                         child.parent = item;
                     });
@@ -139,10 +148,11 @@ export default {
             var res = [key];
 
             var filtedItem = arr.filter(item => item[this.props.value] === key)[0];
-            if(filtedItem) {
+
+            if (filtedItem) {
                 var patentData;
 
-                if(filtedItem.parent) {
+                if (filtedItem.parent) {
                     patentData = this.getFullPath(filtedItem.parent[this.props.value], [filtedItem.parent]);
                 } else {
                     patentData = [];
@@ -153,26 +163,27 @@ export default {
             return res;
         },
         twoWayHandler(row) {
-            if(this['2way']) {
+            if (this['2way']) {
                 var modelArr = this['2way'].split(',');
+
                 modelArr.forEach(function(key) {
-                    var item = row.pathNodes.map(item => {
-                        return item.data[key];
+                    var item = row.pathNodes.map(rowItem => {
+                        return rowItem.data[key];
                     });
 
-                    if(this.modelStr) {
+                    if (this.modelStr) {
                         item = item.join(this.strSpliter);
                     }
 
-                    this.$emit('update:' + key, item)
+                    this.$emit('update:' + key, item);
                 }.bind(this));
-            };
+            }
         }
-	},
-	created() {
-		this.queryData();
-	}
-}
+    },
+    created() {
+        this.queryData();
+    }
+};
 </script>
 
 <style>
