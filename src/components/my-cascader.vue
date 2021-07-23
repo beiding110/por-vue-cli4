@@ -9,6 +9,7 @@
 		clearable
 		@change="changeHandler"
         :filterable="filterable"
+        :collapse-tags="collapseTags"
 	></el-cascader>
 </template>
 
@@ -35,11 +36,7 @@ export default {
         props: {
             type: Object,
             default: function () {
-                return {
-                    emitPath: false,
-                    value: 'id',
-                    label: 'text'
-                };
+                return {};
             }
         },
         data: {
@@ -50,17 +47,26 @@ export default {
             type: String
         },
         modelStr: {
+            // 绑定字符串，props.multiple为true可用，低版本无props.emitPath可用
             type: Boolean,
-            default: false
+            default: false,
         },
         strSpliter: {
             type: String,
-            default: '-'
+            default: ','
         },
         '2way': {
             type: String
         },
+        '2wayStrSpliter': {
+            type: String,
+            default: '-'
+        },
         filterable: {
+            type: Boolean,
+            default: false,
+        },
+        collapseTags: {
             type: Boolean,
             default: false,
         },
@@ -74,30 +80,81 @@ export default {
     computed: {
         model: {
             get() {
-                if (this.modelStr) {
-                    return this.getFullPath(this.value, this.leafs).reverse();
+                if (this.mixedProps.emitPath) {
+                    // 绑定完整路径数组
+
+                    if (this.modelStr) {
+                        return this.getFullPath(this.value, this.leafs).reverse();
+                    }
+
+                    return this.value;
                 }
-                
+
+                // 绑定叶子值
+                if (this.mixedProps.multiple) {
+                    // 可多选
+                    if (this.modelStr) {
+                        //绑定字符串
+                        return this.value.split(this.strSpliter);
+                    }
+
+                    return this.value;
+                }
+
+                // 不可多选
                 return this.value;
                     
             },
             set(val) {
-                if (this.modelStr) {
-                    var length = val.length;
+                var length;
+
+                if (this.mixedProps.emitPath) {
+                    // 绑定完整路径数组
+                    if (this.modelStr) {
+                        // 使用了modelStr
+                        length = val.length;
+
+                        if (length) {
+                            this.$emit('input', val[length - 1]);
+                        } else {
+                            this.$emit('input', '');
+                        }
+                        
+                        return;
+                    }
+
+                    this.$emit('input', val);
+                    return;
+                }
+                
+                // 绑定叶子值
+                if (this.mixedProps.multiple) {
+                    // 可多选
+                    length = val.length;
 
                     if (length) {
-                        this.$emit('input', val[length - 1]);
+                        if (this.modelStr) {
+                            this.$emit('input', val.join(this.strSpliter));
+                            return;
+                        }
+
+                        this.$emit('input', val);
                     } else {
                         this.$emit('input', '');
                     }
-                } else {
-                    this.$emit('input', val);
+
+                    return;
                 }
+                
+                // 不可多选
+                this.$emit('input', val);
             }
         },
         mixedProps() {
             return mixin(this.props, {
                 emitPath: false,
+                multiple: false,
+                checkStrictly: false,
                 value: 'id',
                 label: 'text'
             }, true);
@@ -118,47 +175,50 @@ export default {
             if (this.url) {
                 this.$get(this.url, data => {
                     this.options = data;
-                    this.dataRebuild(data, this.props.value);
+                    this.dataRebuild(data, this.mixedProps.value);
                 });
             }
             if (this.data.length) {
                 this.options = this.data;
-                this.dataRebuild(this.data, this.props.value);
+                this.dataRebuild(this.data, this.mixedProps.value);
             }
         },
         changeHandler() {
             this.$nextTick(() => {
                 const selNodes = this.$refs.cascader.getCheckedNodes();
-                const selNode = selNodes[0];
 
-                selNode && this.twoWayHandler(selNode);
+                selNodes && this.twoWayHandler(selNodes);
 
                 this.$emit('change', selNodes);
             });
         },
         dataRebuild(obj, key) {
             obj.forEach(item => {
-                if (item.children) {
+                if (item.children && item.children.length) {
                     item.children.forEach(child => {
                         child.parent = item;
                     });
 
                     this.dataRebuild(item.children, key);
                 } else {
+                    try {
+                        delete item.children;
+                    } catch (e) {
+                        //删除children失败
+                    }
+
                     this.leafs.push(item);
                 }
             });
         },
         getFullPath(key, arr) {
-            var res = [key];
-
-            var filtedItem = arr.filter(item => item[this.props.value] === key)[0];
+            var res = [key],
+                filtedItem = arr.filter(item => item[this.mixedProps.value] === key)[0],
+                patentData;
 
             if (filtedItem) {
-                var patentData;
-
                 if (filtedItem.parent) {
-                    patentData = this.getFullPath(filtedItem.parent[this.props.value], [filtedItem.parent]);
+                    patentData = this.getFullPath(filtedItem.parent[this.mixedProps.value], [filtedItem.parent]);
                 } else {
                     patentData = [];
                 }
@@ -167,22 +227,48 @@ export default {
 
             return res;
         },
-        twoWayHandler(row) {
+        twoWayHandler(selNodes) {
             if (this['2way']) {
-                var modelArr = this['2way'].split(',');
+                var modelArr = this['2way'].split(','),
+                    updateValue;
 
-                modelArr.forEach(function(key) {
-                    var item = row.pathNodes.map(rowItem => {
-                        return rowItem.data[key];
-                    });
+                modelArr.forEach(key => {
+                    if (this.mixedProps.multiple) {
+                        // 多选
 
-                    if (this.modelStr) {
-                        item = item.join(this.strSpliter);
+                        updateValue = selNodes.filter(selNode => !selNode.hasChildren).map(selNode => {
+                            return this.twoWayObjBuilder(selNode, key);
+                        });
+
+                        if (this.modelStr) {
+                            updateValue = updateValue.join(this.strSpliter);
+                        }
+                    } else {
+                        // 单选
+                        
+                        var rowItem = selNodes[0];
+
+                        if (!rowItem) {
+                            return;
+                        }
+
+                        updateValue = this.twoWayObjBuilder(rowItem, key);
                     }
 
-                    this.$emit('update:' + key, item);
-                }.bind(this));
+                    this.$emit(`update:${key}`, updateValue);
+                });
             }
+        },
+        twoWayObjBuilder(node, key) {
+            var item = node.pathNodes.map(nodeItem => {
+                return nodeItem.data[key];
+            });
+
+            if (!this.mixedProps.emitPath) {
+                item = item.join(this['2wayStrSpliter']);
+            }
+
+            return item;
         }
     },
     created() {
