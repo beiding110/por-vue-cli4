@@ -110,7 +110,12 @@ export default {
                     this.setRowSelection(n);
                 })
             }, deep: true
-        }
+        },
+        tableData: {
+            handler() {
+                this.valueWatchLock = false;
+            }, deep: true,
+        },
     },
     methods: {
         //表格选中项变化
