@@ -70,7 +70,7 @@ export default {
             }
         },
         ueconfig() {
-            var url = '/pms';
+            var url = '/web';
             return [
                 `${url}/uedtior/ueditor.config.js`,
                 `${url}/uedtior/ueditor.all.js`,
@@ -164,11 +164,21 @@ export default {
 
                 this.ue.addListener("contentChange", () => {
                     var htmlContent = this.ue.getContent();
+
+                    htmlContent = htmlContent
+                        .replace(/background: white;/g, '')
+                        .replace(/, "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei UI", "Microsoft YaHei"/g, '');
+
                     this.model = htmlContent;
                 });
 
                 this.ue.addListener("blur", () => {
                     var htmlContent = this.ue.getContent();
+
+                    htmlContent = htmlContent
+                        .replace(/background: white;/g, '')
+                        .replace(/, "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei UI", "Microsoft YaHei"/g, '');
+                        
                     this.model = htmlContent;
                 });
             });

@@ -15,7 +15,7 @@
     "babel-polyfill": "^6.26.0",
     "core-js": "^3.6.5",
     "echarts": "^5.1.1",
-    "element-ui": "^2.13.0",
+    "element-ui": "^2.15.6",
     "jquery": "^3.2.1",
     "mint-ui": "^2.2.13",
     "nprogress": "^0.2.0",

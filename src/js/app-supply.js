@@ -244,4 +244,28 @@ import Vue from 'vue'
         return rules
     }
 
+    owner.timeRangeComputeFactory = function(startkey, endkey) {
+        return {
+            get() {
+                if (startkey && endkey) {
+                    return [startkey, endkey];
+                }
+                
+                return [];
+            },
+            set(val) {
+                if (val) {
+                    var startdate = val[0] || '',
+                        enddate = val[1] || '';
+
+                    startkey = startdate;
+                    endkey = enddate;
+                } else {
+                    startkey = '';
+                    endkey = '';
+                }
+            }
+        }
+    }
+
 })(Vue.prototype)

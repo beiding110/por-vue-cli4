@@ -1,7 +1,7 @@
 <template>
     <div :class="theme=='dark' ? '' : 'my__pagination'">
         <el-pagination
-            layout="prev, pager, next"
+            layout="prev, pager, next, total"
             :total="total"
             :page-size="!!search ? search.pagesize || defaultSearch.pagesize : defaultSearch.pagesize"
             :current-page.sync="currentPage"
@@ -69,7 +69,7 @@ export default {
             total: 1,
             currentPage: 1,
             defaultSearch: {
-                sortname: 'addtime',
+                sortname: '',
                 sortorder: 'desc',
                 pagesize: 20
             },
@@ -142,7 +142,7 @@ export default {
                                 that.total = data.total;
                             });
 
-                            this.$emit('update:extra', data.extra);
+                            this.$emit('update:statistics', data.statistics);
                         },
                         complete() {
                             NProgress.done();

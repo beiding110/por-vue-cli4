@@ -6,6 +6,7 @@
     :size="size"
     :label-position="labelPosition"
     :disabled="disabled || readonly"
+    class="my-form"
     :class="{disabled:disabled||readonly, 'table-view':table}"
     :inline="inline"
     v-loading.sync="submitLoadingController">
@@ -280,6 +281,12 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
+.my-form{
+    /deep/ {
+        .el-select, .el-date-editor{width:100%;}
+    }
+}
+
 .disabled.el-form /deep/ .el-form-item {
     margin-bottom: 2px;
 }

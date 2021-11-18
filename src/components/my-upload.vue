@@ -152,7 +152,7 @@ export default {
     },
     computed: {
         uploadAction() {
-            return this.action || `${this.getGetters('fileUrl')}/upload/${this.type}/common.json`;
+            return this.action || `${this.getGetters('fileUrl')}/upload`;
         },
         myReadonly: function () {
             return !this.readonly;
@@ -186,7 +186,7 @@ export default {
             mixin(this.extra, data, true);
 
             this.$ajax({
-                url: `${this.getGetters('fileUrl')}/operate/getlist.json`,
+                url: `${this.getGetters('fileUrl')}/filelist`,
                 data,
                 callback: data => {
                     this.fileList = data || [];
@@ -203,7 +203,7 @@ export default {
                 this.getListLoading = true;
                 this.$ajax({
                     type: 'post',
-                    url: `${this.getGetters('fileUrl')}/operate/delete.json`,
+                    url: `${this.getGetters('fileUrl')}/filedel`,
                     data: {
                         rowguid: row.rowguid
                     },
@@ -261,7 +261,7 @@ export default {
 
             ajaxResCheck.call(this, obj, function () {
                 // this.bindFileList();
-                var file = clone(obj.tdata[0]);
+                var file = clone(obj.tdata);
                 file.fileuptime = file.addtime;
                 this.fileList.push(file);
 

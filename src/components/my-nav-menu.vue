@@ -5,7 +5,12 @@
             <template v-if="!!childItem.children">
                 <el-submenu :index="childItem.id" :key="childItem.id">
                     <template slot="title">
-                        <i class="iconfont" v-if="childItem.imgpath" v-html="childItem.imgpath"></i>
+                        <i 
+                            class="iconfont nav-icon" 
+                            v-if="childItem.imgpath" 
+                            v-html="childItem.imgpath"
+                        ></i>
+
                         <span>{{ childItem.text }}</span>
                     </template>
 
@@ -14,7 +19,12 @@
             </template>
             <template v-else>
                 <el-menu-item :index="childItem.url" :key="childItem.id">
-                    <i class="iconfont" v-if="childItem.imgpath" v-html="childItem.imgpath"></i>
+                    <i 
+                        class="iconfont nav-icon" 
+                        v-if="childItem.imgpath" 
+                        v-html="childItem.imgpath"
+                    ></i>
+
                     <span>{{ childItem.text }}</span>
                 </el-menu-item>
             </template>
@@ -48,15 +58,15 @@ export default {
     },
     methods: {
         sliceUrl: function (href) {
-            if (!!href) {
+            if (href) {
                 if (/list/.test(href)) {
                     return href.split('/').slice(0, -1).join('/');
-                } else {
-                    return href;
-                }
-            } else {
-                return ''
-            }
+                } 
+                
+                return href;
+            } 
+            
+            return '';
         }
     },
     mounted: function() {
@@ -66,6 +76,12 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
+<style scoped lang="scss">
+.nav-icon{
+    color: inherit;
 
+    & + span{
+        margin-left: .5em;
+    }
+}
 </style>

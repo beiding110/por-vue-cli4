@@ -18,6 +18,7 @@ export default{
         Vue.component('my-cascader', function(){return import(/*webpackChunkName: 'coms'*/ './my-cascader')});
         Vue.component('my-transfer', function(){return import(/*webpackChunkName: 'coms'*/ './my-transfer')});
         Vue.component('my-upload', function(){return import(/*webpackChunkName: 'coms'*/ './my-upload')});
+        Vue.component('my-number-range', function(){return import(/*webpackChunkName: 'coms'*/ './my-number-range')});
 
         Vue.component('my-dialog', function(){return import(/*webpackChunkName: 'coms'*/ './my-dialog')});
         Vue.component('my-tree', function(){return import(/*webpackChunkName: 'coms'*/ './my-tree')});

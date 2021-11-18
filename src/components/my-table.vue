@@ -12,6 +12,7 @@
         :show-summary="showSummary"
         :span-method="spanMethod"
         :row-key="rowKey"
+        default-expand-all
         >
             <el-table-column type="selection" width="55" v-if="select" :selectable="selectable"></el-table-column>
             <slot></slot>
@@ -110,12 +111,7 @@ export default {
                     this.setRowSelection(n);
                 })
             }, deep: true
-        },
-        tableData: {
-            handler() {
-                this.valueWatchLock = false;
-            }, deep: true,
-        },
+        }
     },
     methods: {
         //表格选中项变化

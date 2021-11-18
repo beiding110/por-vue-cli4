@@ -10,6 +10,7 @@
 		@change="changeHandler"
         :filterable="filterable"
         :collapse-tags="collapseTags"
+        :show-all-levels="showAllLevels"
 	></el-cascader>
 </template>
 
@@ -69,6 +70,10 @@ export default {
         collapseTags: {
             type: Boolean,
             default: false,
+        },
+        showAllLevels: {
+            type: Boolean,
+            default: true,
         },
     },
     data() {
