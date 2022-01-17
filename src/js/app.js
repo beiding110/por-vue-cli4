@@ -1042,7 +1042,7 @@ import storage from './storage'
 
         for (var i = 0; i < fraction.length; i++)
         {
-            s += (digit[Math.floor(n * 10 * Math.pow(10, i)) % 10] + fraction[i]).replace(/零./, '');
+            s += (digit[Math.floor(n * Math.pow(10, (i + 1))) % 10] + fraction[i]).replace(/零./, '');
         }
         s = s || '整';
         n = Math.floor(n);
