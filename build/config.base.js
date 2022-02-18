@@ -50,7 +50,7 @@ var baseConfig = {
                 };
                 return options;
             });
-        };
+        }
     }
 };
 
@@ -75,6 +75,6 @@ if (CONFIG.project['project-type'] === 'mobile') {
             }
         }
     }
-};
+}
 
 module.exports = baseConfig;

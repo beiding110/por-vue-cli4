@@ -57,6 +57,31 @@ npm install
 yarn install
 ```
 
+> 安装过程中可能发生错误
+
+```
+错误类型：
+无法安装sentry-cli
+
+错误内容：
+Downloading from https://downloads.sentry-cdn.com/sentry-cli/x.xx.x/sentry-cli-Windows-x86_64.exe 
+Error: Unable to download sentry-cli binary from https://downloads.sentry-cdn.com/sentry-cli/1.67.1/sentry-cli-Windows-x86_64.exe. Error code: ECONNRESET
+
+解决方法：
+npm config set sentrycli_cdnurl https://npm.taobao.org/mirrors/sentry-cli/
+```
+
+```
+错误类型：
+无法安装node-sass
+
+错误内容：
+-
+
+解决方法：
+npm config set sass_binary_site=https://npm.taobao.org/mirrors/node-sass/
+```
+
 ### Compiles and hot-reloads for development
 
 ```
