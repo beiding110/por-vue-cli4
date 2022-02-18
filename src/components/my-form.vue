@@ -282,20 +282,20 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
 .my-form{
-    /deep/ {
+    ::v-deep {
         .el-select, .el-date-editor{width:100%;}
     }
 }
 
-.disabled.el-form /deep/ .el-form-item {
+.disabled.el-form ::v-deep .el-form-item {
     margin-bottom: 2px;
 }
 .btn-row{text-align:center; margin-top:20px;}
 
 $tableBorderColor: #E8E8E8;
 .table-view{border-left:1px solid $tableBorderColor; border-top:1px solid $tableBorderColor; overflow:hidden; display:flex; flex-wrap:wrap;
-    /deep/ .el-form-item{margin:0; border-right:1px solid $tableBorderColor; border-bottom:1px solid $tableBorderColor; box-sizing:border-box;}
-    /deep/ .el-form-item:not(.btn-row){width:50%; position:relative;
+    ::v-deep .el-form-item{margin:0; border-right:1px solid $tableBorderColor; border-bottom:1px solid $tableBorderColor; box-sizing:border-box;}
+    ::v-deep .el-form-item:not(.btn-row){width:50%; position:relative;
         .el-form-item__label{height:100%; line-height:normal; border-right:1px solid $tableBorderColor; box-sizing:border-box; background:#F9FBFE; display:flex; align-items:center; justify-content:flex-end;}
         .el-form-item__content{padding:5px; position:relative; min-height:2em;
             .el-form-item__error{top:auto; bottom:0; left:5px;}
@@ -305,7 +305,7 @@ $tableBorderColor: #E8E8E8;
 }
 @media screen and (max-width: 1000px) {
     .table-view{
-        /deep/ .el-form-item:not(.btn-row){width:100%;}
+        ::v-deep .el-form-item:not(.btn-row){width:100%;}
     }
 }
 </style>

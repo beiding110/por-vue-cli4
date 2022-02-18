@@ -162,7 +162,7 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
 .my__table{width:100%;
-    /deep/ {
+    ::v-deep {
         .el-button--text{text-align:left;
             span{word-break:break-all; white-space:normal; }
         }

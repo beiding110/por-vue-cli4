@@ -256,8 +256,8 @@ export default {
             border-radius: 50%;
             background: white;
             position: absolute;
-            left: - $btnSize / 2 + 1;
-            top: - $btnSize / 2 + 1;
+            left: - calc($btnSize / 2) + 1;
+            top: - calc($btnSize / 2) + 1;
             cursor: pointer;
         }
     }

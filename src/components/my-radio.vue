@@ -123,7 +123,7 @@ export default {
 
     @media screen and (max-width:500px) {
         .my__radio{
-            /deep/ .el-radio{margin-left:0; margin-right:1em;}
+            ::v-deep .el-radio{margin-left:0; margin-right:1em;}
         }
     }
 </style>

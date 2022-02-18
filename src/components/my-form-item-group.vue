@@ -27,7 +27,7 @@ $title-line-height:32px;
 
 .my-form-item-group{ width:100%;
     .form-item-group_title{ font-weight:bold; color:#606266; line-height:$title-line-height; padding:0 $title-space; border-bottom:$border-style; border-right:$border-style; background-color:$primaryColor1;
-        &:before{content:'◆'; margin-right:$title-space / 2;}
+        &:before{content:'◆'; margin-right:calc($title-space / 2);}
     }
     .form-item-group_body{ display:flex; width:100%; flex-wrap:wrap; position:relative;
         &:after{content:''; display:block; width:0; height:100%; position:absolute; right:0; top:0; border-right:$border-style;}

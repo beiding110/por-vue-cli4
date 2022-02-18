@@ -32,7 +32,7 @@ $topNavWithTagNavHeight: 80px;
         &.collapse {
             width: $colLeftWidth;
 
-            /deep/ .el-menu .infinite-sub-menu .el-menu-item span {
+            ::v-deep .el-menu .infinite-sub-menu .el-menu-item span {
                 display: none;
             }
         }
@@ -41,7 +41,7 @@ $topNavWithTagNavHeight: 80px;
             border: none;
         }
 
-        /deep/ .el-menu--collapse .el-submenu>.el-submenu__title {
+        ::v-deep .el-menu--collapse .el-submenu>.el-submenu__title {
             span {
                 height: 0;
                 width: 0;
