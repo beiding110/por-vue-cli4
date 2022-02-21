@@ -253,7 +253,7 @@ export default {
     }
 
     .file-preview-dialog {
-        /deep/ {
+        ::v-deep {
             .el-dialog__body{
                 text-align: center;
             }
