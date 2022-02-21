@@ -2,7 +2,7 @@
 
 > the new cli with node 10，vue-cli4，webpack4
 
-集成了appjs、常用组件库、element-ui/mint-ui、jquery、babel、sentry、vue-mate-info等；
+集成了appjs、常用组件库、element-ui/mint-ui、jquery、babel、sentry、vue-mate-info、~~node-sass~~、sass（dart-sass）等；
 
 常用配置修改；
 
@@ -12,7 +12,7 @@
 
 各个文件夹详细内容及规则参考 `src文件夹` 下各级文件夹内 `README` 文件
 
-``` bash
+```bash
 
 |-build         构建相关内容
 |-config        前端工程相关配置
@@ -39,12 +39,12 @@
 ## 开发过程
 
 * 拉取项目；
-* 是否使用多项目开发，是则取消`.gitignore`中的注释；
-* 修改`vue.config.js`中项目配置，包含：devServer.proxy（开发代理）、CONFIG.sentryEnabled（是否启用sentry错误收集）；
-* 修改`src/config/index`中相关参数（如需要），包含：sentry（错误收集相关）、cnzz（运营收集相关）、router（基础根路由）等；
-* 判断是否使用统一login页面，决定登录页面`src/views/pc/login`，及相关方法`src/views/pc/store`，继续在原位置维护（使用统一登录），或移至子项目文件夹中维护（非统一）；
-* 修改`src/views/pc/store`中的上导航相关操作；
-* 根据需要配置`src/views/pc/layout`中导航菜单（如本示例中将菜单项进行配置抽离，实际生产中应该是以接口形式获取菜单）；
+* 是否使用多项目开发，是则取消 `.gitignore`中的注释；
+* 修改 `vue.config.js`中项目配置，包含：devServer.proxy（开发代理）、CONFIG.sentryEnabled（是否启用sentry错误收集）；
+* 修改 `src/config/index`中相关参数（如需要），包含：sentry（错误收集相关）、cnzz（运营收集相关）、router（基础根路由）等；
+* 判断是否使用统一login页面，决定登录页面 `src/views/pc/login`，及相关方法 `src/views/pc/store`，继续在原位置维护（使用统一登录），或移至子项目文件夹中维护（非统一）；
+* 修改 `src/views/pc/store`中的上导航相关操作；
+* 根据需要配置 `src/views/pc/layout`中导航菜单（如本示例中将菜单项进行配置抽离，实际生产中应该是以接口形式获取菜单）；
 * 如使用多项目开发，则应在此位置提交git，并将该项目作为base项目，禁止管理员外其他成员提交修改；
 * 在以上基础上进行开发；
 
@@ -69,17 +69,6 @@ Error: Unable to download sentry-cli binary from https://downloads.sentry-cdn.co
 
 解决方法：
 npm config set sentrycli_cdnurl https://npm.taobao.org/mirrors/sentry-cli/
-```
-
-```
-错误类型：
-无法安装node-sass
-
-错误内容：
--
-
-解决方法：
-npm config set sass_binary_site=https://npm.taobao.org/mirrors/node-sass/
 ```
 
 ### Compiles and hot-reloads for development
@@ -130,4 +119,4 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 
 `系统主题色` src/css/var.scss
 
-`面板主题` src/views/pc/layout/index.vue，在style标签中选择引用`common.scss`或`pop.scss`
+`面板主题` src/views/pc/layout/index.vue，在style标签中选择引用 `common.scss`或 `pop.scss`
