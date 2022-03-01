@@ -2,7 +2,13 @@
 
 > the new cli with node 10，vue-cli4，webpack4
 
-集成了appjs、常用组件库、element-ui/mint-ui、jquery、babel、sentry、vue-mate-info、~~node-sass~~、sass（dart-sass）等；
+集成了appjs、常用组件库、等:
+
+* `ui库`：element-ui、mint-ui、
+* `工具库`：jquery、echarts、axios、nprogress、postcss-pxtorem、
+* `css预处理`：~~node-sass~~、sass(dart-sass)、
+* `运维及统计`：sentry、cnzz、
+* `vue插件`：vue-mate-info、
 
 常用配置修改；
 

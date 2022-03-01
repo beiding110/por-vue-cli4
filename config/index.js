@@ -26,7 +26,7 @@ exports.project = {
 
     router: {
         'base-name': '',
-        title: '惠咨询'
+        title: 'porcupine'
     },
 
     //ajax类型axios或jquery，用法相同
