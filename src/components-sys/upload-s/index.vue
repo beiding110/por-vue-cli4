@@ -50,6 +50,7 @@
                 class="bigfile-percent"
                 type="circle" 
                 :percentage="percent"
+                :width="progressWidth"
             ></el-progress>
         </div>
     </div>
@@ -60,6 +61,8 @@ import FileList from './components/file-list';
 
 import ajax from './ajax';
 import BigFilePipeline from './assets/js/BigFilePipeline';
+import debounce from './assets/js/debounce';
+import Chain from './assets/js/Chain';
 
 export default {
     components: {
@@ -130,6 +133,12 @@ export default {
 
             // 大文件分包大小
             chunkSize: 5 * 1024 * 1024,
+
+            // 防抖弹窗集合
+            debounceDialogs: {},
+
+            // 上传成功的暂存文件
+            successCache: [],
         };
     },
     computed: {
@@ -171,7 +180,7 @@ export default {
         extraData: function () {
             var extra = {
                 fileguid: this.fileguid,
-                single: (this.single * 1)
+                single: (this.single * 1),
             };
 
             mixin(this.extra, extra, true);
@@ -200,11 +209,55 @@ export default {
             return /px/.test(this.size) ? this.size : `${this.size}px`;
         },
         exist() {
-            return this.fileList.length > 0;
+            return (this.fileList.length > 0 && !this.loadingBarShowController);
         },
         uploaderInnerFiles() {
             return this.$refs.upload.uploadFiles.length;
         },
+        progressWidth() {
+            return this.size - 30;
+        },
+        computeLimit() {
+            var limit = false;
+
+            if (this.limit) {
+                limit = this.limit;
+            }
+
+            if (this.single) {
+                limit = 1;
+            }
+
+            return limit;
+        },
+    },
+    watch: {
+        fileguid: function (e) {
+            if (e) {
+                this.getFileList();
+            }
+        },
+        extra: {
+            handler(n, o) {
+                if (JSON.stringify(n) !== JSON.stringify(o)) {
+                    this.getFileList();
+                }
+            }, deep: true
+        },
+        filetype() {
+            this.updateDebounceDialogs();
+        },
+        limit() {
+            this.updateDebounceDialogs();
+        },
+        filesize() {
+            this.updateDebounceDialogs();
+        }
+    },
+    provide() {
+        return {
+            readonly: this.readonly,
+        };
     },
     methods: {
         /**
@@ -224,8 +277,6 @@ export default {
                 },
                 callback: data => {
                     this.fileList = data || [];
-
-                    this.$refs.upload.clearFiles();
                     
                     this.fileListUpdateHandler();
                 },
@@ -292,32 +343,53 @@ export default {
 
             return new Promise((resolve, reject) => {
                 this.$nextTick(() => {
-                    if (this.filetype) {
-                        var typeArr = this.filetype.split(',');
+                    new Chain().link(next => {
 
-                        if (!typeArr.some(function(item) {
-                            return ((new RegExp(type, 'i')).test(item));
-                        })) {
-                            showMsg('文件类型应为:\n' + this.filetype, 'error');
+                        // 文件类型判断
+                        if (this.filetype) {
+                            var typeArr = this.filetype.split(',');
+
+                            if (!typeArr.some(function(item) {
+                                return ((new RegExp(type, 'i')).test(item));
+                            })) {
+                                this.debounceDialogs.filetype();
+
+                                return reject();
+                            }
+                            
+                            next();
+                        } else {
+                            next();
+                        }
+
+                    }).link(next => {
+                        // 文件数量判断
+                        if (this.computeLimit && (this.fileList.length + this.uploaderInnerFiles > this.computeLimit)) {
+
+                            this.debounceDialogs.limit();
 
                             return reject();
                         }
-                    }
 
-                    if (this.limit && (this.fileList.length + this.uploaderInnerFiles > this.limit)) {
-                        showMsg(`总文件数量超过${this.limit}个`, 'error');
+                        next();
+                        
+                    }).link(next => {
 
-                        return reject();
-                    }
+                        // 文件大小判断
+                        if (fs && (size > fs)) {
+                            this.debounceDialogs.filesize();
 
-                    if (fs && (size > fs)) {
-                        showMsg(`文件大小超过:${fs}M`, 'error');
+                            return reject();
+                        }
 
-                        return reject();
-                    }
+                        next();
+                        
+                    }).link(next => {
+                        
+                        // 执行上传
+                        return resolve();
 
-                    this.loadingShow('附件上传中');
-                    return resolve();
+                    }).run();
                 });
             });
         },
@@ -326,23 +398,28 @@ export default {
          * files, fileList
          */
         handleExceed: function () {
-            this.limit && showMsg('限制上传' + this.limit + '个文件', 'error');
+            this.computeLimit && showMsg('限制上传' + this.computeLimit + '个文件', 'error');
         },
         /**
          * 上传成功
          * response, file, fileList
          */
-        onSuccess: function (response) {
+        onSuccess: function (response, file, fileList) {
             this.loadingHide();
 
             var res = typeof (response) === 'string' ? JSON.parse(response) : response;
 
             ajaxResCheck(res, () => {
-                showMsg(res.msg ? res.msg : '上传成功', 'success');
+                this.successCache.push(file);
 
-                this.getFileList();
+                if (this.successCache.length === fileList.length) {
+                    showMsg(res.msg ? res.msg : '上传成功', 'success');
 
-                this.$emit('success', res);
+                    this.successCache = [];
+
+                    this.getFileList();
+                    this.$emit('success', res);
+                }
             });
         },
         /**
@@ -370,6 +447,8 @@ export default {
             this.$refs.FileUp.submit();
         },
         fileListUpdateHandler: function() {
+            this.$refs.upload.clearFiles();
+
             this.$emit('update', this.fileList);
             this.$emit('update:files', this.fileList);
             this.model = this.fileList;
@@ -423,6 +502,27 @@ export default {
                 }).run();
             }
         },
+        /**
+         * 更新防抖弹窗变量
+         */
+        updateDebounceDialogs() {
+            var that = this;
+
+            this.debounceDialogs = {
+                filetype: debounce(() => {
+                    showMsg(`文件类型应为:${that.filetype}`, 'error');
+                }, 1000 / 24),
+                limit: debounce(() => {
+                    showMsg(`总文件数量超过${that.computeLimit}个`, 'error');
+                }, 1000 / 24),
+                filesize: debounce(() => {
+                    showMsg(`文件大小超过:${that.filesize}M`, 'error');
+                }, 1000 / 24),
+                avcmp4: debounce(() => {
+                    showMsg(`您上传的视频文件不是avc编码格式的mp4文件，请修改后重新上传`, 'error');
+                }, 1000 / 24),
+            };
+        },
     },
     mounted: function () {
         try {
@@ -430,21 +530,9 @@ export default {
         } catch (e) {
             // e
         }
+
+        this.updateDebounceDialogs();
     },
-    watch: {
-        fileguid: function (e) {
-            if (e) {
-                this.getFileList();
-            }
-        },
-        extra: {
-            handler(n, o) {
-                if (JSON.stringify(n) !== JSON.stringify(o)) {
-                    this.getFileList();
-                }
-            }, deep: true
-        }
-    }
 };
 </script>
 
