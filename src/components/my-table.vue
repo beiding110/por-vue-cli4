@@ -111,6 +111,11 @@ export default {
                     this.setRowSelection(n);
                 })
             }, deep: true
+        },
+        data: {
+            handler() {
+                this.doLayout();
+            }, deep: true,
         }
     },
     methods: {
@@ -151,6 +156,9 @@ export default {
             }
 
             this.valueWatchLock = true;
+        },
+        doLayout() {
+            this.$refs.table.doLayout();
         },
     },
     mounted: function() {
