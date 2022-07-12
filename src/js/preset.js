@@ -1,5 +1,6 @@
-import Vue from 'vue'
-import config from '@/config'
+import Vue from 'vue';
+
+const config = require('../../config/index.js');
 
 if (config.ui.element) {
     // 使用element

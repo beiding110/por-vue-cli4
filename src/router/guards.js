@@ -2,7 +2,6 @@ import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
 
 import store from '../store/index'
-import CONFIG from '../config'
 
 export default function(router) {
     router.beforeEach(function(to, from, next){
@@ -10,7 +9,7 @@ export default function(router) {
 
         //设置面包屑
         var title = to.meta.title;
-        document.title = `${title ? (title + '·') : ''}${CONFIG.router['title']}`;
+        document.title = `${title ? (title + '·') : ''}${window.$_plat_config.title}`;
         // store.commit('setBread', to.meta.bread || []);
         store.commit('updateBread', {to, from});
 

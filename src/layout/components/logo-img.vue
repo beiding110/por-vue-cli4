@@ -5,9 +5,6 @@
     :src="logoSrc"/>
 </template>
 <script>
-import logo from '@/assets/logo.png'
-import logoS from '@/assets/logo-small.png'
-
 export default {
     props: {
         small: {
@@ -17,7 +14,7 @@ export default {
     },
     computed: {
         logoSrc() {
-            return this.small ? logoS : logo;
+            return this.small ? './config/logo-small.png' : './config/logo.png';
         }
     }
 }

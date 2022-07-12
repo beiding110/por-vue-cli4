@@ -3,7 +3,6 @@
 </template>
 
 <script>
-import config from '@config/index'
 export default {
     props: {
         hide: {
@@ -23,7 +22,7 @@ export default {
             };
         },
         cid() {
-            return config.cnzz.id;
+            return window.$_plat_config.cnzz.id;
         }
     },
     watch: {

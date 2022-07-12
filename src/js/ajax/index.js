@@ -1,7 +1,8 @@
-import config from '@/config'
+const CONFIG = require('../../../config/index.js');
 
 const ajaxObj = {
     jquery: () => require('./jquery.ajax.js'),
     axios: () => require('./axios.js')
 };
-ajaxObj[config.ajax]();
+
+ajaxObj[CONFIG.ajax]();

@@ -2,8 +2,6 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import guards from './guards'
 
-import CONFIG from '../config'
-
 import { initRouter } from '@router/tools'
 
 Vue.use(Router);
@@ -17,10 +15,10 @@ var router = new Router({
             component: () => import(/*webpackChunkName: 'demo-vcm'*/ '@components/example')
         },
         {
-            path: `/${CONFIG.router['base-name']}`,
+            path: `/`,
             component: () => import(/*webpackChunkName: 'pc'*/ '@layout/empty'),
             meta: {
-                title: CONFIG.router['title']
+                title: window.$_plat_config.title,
             },
             children: indexs
         }

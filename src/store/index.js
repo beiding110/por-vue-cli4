@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import createPersistedState from 'vuex-persistedstate';
 import _ from './tools.js'
 
 import user from './modules/user.js'
@@ -16,6 +17,11 @@ const {modules, getters} = _.init({
 Vue.use(Vuex)
 
 export default new Vuex.Store({
+    plugins: [
+        createPersistedState({
+            storage: window.sessionStorage,
+        }),
+    ],
     state: {
 
     },

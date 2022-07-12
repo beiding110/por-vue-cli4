@@ -6,10 +6,10 @@ const CONFIG = require('../config/index');
 
 var baseConfig = {
     publicPath: process.env.NODE_ENV === "production" ? "./" : "/",
-    assetsDir: CONFIG.project.assetsDir,
+    assetsDir: CONFIG.assetsDir,
     lintOnSave: false,
     configureWebpack: config => {
-        const staticFoldersPlugin = util.buildStaticPlugin(CONFIG.project.assetsDir);
+        const staticFoldersPlugin = util.buildStaticPlugin(CONFIG.assetsDir);
         config.plugins.push.apply(config.plugins, staticFoldersPlugin);
     },
     chainWebpack: config => {
@@ -27,6 +27,7 @@ var baseConfig = {
             '@router': util.resolve('src/router'),
             '@store': util.resolve('src/store'),
             '@views': util.resolve('src/views'),
+            '@public': util.resolve('public'),
         }, function (key, value) {
             config.resolve.alias.set(key, value);
         });
@@ -38,15 +39,15 @@ var baseConfig = {
             'window.jQuery': 'jquery'
         }]);
 
-        if (process.env.NODE_ENV === "production" && CONFIG.project.sentry.enabled) {
+        if (process.env.NODE_ENV === "production" && CONFIG.sentry.enabled) {
             const SentryPlugin = require('@sentry/webpack-plugin');
 
             config.plugin('sentry').use(SentryPlugin).tap(options => {
                 options[0] = {
                     release: process.env.RELEASE_VERSION,
                     configFile: 'sentry.properties',
-                    include: path.join(__dirname, `../dist/${CONFIG.project.assetsDir}/js/`),
-                    urlPrefix: `~/${CONFIG.project.assetsDir}/js`
+                    include: path.join(__dirname, `../dist/${CONFIG.assetsDir}/js/`),
+                    urlPrefix: `~/${CONFIG.assetsDir}/js`
                 };
                 return options;
             });
@@ -61,7 +62,7 @@ var baseConfig = {
     },
 };
 
-if (CONFIG.project['project-type'] === 'mobile') {
+if (CONFIG['project-type'] === 'mobile') {
     baseConfig.css.loaderOptions.postcss = {
         plugins: [
             require("autoprefixer")({
