@@ -47,7 +47,7 @@
 </template>
 
 <script>
-import MyPagination from '../../my-pagination.vue'
+import MyPagination from '../../pagination.vue'
 export default {
     props: [],
     data () {
