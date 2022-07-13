@@ -1,22 +1,28 @@
 <template>
     <el-table
-        ref="table"
-        class="my__table"
-        :border="border"
-        :data.sync="tableData"
-        @selection-change="handleSelectionChange"
-        @sort-change="sortChange"
-        :height="height"
-        :max-height="maxHeight"
-        :summary-method="summaryMethod"
-        :show-summary="showSummary"
-        :span-method="spanMethod"
-        :row-key="rowKey"
-        default-expand-all
-        >
-            <el-table-column type="selection" width="55" v-if="select" :selectable="selectable"></el-table-column>
-            <slot></slot>
-        </el-table>
+    ref="table"
+    class="my-table"
+    :border="border"
+    :data.sync="tableData"
+    :height="height"
+    :max-height="maxHeight"
+    :summary-method="summaryMethod"
+    :show-summary="showSummary"
+    :span-method="spanMethod"
+    :row-key="rowKey"
+    default-expand-all
+    @selection-change="handleSelectionChange"
+    @sort-change="sortChange"
+    >
+        <el-table-column 
+            v-if="select" 
+            type="selection" 
+            width="55" 
+            :selectable="selectable"
+        ></el-table-column>
+
+        <slot></slot>
+    </el-table>
 </template>
 
 <script>
@@ -37,6 +43,10 @@ export default {
         url: {
             type: String,
             default: ''
+        },
+        afterQuery: {
+            type: [Boolean, Function],
+            default: false,
         },
         search: {
             type: Object,
@@ -64,10 +74,6 @@ export default {
         },
         maxHeight: {
             type: [String, Number]
-        },
-        theme: {
-            type: String,
-            default: ''
         },
         select: {
             type: Boolean,
@@ -116,7 +122,7 @@ export default {
             handler() {
                 this.doLayout();
             }, deep: true,
-        }
+        },
     },
     methods: {
         //表格选中项变化
@@ -129,17 +135,29 @@ export default {
         /*表格排序事件*/
         sortChange: function(sort){
             this.search.sortname = sort.prop;
-            this.search.sortorder = sortorder(sort.order);
+            this.search.sortorder = this.sortorder(sort.order);
+
+            this.$emit('update:search', this.search);
+
             this.$emit('sort', this.search);
+        },
+        sortorder(str) {
+            try {
+                if (str.indexOf('asc') > -1) {
+                    return 'asc'
+                } else if (str.indexOf('desc') > -1) {
+                    return 'desc'
+                }
+            } catch (e) {
+                return str
+            }
         },
         queryData: function () {
             if (!this.url) return;
+            
             this.$get(this.url, this.search, function (data) {
-                !!this.after && this.after(data, function (newData) {
-                    if (newData) {
-                        data = newData;
-                    }
-                });
+                this.afterQuery && this.afterQuery(data);
+
                 this.innerData = data;
             })
         },
@@ -163,23 +181,11 @@ export default {
     },
     mounted: function() {
         this.queryData();
-    }
+    },
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
-.my__table{width:100%;
-    ::v-deep {
-        .el-button--text{text-align:left;
-            span{word-break:break-all; white-space:normal; }
-        }
-        .el-table__header{
-            min-width: 100% !important;
-        }
-        .el-table__body{
-            min-width: 100% !important;
-        }
-    }
-}
+
 </style>

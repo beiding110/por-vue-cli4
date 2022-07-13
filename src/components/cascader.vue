@@ -282,6 +282,6 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss" scoped>
 	.my-cascader{width:100%;}
 </style>

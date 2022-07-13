@@ -13,7 +13,7 @@
             <component 
                 v-if="dialogVisible" 
                 :is="dialogComponent"
-                @cancle="dialogClose"
+                @cancel="dialogClose"
                 :row="row"
                 :model="model"
             ></component>

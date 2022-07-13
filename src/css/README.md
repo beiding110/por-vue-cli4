@@ -9,7 +9,7 @@ css
 |-element-customize.scss    element自定义样式
 |-iconfont.css              图标文件
 |-var.scss                  scss变量文件
-|-zh-common.css             清除样式表全局样式(请勿修改)
+|-zh-common.css             清除样式表全局样式及基础公用样式(请勿修改)
 
 ```
 

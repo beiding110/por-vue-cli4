@@ -1,15 +1,15 @@
 <template>
     <el-dialog
-        :title="title"
-        @opened="opened"
-        :width="width"
-        :visible.sync="model"
-        :append-to-body="true"
-        :close-on-click-modal="false"
-        @close = "close"
-        :show-close="showclose"
-        :before-close="beforeClose"
-        >
+    :title="title"
+    @opened="opened"
+    :width="width"
+    :visible.sync="model"
+    :append-to-body="true"
+    :close-on-click-modal="false"
+    @close = "close"
+    :show-close="showclose"
+    :before-close="beforeClose"
+    >
 
         <slot></slot>
 

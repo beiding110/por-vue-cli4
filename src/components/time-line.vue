@@ -1,5 +1,5 @@
 <template>
-    <div ref="_visualization" style="position:relative;" class="my__timeline" v-loading="loadingController" element-loading-background="rgba(0, 0, 0, 0)"></div>
+    <div ref="_visualization" style="position:relative;" class="my-timeline" v-loading="loadingController" element-loading-background="rgba(0, 0, 0, 0)"></div>
 </template>
 
 <script>
@@ -76,24 +76,24 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-    .my__timeline{padding:1em;}
+    .my-timeline{padding:1em;}
 </style>
 <style>
-.my__timeline .progress-wrapper {width:100%; height:18px; text-align:center; position:relative; overflow:hidden;}
-.my__timeline .progress {height:100%; width:60%; position:absolute; left:0px; top:0px; background:#79E1AC; border-radius: 2px;}
-.my__timeline .progress.error{background:#ed6565;}
-.my__timeline .progress.warning{background:#FFCC55;}
-.my__timeline .progress-label {position:absolute; z-index:1; color:white;}
+.my-timeline .progress-wrapper {width:100%; height:18px; text-align:center; position:relative; overflow:hidden;}
+.my-timeline .progress {height:100%; width:60%; position:absolute; left:0px; top:0px; background:#79E1AC; border-radius: 2px;}
+.my-timeline .progress.error{background:#ed6565;}
+.my-timeline .progress.warning{background:#FFCC55;}
+.my-timeline .progress-label {position:absolute; z-index:1; color:white;}
 
-.my__timeline .vis-time-axis .vis-text{color:white;}
-.my__timeline .vis-timeline{border: none;}
-.my__timeline .vis-current-time{background-color: red; z-index:2;}
+.my-timeline .vis-time-axis .vis-text{color:white;}
+.my-timeline .vis-timeline{border: none;}
+.my-timeline .vis-current-time{background-color: red; z-index:2;}
 
-.my__timeline .vis-panel.vis-center, .my__timeline .vis-panel.vis-left, .my__timeline .vis-panel.vis-right, .my__timeline .vis-panel.vis-top, .my__timeline .vis-panel.vis-bottom, .my__timeline .vis-time-axis .vis-grid.vis-minor{border-color:#5f5f5f;}
-.my__timeline .vis-item{background-color: inherit; border: 1px solid rgba(0,0,0,0);}
-.my__timeline .vis-item .vis-item-overflow{background-color: #33CCFF; border-radius: 2px; margin:10px 0 5px;}
-.my__timeline .vis-item-visible-frame{ margin:5px 0 10px;}
-.my__timeline .vis-item.vis-selected{border: 1px solid #FFCC55;}
+.my-timeline .vis-panel.vis-center, .my-timeline .vis-panel.vis-left, .my-timeline .vis-panel.vis-right, .my-timeline .vis-panel.vis-top, .my-timeline .vis-panel.vis-bottom, .my-timeline .vis-time-axis .vis-grid.vis-minor{border-color:#5f5f5f;}
+.my-timeline .vis-item{background-color: inherit; border: 1px solid rgba(0,0,0,0);}
+.my-timeline .vis-item .vis-item-overflow{background-color: #33CCFF; border-radius: 2px; margin:10px 0 5px;}
+.my-timeline .vis-item-visible-frame{ margin:5px 0 10px;}
+.my-timeline .vis-item.vis-selected{border: 1px solid #FFCC55;}
 
-.my__timeline .vis-labelset .vis-label{color:white;}
+.my-timeline .vis-labelset .vis-label{color:white;}
 </style>

@@ -46,8 +46,6 @@
 </template>
 
 <script>
-import logo from '@assets/logo.png';
-
 export default {
     data: () => ({
         form: {
@@ -55,7 +53,7 @@ export default {
             pwd: '',
         },
 
-        logoSrc: logo,
+        logoSrc: './config/logo.png',
     }),
     methods: {
         /*登录函数*/

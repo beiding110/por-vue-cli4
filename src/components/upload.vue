@@ -1,5 +1,6 @@
 <template>
     <div
+    class="my-upload"
     v-loading="getListLoading"
     element-loading-text="附件内容更新中"
     >
@@ -50,11 +51,15 @@
             <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload" v-if="lazy">上传到服务器</el-button>
         </el-upload>
 
-        <div slot="tip" class="file-type_tip" v-if="!readonly">
-            <font v-if="!!fileType">
+        <div 
+        slot="tip" 
+        v-if="!readonly && (fileType || fileSize)"
+        class="file-type_tip"
+        >
+            <font v-if="fileType">
                 只能上传{{fileType}}文件
             </font>
-            <font v-if="!!fileSize">不能超过{{fileSize}}M</font>
+            <font v-if="fileSize">不能超过{{fileSize}}M</font>
         </div>
 
         <el-table
@@ -94,7 +99,7 @@ export default {
             type: String,
             default: ''
         },
-        fileGuid: {
+        fileguid: {
             type: String,
             default: '',
             required: true
@@ -104,7 +109,8 @@ export default {
             default: false
         },
         limit: {
-            type: Number
+            type: Number,
+            default: 0,
         },
         fileSize: {
             type: Number,
@@ -133,7 +139,7 @@ export default {
         extra: {
             type: Object,
             default: () => ({})
-        }
+        },
     },
     data: function () {
         return {
@@ -159,7 +165,7 @@ export default {
         },
         extraData: function () {
             var extra = {
-                fileguid: this.fileGuid,
+                fileguid: this.fileguid,
                 filetype: this.fileType,
                 single: (this.single * 1)
             };
@@ -176,12 +182,12 @@ export default {
         bindFileList: function () { //绑定文件列表
             var that = this;
 
-            if(!this.fileGuid) return;
+            if(!this.fileguid) return;
             if(this.getListLoading) return;
 
             this.getListLoading = true;
             var data = {
-                fileguid: this.fileGuid
+                fileguid: this.fileguid
             };
             mixin(this.extra, data, true);
 
@@ -328,7 +334,7 @@ export default {
         } catch (e) {}
     },
     watch: {
-        fileGuid: function (e) {
+        fileguid: function (e) {
             if (e) {
                 this.bindFileList();
             }
@@ -345,8 +351,17 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-    .file-type_tip{font-size:12px; color:#909399; line-height:1em;}
-    .btn-sf-del{cursor:pointer;}
-    .btn-sf-del:hover{color:red;}
+<style scoped lang="scss">
+    .my-upload{
+        width: 100%;
+
+        .file-type_tip{
+            font-size:12px; 
+            color:#909399; 
+            line-height:1em;
+            margin: 4px 0 6px;
+        }
+        .btn-sf-del{cursor:pointer;}
+        .btn-sf-del:hover{color:red;}
+    }
 </style>

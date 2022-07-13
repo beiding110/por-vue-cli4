@@ -9,7 +9,7 @@ export default {
     },
     methods: {
         // 默认取消按钮回调函数
-        cancleHandler() {
+        cancelHandler() {
             this.$router.go(-1);
         }
     }

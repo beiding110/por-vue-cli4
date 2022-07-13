@@ -1,10 +1,11 @@
 <template>
-    <el-form :size="size" inline class="zh-action-row">
+    <el-form :size="size" inline class="action-row">
         <el-form-item>
             <el-button-group>
                 <slot></slot>
             </el-button-group>
         </el-form-item>
+
         <slot name="foot"></slot>
     </el-form>
 </template>
@@ -24,4 +25,9 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.action-row {
+    .el-form-item{
+        margin-bottom:10px;
+    }
+}
 </style>

@@ -70,7 +70,7 @@ export default {
             }
         },
         ueconfig() {
-            var url = '/web';
+            var url = '';
             return [
                 `${url}/uedtior/ueditor.config.js`,
                 `${url}/uedtior/ueditor.all.js`,

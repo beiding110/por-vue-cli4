@@ -1,6 +1,10 @@
 <template>
     <el-card>
         <my-search v-model="pgData" @search="searchHandler">
+            <el-form-item>
+                <el-input v-model="pgData.proname" placeholder="proname"></el-input>
+            </el-form-item>
+
             <template slot="btn">
                 <my-btn type="new" @click="addHandler">新增</my-btn>
 
@@ -85,10 +89,12 @@ export default {
         return {
             tableData: [],
 			pgData:{
-				proname:'' ,//项目名称
+				proname:'457547' ,//项目名称
 				xmlx:'' ,//项目类型
 				shstate: '',
 				onlyshowhistory: false,
+                title: '21325',
+                sortname: '',
 			},
 
             btnConfig: BTN_CONFIG,

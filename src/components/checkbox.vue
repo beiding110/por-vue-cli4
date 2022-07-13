@@ -1,5 +1,5 @@
 <template>
-    <span class="my__checkbox">
+    <span class="my-checkbox">
         <span v-if="!inAttr(readonly)">
             <el-checkbox-group v-model="model" style="display:inline-block;">
             	<el-checkbox v-for="item in list" 
@@ -192,13 +192,16 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
-    .my__checkbox{
+    .my-checkbox{
 
     }
 
     @media screen and (max-width:500px) {
-        .my__checkbox{
-            ::v-deep .el-checkbox{margin-left:0; margin-right:1em;}
+        .my-checkbox{
+            ::v-deep .el-checkbox{
+                margin-left:0; 
+                margin-right:1em;
+            }
         }
     }
 </style>

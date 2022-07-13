@@ -1,11 +1,10 @@
 <template>
-    <div :class="theme=='dark' ? '' : 'my__pagination'">
+    <div class="my-pagination">
         <el-pagination
             layout="prev, pager, next, total"
             :total="total"
             :page-size="!!search ? search.pagesize || defaultSearch.pagesize : defaultSearch.pagesize"
             :current-page.sync="currentPage"
-            style="text-align:right; margin-top:1em;"
             @current-change="handleCurrentChange"
         ></el-pagination>
     </div>
@@ -35,10 +34,6 @@ export default {
                 return {}
             }
         },
-        currentChange: {
-            type: Function,
-            default: function(){}
-        },
         beforeQuery: {
             type: Function,
             default: function(){}
@@ -47,29 +42,27 @@ export default {
             type: Function,
             default: function(){}
         },
-        theme: {
-            type: String,
-            default: ''
-        },
         lazy: {
             type: Boolean,
             default: false
         },
         loading: {
+            // 用于双向绑定的加载状态
             type: Boolean,
             default: false
         },
         useLoading: {
+            // 自动在外部table中挂载loading
             type: Boolean,
             default: true,
-        }
+        },
     },
     data () {
         return {
             total: 1,
             currentPage: 1,
             defaultSearch: {
-                sortname: '',
+                sortname: 'addtime',
                 sortorder: 'desc',
                 pagesize: 20
             },
@@ -95,12 +88,14 @@ export default {
             if(this.useLoading) {
                 var table = this.$parent.$children.filter(item => {
                     return /el-table/.test(item.$el.className)
-                })[0];
-                var target = table ? table.$el : '#view-content';
+                })[0],
+                    target = table ? table.$el : '#view-content';
 
                 try{
                     this.elLoading.close();
-                } catch(e) {};
+                } catch(e) {
+                    // e
+                }
                 
                 this.elLoading = Loading.service({
                     target,
@@ -109,54 +104,58 @@ export default {
                 });
             }
 
+            this.$emit('update:loading', true);
+
             this.$nextTick(function () {
                 if (!that.action) {
-                    throw new Error('请绑定action属性（数据api请求地址）');
-                } else {
-                    page = !!getHash('page') ? getHash('page') : (page || 1);
+                    console.error('请绑定action属性（数据api请求地址）');
 
-                    var searchData = {};
-                    var searchData = this.search || {};
-
-                    this.currentPage = page;
-                    searchData.pageindex = page;
-
-                    mixin(this.defaultSearch, searchData);
-
-                    !!this.beforeQuery && this.beforeQuery(searchData);
-                    this.$emit('update:loading', true);
-
-                    this.$ajax({
-                        url: that.action,
-                        data: searchData,
-                        callback: (data, res) => {
-                            if (data.rows.length === 0 && this.currentPage !== 1) {
-                                this.queryData(--this.currentPage);
-                                return;
-                            };
-
-                            !!this.afterQuery && this.afterQuery(data.rows, data);
-                            that.$emit('update:loading', false);
-                            that.pageData = data.rows;
-                            that.$nextTick(function() {
-                                that.total = data.total;
-                            });
-
-                            this.$emit('update:statistics', data.statistics);
-                        },
-                        complete() {
-                            NProgress.done();
-
-                            if(that.useLoading) {
-                                that.elLoading.close();
-                            }
-                        }
-                    });
+                    return;
                 }
+                
+                let queryPage = this.getQuery('page'),
+                    searchData = this.search || {};
+
+                page = queryPage ? queryPage : (page || 1);
+
+                this.currentPage = page;
+                searchData.pageindex = page;
+
+                window.mixin(this.defaultSearch, searchData);
+
+                !!this.beforeQuery && this.beforeQuery(searchData);
+
+                this.$ajax({
+                    url: that.action,
+                    data: searchData,
+                    callback: (data, res) => {
+                        if (data.rows.length === 0 && this.currentPage !== 1) {
+                            this.queryData(--this.currentPage);
+                            return;
+                        }
+
+                        !!this.afterQuery && this.afterQuery(data.rows, data);
+
+                        that.$emit('update:loading', false);
+                        that.pageData = data.rows;
+
+                        that.$nextTick(function() {
+                            that.total = data.total;
+                        });
+
+                        this.$emit('update:statistics', data.statistics);
+                    },
+                    complete() {
+                        NProgress.done();
+
+                        if(that.useLoading) {
+                            that.elLoading.close();
+                        }
+                    }
+                });
             })
         },
         handleCurrentChange: function (e) {
-            !!this.currentChange && this.currentChange();
             this.$emit('currentChange', e);
             this.queryData(e);
         },
@@ -165,12 +164,15 @@ export default {
         }
     },
     mounted: function() {
-        !inAttr(this.lazy) && this.queryData(1)
-    }
+        !this.lazy && this.queryData(1);
+    },
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style>
-
+<style lang="scss" scoped>
+.my-pagination{
+    text-align:right; 
+    margin-top:1em;
+}
 </style>

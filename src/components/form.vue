@@ -7,12 +7,12 @@
     :label-position="labelPosition"
     :disabled="disabled || readonly"
     class="my-form"
-    :class="{disabled:disabled||readonly, 'table-view':table}"
+    :class="{disabled: disabled||readonly, 'table-view':table}"
     :inline="inline"
     v-loading.sync="submitLoadingController">
         <slot></slot>
         <el-form-item label-width="0" class="btn-row" v-if="!readonly">
-            <slot name="btn" :submit-handler="onSubmit" :cancle-handler="onCancle" :submit-loading="submitLoadingController">
+            <slot name="btn" :submit-handler="onSubmit" :cancel-handler="onCancle" :submit-loading="submitLoadingController">
                 <el-button type="primary" @click="onSubmit" :style="btn_styl" :loading="submitLoadingController">保存</el-button>
                 <el-button @click="onCancle" :style="btn_styl">取消</el-button>
             </slot>
@@ -201,7 +201,7 @@ export default {
             }).run(this);
         },
         onCancle: function () {
-            this.$emit('cancle');
+            this.$emit('cancel');
         },
         close: function () {
             try {
@@ -283,7 +283,9 @@ export default {
 <style scoped lang="scss">
 .my-form{
     ::v-deep {
-        .el-select, .el-date-editor{width:100%;}
+        .el-select, .el-date-editor{
+            width:100%;
+        }
     }
 }
 
@@ -293,19 +295,62 @@ export default {
 .btn-row{text-align:center; margin-top:20px;}
 
 $tableBorderColor: #E8E8E8;
-.table-view{border-left:1px solid $tableBorderColor; border-top:1px solid $tableBorderColor; overflow:hidden; display:flex; flex-wrap:wrap;
-    ::v-deep .el-form-item{margin:0; border-right:1px solid $tableBorderColor; border-bottom:1px solid $tableBorderColor; box-sizing:border-box;}
-    ::v-deep .el-form-item:not(.btn-row){width:50%; position:relative;
-        .el-form-item__label{height:100%; line-height:normal; border-right:1px solid $tableBorderColor; box-sizing:border-box; background:#F9FBFE; display:flex; align-items:center; justify-content:flex-end;}
-        .el-form-item__content{padding:5px; position:relative; min-height:2em;
-            .el-form-item__error{top:auto; bottom:0; left:5px;}
+.table-view{
+    border-left:1px solid $tableBorderColor; 
+    border-top:1px solid $tableBorderColor; 
+    overflow:hidden; 
+    display:flex; 
+    flex-wrap:wrap;
+
+    ::v-deep .el-form-item{
+        margin:0; 
+        border-right:1px solid $tableBorderColor; 
+        border-bottom:1px solid $tableBorderColor; 
+        box-sizing:border-box;
+    }
+
+    ::v-deep .el-form-item:not(.btn-row){
+        width:50%; 
+        position:relative;
+
+        .el-form-item__label{
+            height:100%; 
+            line-height:normal; 
+            border-right:1px solid $tableBorderColor; 
+            box-sizing:border-box; 
+            background:#F9FBFE; 
+            display:flex; 
+            align-items:center; 
+            justify-content:flex-end;
+        }
+
+        .el-form-item__content{
+            display: flex;
+            align-items: center;
+            height: 100%;
+            min-height:2em;
+            box-sizing: border-box;
+            padding:5px; 
+            position:relative; 
+
+            .el-form-item__error{
+                top:auto; 
+                bottom:0; 
+                left:5px;
+            }
         }
     }
-    .btn-row{width:100%; padding:1em 0;}
+
+    .btn-row{
+        width:100%; 
+        padding:1em 0;
+    }
 }
 @media screen and (max-width: 1000px) {
     .table-view{
-        ::v-deep .el-form-item:not(.btn-row){width:100%;}
+        ::v-deep .el-form-item:not(.btn-row){
+            width:100%;
+        }
     }
 }
 </style>

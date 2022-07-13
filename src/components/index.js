@@ -7,7 +7,6 @@ export default{
 
         Vue.component('my-pagination', function(){return import(/*webpackChunkName: 'coms'*/ './pagination')});
         Vue.component('my-table', function(){return import(/*webpackChunkName: 'coms'*/ './table')});
-        Vue.component('tree-table', function(){return import(/*webpackChunkName: 'coms'*/ './tree-table')});
         Vue.component('my-search', function(){return import(/*webpackChunkName: 'coms'*/ './search')});
 
         Vue.component('my-form', function(){return import(/*webpackChunkName: 'coms'*/ './form')});
@@ -31,7 +30,6 @@ export default{
         Vue.component('my-img', function(){return import(/*webpackChunkName: 'coms'*/ './img')});
         
         Vue.component('pdf', function(){return import(/*webpackChunkName: 'coms'*/ './pdf-js')});
-        // Vue.component('word', function(){return import(/*webpackChunkName: 'coms'*/ './word')});
         Vue.component('photo', function(){return import(/*webpackChunkName: 'coms'*/ './picture-view')});
         Vue.component('word-view', function(){return import(/*webpackChunkName: 'coms'*/ './word-view')});
     }

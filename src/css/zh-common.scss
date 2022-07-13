@@ -16,42 +16,10 @@ a {cursor:pointer; text-decoration:none;}
 /* 滑轨两头的监听按钮颜色 */::-webkit-scrollbar-corner {opacity:0;}
 /* 横向滚动条和纵向滚动条相交处尖角的颜色 *//*vis样式类*/.vis-item.success {background:#67C23A;border-color:#67C23A;}
 
-// 搜索栏样式
-.my-search{
-    .el-form-item{margin-bottom:10px;}
+// 去除ie浏览器下input中自动添加的叉号
+input::-ms-clear{
+    display: none;
 }
-
-// 操作按钮行样式
-.zh-action-row{
-    .el-form-item{margin-bottom:10px;}
-}
-
-.my__table{
-    &.el-table {
-        td, .el-table th{padding:10px 0;}
-        .cell{
-            line-height:1.5em;
-
-            .el-button--text{padding:0;}
-        }
-    }
-}
-
-// 全屏表单页样式
-.form-page{
-    width:1100px; margin:0 auto;
-    @media only screen and (max-width: 1100px){
-        width:auto;
-    }
-}
-
-.form-item_half{width:50%; float:left;
-    & ::v-deep .el-input__inner{border-top-right-radius:0; border-bottom-right-radius:0;}
-    & + & ::v-deep .el-input__inner{border-top-left-radius:0; border-bottom-left-radius:0;}
-}
-
-// 占整行的tableform项样式
-.table-full-row{width:100% !important;}
 
 @media only screen and (min-width: 768px){
     //sm
@@ -82,3 +50,19 @@ a {cursor:pointer; text-decoration:none;}
     body, html, #app{width:auto !important; height:auto !important; overflow:auto !important;}
     .layout .view{position:relative !important;}
 }
+
+// 全屏表单页样式
+.form-page{
+    width:1100px; margin:0 auto;
+    @media only screen and (max-width: 1100px){
+        width:auto;
+    }
+}
+
+.form-item_half{width:50%; float:left;
+    & ::v-deep .el-input__inner{border-top-right-radius:0; border-bottom-right-radius:0;}
+    & + & ::v-deep .el-input__inner{border-top-left-radius:0; border-bottom-left-radius:0;}
+}
+
+// 占整行的tableform项样式
+.table-full-row{width:100% !important;}

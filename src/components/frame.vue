@@ -1,8 +1,9 @@
 <template>
     <iframe
-    ref="frame"
-    class="iframe-container"
-    :data-src="src"></iframe>
+        ref="frame"
+        class="iframe-container"
+        :data-src="src"
+    ></iframe>
 </template>
 
 <script>
@@ -25,7 +26,7 @@ export default {
                 this.assign();
             } else {
                 this.reload();
-            };
+            }
         }
     },
     methods: {
@@ -36,11 +37,12 @@ export default {
 
             if(this.innerSrc !== this.src) {
                 frameWin.location.replace(this.src);
-            };
+            }
         },
         reload() {
             var frameWin = this.$refs.frame.contentWindow;
-            window.location.reload();
+
+            frameWin.location.reload();
         }
     },
     mounted: function() {
@@ -51,5 +53,14 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
-    .iframe-container{position:absolute; left:0; top:0; right:0; bottom:0; width:100%; height:100%; display:block;}
+    .iframe-container{
+        position:absolute; 
+        left:0; 
+        top:0; 
+        right:0; 
+        bottom:0; 
+        width:100%; 
+        height:100%; 
+        display:block;
+    }
 </style>

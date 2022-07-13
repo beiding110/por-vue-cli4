@@ -42,24 +42,3 @@
         }
     }
 }
-
-.el-table{
-    .el-button{
-        margin-right: 10px;
-        margin-left: 0px;
-
-        &:last-child{
-            margin-right: 0;
-        }
-    }
-
-    .el-tag{
-        height: auto;
-        white-space: break-spaces;
-    }
-}
-
-// 去除ie浏览器下input中自动添加的叉号
-input::-ms-clear{
-    display: none;
-}

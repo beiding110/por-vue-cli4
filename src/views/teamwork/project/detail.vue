@@ -60,7 +60,7 @@ export default {
         beforeSend(send, deny) {
             send();
         },
-        cancleHandler() {
+        cancelHandler() {
             this.$router.go(-1);
         }
     },

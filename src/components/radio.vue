@@ -1,5 +1,5 @@
 <template>
-    <span class="my__radio">
+    <span class="my-radio">
         <el-radio-group v-model="model" v-if="!readonly" @change="selectChange">
             <template v-for="item in list">
                <el-radio :label="item[props.value]" :key="item[props.value]">{{item[props.label]}}</el-radio>
@@ -8,6 +8,7 @@
 
             </slot>
         </el-radio-group>
+
         <template v-else>
             {{selectedLabel}}
         </template>
@@ -83,7 +84,7 @@ export default {
     },
     methods: {
         queryData: function () {
-            if (!!this.action) {
+            if (this.action) {
                 this.$get(this.action, function (data) {
                     this.list = data;
                     this.options = this.list2map(data || []);
@@ -119,10 +120,10 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
-    .my__radio{}
+    .my-radio{}
 
     @media screen and (max-width:500px) {
-        .my__radio{
+        .my-radio{
             ::v-deep .el-radio{margin-left:0; margin-right:1em;}
         }
     }

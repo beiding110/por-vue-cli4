@@ -93,30 +93,6 @@ export default {
 <style lang="scss">
     .my-bumber-range{
         display: flex;
-
-        // .el-input-number{
-        //     flex: 1;
-
-        //     .el-input__inner{
-        //         border-radius: 0;
-        //     }
-
-        //     &:first-child {
-        //         .el-input__inner{
-        //             border-top-left-radius: 4px;
-        //             border-bottom-left-radius: 4px;
-        //         }
-        //     }
-
-        //     &:last-child {
-        //         .el-input__inner{
-        //             border-top-right-radius: 4px;
-        //             border-bottom-right-radius: 4px;
-        //             margin-left: -1px;
-        //         }
-        //     }
-        // }
-
         width: 300px;
 
         .el-input{
