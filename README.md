@@ -8,7 +8,7 @@
 * `工具库`：jquery、echarts、axios、nprogress、postcss-pxtorem、
 * `css预处理`：~~node-sass~~、sass(dart-sass)、
 * `运维及统计`：sentry、cnzz、
-* `vue插件`：vue-mate-info、
+* `vue插件`：vue-mate-info、vuex-persistedstate、
 
 常用配置修改；
 
@@ -25,11 +25,12 @@
 |-src           源代码
     |-api               请求头前缀配置
     |-assets            图片等媒体文件
-    |-components        vue_components组件库（勿改）
-    |-components-sys    项目独有全局引用组件库
-    |-config            前端项目配置
-    |-css               全局样式
-    |-js                全局方法
+        |-css           全局样式
+        |-js            全局方法
+    |-components        全局组件库
+        |-my            vue_components组件库（勿改）
+        |-sys           项目独有全局引用组件库
+    |-config            前端项目全局配置
     |-layout            全局布局
     |-mixins            全局mixin
     |-router            自动化路由配置文件
@@ -38,6 +39,7 @@
     |-App.vue           入口页面
     |-main.js           入口文件、加载组件、样式、初始化配置等
 |-public        不打包编译的静态文件
+    |-config            全局项目静态配置
 ...
 
 ```

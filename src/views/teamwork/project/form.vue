@@ -104,9 +104,9 @@
                     <my-upload :fileguid="form.fileguid" file-type=".doc,.xls"></my-upload>
                 </el-form-item>
 
-                <!-- <el-form-item label="附件" prop="yzlx" class="table-full-row">
-                    <upload-s :fileguid="form.fileguid"></upload-s>
-                </el-form-item> -->
+                <el-form-item label="附件" prop="yzlx" class="table-full-row">
+                    <my-upload-s :fileguid="form.fileguid"></my-upload-s>
+                </el-form-item>
             </my-form-item-group>
         </my-form>
     </div>
@@ -115,11 +115,8 @@
 <script>
 import FORM_PAGE_MIXIN from '@mixins/form-page'
 
-import UploadS from '@components/upload-s'
-
 export default {
     mixins: [ FORM_PAGE_MIXIN ],
-    components: {UploadS},
     data: () => ({
         form: {
             input: '',
@@ -132,7 +129,7 @@ export default {
             switch: true,
             datepicker: '',
             daterange: [],
-            rate: '',
+            rate: 0,
         },
 
         options: [{

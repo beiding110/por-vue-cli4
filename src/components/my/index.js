@@ -2,10 +2,6 @@ export default{
     install: function(Vue){
         // Vue.component('time-line', function(){return import(/*webpackChunkName: 'coms'*/ './time-line')});
 
-        // 布局类
-        Vue.component('action-row', function(){return import(/*webpackChunkName: 'coms-sys'*/ './action-row')});
-        Vue.component('my-tag', function(){return import(/*webpackChunkName: 'coms'*/ './tag')});
-
         // 列表用
         Vue.component('my-pagination', function(){return import(/*webpackChunkName: 'coms'*/ './pagination')});
         Vue.component('my-table', function(){return import(/*webpackChunkName: 'coms'*/ './table')});
@@ -21,6 +17,7 @@ export default{
         Vue.component('my-transfer', function(){return import(/*webpackChunkName: 'coms'*/ './transfer')});
         Vue.component('my-upload', function(){return import(/*webpackChunkName: 'coms'*/ './upload')});
         Vue.component('my-number-range', function(){return import(/*webpackChunkName: 'coms'*/ './number-range')});
+        Vue.component('my-upload-s', function(){return import(/*webpackChunkName: 'coms'*/ './upload-s/index')});
 
         // 其他
         Vue.component('my-nav-menu', function(){return import(/*webpackChunkName: 'coms'*/ './nav-menu')});
@@ -30,7 +27,6 @@ export default{
         Vue.component('my-img', function(){return import(/*webpackChunkName: 'coms'*/ './img')});
 
         // 非my字头，即非element二次封装
-
         Vue.component('echarts', function(){return import(/*webpackChunkName: 'coms-echarts'*/ './echarts')});
 
         Vue.component('cnzz', function(){return import(/*webpackChunkName: 'coms'*/ './cnzz')});
