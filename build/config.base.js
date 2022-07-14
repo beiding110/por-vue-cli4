@@ -10,6 +10,7 @@ var baseConfig = {
     lintOnSave: false,
     configureWebpack: config => {
         const staticFoldersPlugin = util.buildStaticPlugin(CONFIG.assetsDir);
+        
         config.plugins.push.apply(config.plugins, staticFoldersPlugin);
     },
     chainWebpack: config => {
@@ -27,6 +28,8 @@ var baseConfig = {
             '@router': util.resolve('src/router'),
             '@store': util.resolve('src/store'),
             '@views': util.resolve('src/views'),
+            
+            '@sub': util.resolve('sub'),
         }, function (key, value) {
             config.resolve.alias.set(key, value);
         });

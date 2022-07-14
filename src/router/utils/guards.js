@@ -1,7 +1,7 @@
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
 
-import store from '../store/index'
+import store from '../../store/index'
 
 export default function(router) {
     router.beforeEach(function(to, from, next){

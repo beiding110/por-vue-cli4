@@ -31,7 +31,7 @@ if (process.env.NODE_ENV !== 'development') {
 
         Sentry.init({
             Vue,
-            dsn: config.sentry.dsn,
+            dsn: CONFIG.sentry.dsn,
             integrations: [
                 new BrowserTracing(),
             ],

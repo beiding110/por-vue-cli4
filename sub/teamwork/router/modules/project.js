@@ -11,7 +11,7 @@ export default {
     children: [
         {
             path: 'list',
-            component: () => import(/*webpackChunkName: 'pc-tw-project'*/ '@views/teamwork/project/list'),
+            component: () => import(/*webpackChunkName: 'pc-tw-project'*/ '@sub/teamwork/views/project/list'),
             meta: {
                 title: '项目列表',
                 tagNav: true,
@@ -21,7 +21,7 @@ export default {
             }
         }, {
             path: 'form',
-            component: () => import(/*webpackChunkName: 'pc-tw-project'*/ '@views/teamwork/project/form'),
+            component: () => import(/*webpackChunkName: 'pc-tw-project'*/ '@sub/teamwork/views/project/form'),
             meta: {
                 title: '项目表单',
                 bread: [
@@ -33,7 +33,7 @@ export default {
             }
         }, {
             path: 'detail',
-            component: () => import(/*webpackChunkName: 'pc-tw-project'*/ '@views/teamwork/project/detail'),
+            component: () => import(/*webpackChunkName: 'pc-tw-project'*/ '@sub/teamwork/views/project/detail'),
             meta: {
                 title: '项目表单',
                 bread: [
