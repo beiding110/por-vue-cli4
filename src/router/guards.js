@@ -9,7 +9,7 @@ export default function(router) {
 
         //设置面包屑
         var title = to.meta.title;
-        document.title = `${title ? (title + '·') : ''}${window.$_plat_config.title}`;
+        document.title = `${title ? (title + '·') : ''}${store.state.config.title}`;
         // store.commit('setBread', to.meta.bread || []);
         store.commit('updateBread', {to, from});
 

@@ -1,14 +1,17 @@
 export default{
     install: function(Vue){
-        Vue.component('echarts', function(){return import(/*webpackChunkName: 'coms-echarts'*/ './echarts')});
         // Vue.component('time-line', function(){return import(/*webpackChunkName: 'coms'*/ './time-line')});
 
-        Vue.component('my-nav-menu', function(){return import(/*webpackChunkName: 'coms'*/ './nav-menu')});
+        // 布局类
+        Vue.component('action-row', function(){return import(/*webpackChunkName: 'coms-sys'*/ './action-row')});
+        Vue.component('my-tag', function(){return import(/*webpackChunkName: 'coms'*/ './tag')});
 
+        // 列表用
         Vue.component('my-pagination', function(){return import(/*webpackChunkName: 'coms'*/ './pagination')});
         Vue.component('my-table', function(){return import(/*webpackChunkName: 'coms'*/ './table')});
         Vue.component('my-search', function(){return import(/*webpackChunkName: 'coms'*/ './search')});
 
+        // 表单用
         Vue.component('my-form', function(){return import(/*webpackChunkName: 'coms'*/ './form')});
         Vue.component('my-form-item-group', function(){return import(/*webpackChunkName: 'coms'*/ './form-item-group')});
         Vue.component('my-checkbox', function(){return import(/*webpackChunkName: 'coms'*/ './checkbox')});
@@ -19,18 +22,25 @@ export default{
         Vue.component('my-upload', function(){return import(/*webpackChunkName: 'coms'*/ './upload')});
         Vue.component('my-number-range', function(){return import(/*webpackChunkName: 'coms'*/ './number-range')});
 
+        // 其他
+        Vue.component('my-nav-menu', function(){return import(/*webpackChunkName: 'coms'*/ './nav-menu')});
         Vue.component('my-dialog', function(){return import(/*webpackChunkName: 'coms'*/ './dialog')});
         Vue.component('my-tree', function(){return import(/*webpackChunkName: 'coms'*/ './tree')});
+
+        Vue.component('my-img', function(){return import(/*webpackChunkName: 'coms'*/ './img')});
+
+        // 非my字头，即非element二次封装
+
+        Vue.component('echarts', function(){return import(/*webpackChunkName: 'coms-echarts'*/ './echarts')});
 
         Vue.component('cnzz', function(){return import(/*webpackChunkName: 'coms'*/ './cnzz')});
 
         Vue.component('ueditor', function(){return import(/*webpackChunkName: 'coms'*/ './ueditor')});
-
-        Vue.component('my-frame', function(){return import(/*webpackChunkName: 'coms'*/ './frame')});
-        Vue.component('my-img', function(){return import(/*webpackChunkName: 'coms'*/ './img')});
         
-        Vue.component('pdf', function(){return import(/*webpackChunkName: 'coms'*/ './pdf-js')});
-        Vue.component('photo', function(){return import(/*webpackChunkName: 'coms'*/ './picture-view')});
+        // 预览类
+        Vue.component('frame-view', function(){return import(/*webpackChunkName: 'coms'*/ './frame')});
+        Vue.component('pdf-view', function(){return import(/*webpackChunkName: 'coms'*/ './pdf-js')});
+        Vue.component('photo-view', function(){return import(/*webpackChunkName: 'coms'*/ './picture-view')});
         Vue.component('word-view', function(){return import(/*webpackChunkName: 'coms'*/ './word-view')});
     }
 }

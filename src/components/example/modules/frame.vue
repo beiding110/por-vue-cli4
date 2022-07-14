@@ -1,11 +1,11 @@
 <template>
     <el-card 
-    header="my-frame"
+    header="frame-view"
     >
         <div class="frame-con">
-            <my-frame
+            <frame-view
                 src="http://www.baidu.com"
-            ></my-frame>
+            ></frame-view>
         </div>
     </el-card>
 </template>

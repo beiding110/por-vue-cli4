@@ -115,7 +115,7 @@
 <script>
 import FORM_PAGE_MIXIN from '@mixins/form-page'
 
-import UploadS from '@components-sys/upload-s'
+import UploadS from '@components/upload-s'
 
 export default {
     mixins: [ FORM_PAGE_MIXIN ],

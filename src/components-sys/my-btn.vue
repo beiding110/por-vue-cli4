@@ -12,11 +12,16 @@ export default {
     data () {
         var that = this;
 
+        console.log(this.$store.state.config.sys.btn);
+
+        const CONFIG_BTN = this.$store.state.config.sys.btn,
+            CONFIG_MSG = this.$store.state.config.sys.msg;
+
         return {
             switchObj: {
                 edit: {
                     type: 'text',
-                    text: '编辑',
+                    text: CONFIG_BTN.edit,
                     icon: 'el-icon-edit-outline',
                     click() {
                         that.$emit('click');
@@ -24,17 +29,17 @@ export default {
                 },
                 del: {
                     type: 'text',
-                    text: '删除',
+                    text: CONFIG_BTN.del,
                     icon: 'el-icon-delete',
                     click() {
-                        ShowConfirm('删除后无法撤销，确认删除操作？', 'warning', () => {
+                        showConfirm(CONFIG_MSG.del_warning, 'warning', () => {
                             that.$emit('click');
                         });
                     }
                 },
                 detail: {
                     type: 'text',
-                    text: '详情',
+                    text: CONFIG_BTN.detail,
                     icon: 'el-icon-document',
                     click() {
                         that.$emit('click');
@@ -43,7 +48,7 @@ export default {
 
                 new: {
                     type: 'success',
-                    text: '添加',
+                    text: CONFIG_BTN.add,
                     icon: 'el-icon-plus',
                     click() {
                         that.$emit('click');
@@ -51,10 +56,10 @@ export default {
                 },
                 gdel: {
                     type: 'danger',
-                    text: '批量删除',
+                    text: CONFIG_BTN.gdel,
                     icon: 'el-icon-minus',
                     click() {
-                        ShowConfirm('删除后无法撤销，确认删除操作？', 'warning', () => {
+                        showConfirm(CONFIG_MSG.del_warning, 'warning', () => {
                             that.$emit('click');
                         });
                     }

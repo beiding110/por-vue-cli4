@@ -2,6 +2,8 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import guards from './guards'
 
+import store from '../store/index.js'
+
 import { initRouter } from '@router/tools'
 
 Vue.use(Router);
@@ -18,7 +20,7 @@ var router = new Router({
             path: `/`,
             component: () => import(/*webpackChunkName: 'pc'*/ '@layout/empty'),
             meta: {
-                title: window.$_plat_config.title,
+                title:store.state.config.title,
             },
             children: indexs
         }

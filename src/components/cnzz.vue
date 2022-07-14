@@ -22,7 +22,7 @@ export default {
             };
         },
         cid() {
-            return window.$_plat_config.cnzz.id;
+            return this.$store.state.config.cnzz.id;
         }
     },
     watch: {
