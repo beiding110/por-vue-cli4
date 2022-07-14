@@ -74,8 +74,10 @@ $--font-path: '~element-ui/lib/theme-chalk/fonts';
     }
 
     .el-rate{
+        height: auto;
+        
         .el-rate__icon{
-            font-size: 20px;
+            font-size: 32px;
         }
     }
 }

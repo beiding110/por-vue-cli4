@@ -5,21 +5,56 @@
 	ref="form"
 	v-model="form"
     class="form-page"
-    :detail-url="`${getGetters('twUrl')}/xmgl/project/detail`"
-    :detail-extra="detailExtra"
     >
-        <my-form-item-group title="项目信息">
-            <el-form-item label="项目名称" prop="proname">
-                {{form.proname}}
+        <my-form-item-group title="组1">
+            <el-form-item label="输入" prop="input" >
+                输入
             </el-form-item>
-            <el-form-item label="项目类型" prop="xmlx">
-                {{form.workflowtype}}
+
+            <el-form-item label="数字" prop="number" >
+                123
+            </el-form-item>
+
+            <el-form-item label="单选" prop="xmlx" >
+                备选项
+            </el-form-item>
+
+            <el-form-item label="多选" prop="xmlx" >
+                复选框 A,复选框 B
+            </el-form-item>
+
+            <el-form-item label="下拉选择" prop="number" >
+                北京烤鸭
+            </el-form-item>
+
+            <el-form-item label="级联" prop="number" >
+                侧向导航
+            </el-form-item>
+                        
+            <el-form-item class="table-full-row" label="文本框" prop="gz_content" >
+                文本框
+                文本框
+                文本框
             </el-form-item>
         </my-form-item-group>
+        
+        <my-form-item-group title="组2">
+            <el-form-item label="开关" prop="yzlx" >
+                按年付费
+            </el-form-item>
 
-        <my-form-item-group title="业主信息">
-            <el-form-item label="业主类型" prop="yzlx" required change>
-                {{form.yzlx}}
+            <el-form-item label="日期" prop="yzlx" >
+                2022-06-29
+            </el-form-item>
+
+            <el-form-item class="table-full-row" label="日期范围" prop="yzlx" >
+                2022-06-29
+                至
+                2022-06-30
+            </el-form-item>
+
+            <el-form-item class="table-full-row" label="评分" prop="yzlx" >
+                <el-rate value="3.5" disabled allow-half score-template="3.5"></el-rate>
             </el-form-item>
         </my-form-item-group>
 
@@ -60,7 +95,7 @@ export default {
         beforeSend(send, deny) {
             send();
         },
-        cancelHandler() {
+        cancleHandler() {
             this.$router.go(-1);
         }
     },
