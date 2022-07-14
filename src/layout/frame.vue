@@ -45,7 +45,7 @@ import UserInfo from './components/user-info'
 import LogoImg from './components/logo-img'
 import TagNav from './components/tag-nav'
 
-import lessVars from '@/css/var.scss'
+import lessVars from '@css/var.scss'
 
 export default {
     components: {MyBreadcrumb, UserInfo, LogoImg, TagNav},

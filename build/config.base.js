@@ -20,14 +20,13 @@ var baseConfig = {
             '@components': util.resolve('src/components'),
             '@components-sys': util.resolve('src/components-sys'),
             '@config': util.resolve('src/config'),
-            '@css': util.resolve('src/css'),
-            '@js': util.resolve('src/js'),
+            '@css': util.resolve('src/assets/css'),
+            '@js': util.resolve('src/assets/js'),
             '@layout': util.resolve('src/layout'),
             '@mixins': util.resolve('src/mixins'),
             '@router': util.resolve('src/router'),
             '@store': util.resolve('src/store'),
             '@views': util.resolve('src/views'),
-            '@public': util.resolve('public'),
         }, function (key, value) {
             config.resolve.alias.set(key, value);
         });

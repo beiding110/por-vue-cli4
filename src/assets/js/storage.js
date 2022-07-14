@@ -12,7 +12,7 @@ function getStorage(type, key) {
     var storageKey = `${NAME_SPACE}${key}`,
         storageData = window[type][storageKey];
 
-    var res = !!key 
+    var res = key 
     ? storageData 
         ? ((/{|}|%7B|%7D|\[|\]|%5B|%5D/.test(storageData) 
             ? JSON.parse(unescape(storageData)) 

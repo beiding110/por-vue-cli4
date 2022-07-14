@@ -1,10 +1,10 @@
 import Vue from 'vue';
 
-const config = require('../../config/index.js');
+const CONFIG = require('../../../config/index.js');
 
-if (config.ui.element) {
+if (CONFIG.ui.element) {
     // 使用element
-    require('@/css/element-customize.scss');
+    require('@css/element-customize.scss');
 
     const ElementUI = require('element-ui');
     Vue.use(ElementUI);
@@ -16,7 +16,7 @@ if (config.ui.element) {
     Vue.use(sysUi.default);
 }
 
-if (config.ui.mint) {
+if (CONFIG.ui.mint) {
     // 使用mint
     require('mint-ui/lib/style.css');
     const Mint = require('mint-ui');
@@ -24,7 +24,7 @@ if (config.ui.mint) {
 }
 
 if (process.env.NODE_ENV !== 'development') {
-    if (config.sentry) {
+    if (CONFIG.sentry) {
         // 使用sentry
         const Sentry = require('@sentry/vue');
         const { BrowserTracing } = require("@sentry/tracing");
@@ -44,7 +44,7 @@ if (process.env.NODE_ENV !== 'development') {
     }
 }
 
-if (config['project-type'] === 'mobile') {
+if (CONFIG['project-type'] === 'mobile') {
     // 如果是移动端项目
     require('amfe-flexible');
 }

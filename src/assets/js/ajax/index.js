@@ -1,4 +1,4 @@
-const CONFIG = require('../../../config/index.js');
+const CONFIG = require('../../../../config/index.js');
 
 const ajaxObj = {
     jquery: () => require('./jquery.ajax.js'),
