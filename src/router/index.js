@@ -4,15 +4,13 @@ import Router from 'vue-router';
 import store from '../store/index.js';
 
 import guards from './utils/guards';
-import { initRouter } from './utils/tools';
+import { indexs } from './utils/tools';
 
 import login from './modules/login.js';
 import iframe from './modules/iframe.js';
 import demoVcm from './modules/demo-vcm.js';
 
 Vue.use(Router);
-
-const indexs = initRouter();
 
 var router = new Router({
     routes: [

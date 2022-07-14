@@ -24,3 +24,5 @@ export function initRouter() {
 
     return indexRoutes;
 }
+
+export var indexs = initRouter();
