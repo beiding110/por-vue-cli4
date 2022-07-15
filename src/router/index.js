@@ -23,11 +23,12 @@ var router = new Router({
                 title:store.state.config.title,
             },
             children: [
-                login,
                 // iframe,
         
                 // 子系统自动生成的路由
                 ...indexs,
+                
+                login,
             ],
         },
     ]
