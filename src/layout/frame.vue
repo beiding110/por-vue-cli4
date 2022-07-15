@@ -1,8 +1,22 @@
 <template>
-    <div class="layout" :class="{mobile:mobile, 'view-only':viewOnly}">
-        <div class="left-nav-cover" v-if="showController" @click="toggleShowController"></div>
-        <div class="left-nav" :class="{collapse:collapseController, show:showController}" v-if="!viewOnly">
-            <logo-img :small="collapseController"></logo-img>
+    <div 
+    class="layout" 
+    :class="{mobile:mobile, 'view-only':viewOnly}"
+    >
+        <div 
+            v-if="showController"
+            class="left-nav-cover" 
+            @click="toggleShowController"
+        ></div>
+        
+        <div 
+        v-if="!viewOnly"
+        class="left-nav" 
+        :class="{collapse:collapseController, show:showController}" 
+        >
+            <logo-img 
+                :small="collapseController"
+            ></logo-img>
 
             <div class="menu-con">
                 <el-menu
@@ -16,24 +30,53 @@
                 </el-menu>
             </div>
         </div>
-        <div class="top-nav" :class="{collapse:collapseController,'with-tag-nav':tagNav}" v-if="!viewOnly">
-            <div class="btn-coll btn_top-nav" @click="toggleCollapse" v-if="!mobile">
-                <i :class="{'el-icon-s-fold':!collapseController,'el-icon-s-unfold':collapseController}"></i>
-            </div>
-            <div class="btn-coll btn_top-nav" @click="toggleCollapse" v-else>
-                <i class="el-icon-s-unfold"></i>
-            </div>
-            <div class="btn-back btn_top-nav circle" @click="goBack">
-                <i class="el-icon-back"></i>
-            </div>
 
-            <my-breadcrumb></my-breadcrumb>
+        <div 
+        v-if="!viewOnly"
+        class="top-nav" 
+        :class="{collapse:collapseController,'with-tag-nav':tagNav}" 
+        >
+            <div class="nav-row">
+                <div class="left">
+                    <div 
+                    v-if="!mobile"
+                    class="btn-coll btn_top-nav" 
+                    @click="toggleCollapse" 
+                    >
+                        <i :class="{'el-icon-s-fold':!collapseController,'el-icon-s-unfold':collapseController}"></i>
+                    </div>
 
-            <user-info></user-info>
+                    <div 
+                    v-else
+                    class="btn-coll btn_top-nav" 
+                    @click="toggleCollapse" 
+                    >
+                        <i class="el-icon-s-unfold"></i>
+                    </div>
+                    
+                    <div 
+                    class="btn-back btn_top-nav circle" 
+                    @click="goBack"
+                    >
+                        <i class="el-icon-back"></i>
+                    </div>
+
+                    <my-breadcrumb></my-breadcrumb>
+                </div>
+
+                <div class="right">
+                    <user-info></user-info>
+                </div>
+            </div>
 
             <tag-nav v-if="tagNav"></tag-nav>
         </div>
-        <div class="view" :class="{collapse:collapseController,'with-tag-nav':tagNav}" id="view-content">
+
+        <div 
+        class="view" 
+        :class="{collapse:collapseController,'with-tag-nav':tagNav}" 
+        id="view-content"
+        >
             <router-view :key="$route.fullPath" />
         </div>
     </div>
@@ -73,7 +116,7 @@ export default {
             if(this.mobile) {
                 this.toggleShowController();
                 return;
-            };
+            }
             
             this.collapseController = !this.collapseController;
         },
@@ -88,12 +131,12 @@ export default {
                 this.mobile = true;
             } else {
                 this.mobile = false;
-            };
+            }
         },
         checkFrameChild() {
             if(window !== window.top) {
                 this.viewOnly = true;
-            };
+            }
         },
     },
     created() {
@@ -107,7 +150,7 @@ export default {
     },
     beforeDestroy() {
         window.removeEventListener('resize', this.resizeHandler);
-    }
+    },
 }
 </script>
 
