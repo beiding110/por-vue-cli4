@@ -110,7 +110,7 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 
 ### 通用修改
 
-`logo` src/assets/logo.png
+`logo` public/config/logo.png、public/config/logo-small.png
 
 `.ico` public/favicon.ico
 
@@ -118,13 +118,13 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 
 `其他样式重写及覆盖` src/css/common.scss
 
-`组件库级别修改（如my-btn）` 修改对应组件文件即可（如src/components-sys/my-btn.vue）
+`组件库级别修改（如my-btn）` 修改对应组件文件即可（如src/components/sys/my-btn.vue）
 
 ### 系统面板
 
-`logo（大）` src/assets/logo.png
+`logo（大）` public/config/logo.png
 
-`logo（小）` src/assets/logo-small.png
+`logo（小）` public/config/logo-small.png
 
 `系统主题色` src/css/var.scss
 
