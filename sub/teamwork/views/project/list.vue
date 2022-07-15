@@ -93,7 +93,7 @@ export default {
 				xmlx:'' ,//项目类型
 				shstate: '',
 				onlyshowhistory: false,
-                title: '21325',
+                title: '',
                 sortname: '',
 			},
 

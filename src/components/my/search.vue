@@ -11,7 +11,7 @@
                 <el-form-item>
                     <el-date-picker
                         value-format="yyyy-MM-dd"
-                        v-model="pgData.time"
+                        v-model="time"
                         type="daterange"
                         range-separator="至"
                         :start-placeholder="timeStartPlaceholder"
@@ -35,10 +35,16 @@
                 <el-button
                 type="primary"
                 icon="el-icon-search"
-                @click="onSearchSubmit"
+                @click="searchHandler"
                 >
-                    查询
+                    {{$store.state.config.sys.btn.search}}
                 </el-button>
+
+                <el-button
+                    v-if="reset"
+                    icon="el-icon-close"
+                    @click="resetHandler"
+                ></el-button>
                 
                 <slot name="btn"></slot>
             </el-form-item>
@@ -74,31 +80,61 @@ export default {
             type: Boolean,
             default: true,
         },
-    },
-    data() {
-        var that = this;
-
-        return {
-            pgData: {
-                time: [that.value.starttime || '', that.value.endtime || ''],
-                title: that.value.title || '',
-            },
-        };
-    },
-    watch: {
-        pgData: {
-            handler: function (val) {
-                this.valReCalc(val);
-            },
-            deep: true,
+        reset: {
+            type: Boolean,
+            default: false,
         },
     },
+    data() {
+        return {
+            defaultSearch: {
+                title: '',
+                starttime: '',
+                endtime: '',
+                sortname: '',
+                sortorder: 'desc',
+            },
+
+            ordinary: {},
+        };
+    },
+    computed: {
+        pgData: {
+            get() {
+                return this.value;
+            },
+            set(val) {
+                this.$emit('input', val);
+            },
+        },
+        time: {
+            get() {
+                if (this.value.starttime && this.value.endtime) {
+                    return [this.value.starttime, this.value.endtime];
+                }
+
+                return [];
+            },
+            set(val) {
+                var starttime = val[0],
+                    endtime = val[1];
+
+                this.pgData.starttime = starttime || '';
+                this.pgData.endtime = endtime || '';
+            },
+        }
+    },
     methods: {
-        onSearchSubmit: function () {
+        searchHandler: function () {
             if (this.alive) {
                 this.storeSearch();
             }
             this.$emit('search');
+        },
+        resetHandler() {
+            this.clearStore();
+            
+            this.pgData = this.ordinary;
         },
         storeSearch: function () {
             window.setSession(
@@ -117,40 +153,39 @@ export default {
                 ''
             );
         },
-        valReCalc: function (val) {
-            var n = window.clone(val);
-            
-            window.mixin(this.value, n);
+        combineSearchData() {
+            var pgData = {
+                ...this.defaultSearch,
+                ...this.value,
+            };
 
-            n.starttime = val.time ? val.time[0] || '' : '';
-            n.endtime = val.time ? val.time[1] || '' : '';
-            delete n.time;
+            return pgData;
+        },
+        combineStoreData() {
+            var searchSession = this.getStoreSearch(),
+                pgData;
 
-            n.title = val.title;
+            if (searchSession) {
+                pgData = searchSession;
+            } else {
+                pgData = this.combineSearchData();
+            }
 
-            n.sortname = n.sortname || n.sortname === '' ? n.sortname : 'addtime';
-            n.sortorder = n.sortorder ? n.sortorder : 'desc';
-
-            this.$emit('input', n);
-
-            return n;
+            return pgData;
         },
     },
     created: function () {
+        var pgData = this.combineSearchData();
+
+        this.ordinary = pgData;
+
         if (this.alive) {
-            var searchSession = this.getStoreSearch();
-
-            if (searchSession) {
-                searchSession.time =
-                    (searchSession.starttime && searchSession.endtime)
-                        ? [searchSession.starttime, searchSession.endtime]
-                        : [];
-
-                this.pgData = searchSession;
-            }
+            pgData = this.combineStoreData();
         } else {
-            this.valReCalc(this.pgData);
+            pgData = this.ordinary;
         }
+
+        this.pgData = pgData;
     },
     mounted: function () {
         // this.valReCalc(this.pgData);
