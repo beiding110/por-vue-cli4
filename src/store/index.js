@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import createPersistedState from 'vuex-persistedstate';
-import _ from './tools.js'
+import {sub} from './tools.js'
 
 import user from './modules/user.js'
 import api from './modules/api.js'
@@ -10,10 +10,7 @@ import system from './modules/system.js'
 import tagNav from './modules/tag-nav.js'
 import bread from './modules/bread.js'
 import config from './modules/config.js'
-
-const {modules, getters} = _.init({
-    modules: [{user}, {api}, {dictionary}, {system}, {tagNav}, {bread}, {config}]
-});
+import layout from './modules/layout.js'
 
 Vue.use(Vuex)
 
@@ -26,15 +23,25 @@ export default new Vuex.Store({
     state: {
 
     },
-    getters: (function() {
-        return _.mixin(getters, {
+    getters: {
 
-        });
-    }()),
-    mutations: {
-        setState: function(state, n){
-            mixin(n, state, true);
-        }
     },
-    modules
+    mutations: {
+        
+    },
+    actions: {
+
+    },
+    modules: {
+        user,
+        api,
+        dictionary,
+        system,
+        tagNav,
+        bread,
+        config,
+        layout,
+
+        ...sub,
+    },
 });

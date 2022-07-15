@@ -23,6 +23,8 @@
 </template>
 
 <script>
+import {mapState} from 'vuex';
+
 export default {
     props: {
 
@@ -33,18 +35,16 @@ export default {
         }
     },
     computed: {
-        userInfo() {
-            return this.$store.getters.user;
-        },
+        ...mapState({
+            navDeopDownList: state => state.layout.navDropDown,
+            user: state => state.user.user,
+        }),
         dwname() {
-            return this.userInfo.dwname || '游客';
+            return this.user.dwname || '游客';
         },
         userHeaderText() {
             return this.dwname.slice(0, 1);
         },
-        navDeopDownList() {
-            return this.getGetters(`${this.getGetters('system').type}_navDropDown`)
-        }
     },
     methods: {
         handleCommand(command) {

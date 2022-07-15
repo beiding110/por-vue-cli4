@@ -40,6 +40,8 @@
 </template>
 
 <script>
+import {mapState} from 'vuex';
+
 import MyBreadcrumb from './components/breadcrumb'
 import UserInfo from './components/user-info'
 import LogoImg from './components/logo-img'
@@ -62,11 +64,9 @@ export default {
         }
     },
     computed: {
-        menuList() {
-            var type = this.$store.state.system.system.type,
-                sysStore = this.$store.state[type] || {};
-            return sysStore.navList || [];
-        }
+        ...mapState({
+            menuList: state => state.layout.nav,
+        }),
     },
     methods: {
         toggleCollapse() {
@@ -74,6 +74,7 @@ export default {
                 this.toggleShowController();
                 return;
             };
+            
             this.collapseController = !this.collapseController;
         },
         toggleShowController() {

@@ -10,6 +10,10 @@
             id: '1275340054',
             show: 'pic1'
         },
+        api: {
+            twUrl: '/pms/teamwork',
+            sysUrl: '/pms'
+        },
         sys: {
             msg: {
                 success: '成功',
@@ -29,7 +33,7 @@
                 new: '添加',
                 gdel: '批量删除',
             },
-        }
+        },
     };
 
     return config;

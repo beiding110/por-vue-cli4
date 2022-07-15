@@ -10,82 +10,46 @@ function mixin(obj, target, state) {
     return target;
 }
 
-// 自动生成getters时，不增加model前缀的目录
-const FILES_IN_MODULES = require.context('./modules', false, /\.js$/);
-const PRE_NAME_EXCEPT = FILES_IN_MODULES.keys().reduce(
-    (modules, modulePath) => {
-        var FILE_NAME = modulePath.slice(2, -3);
+export function initMainModel() {
+    var modules_res = {};
 
-        FILE_NAME = FILE_NAME.replace(/^\-/, '').replace(
-            /\-(\w)(\w+)/g,
-            function (a, b, c) {
-                return b.toUpperCase() + c.toLowerCase();
-            }
-        );
+    // 注册包中的store和getter
+    const indexFiles = require.context('./modules', true, /\.js$/),
+        moduleIndexs = indexFiles.keys().reduce((modules, modulePath) => {
+            var moduleName = modulePath.slice(2,-3);
 
-        modules.push(FILE_NAME);
-        return modules;
-    },
-    []
-);
+            const value = indexFiles(modulePath);
+            modules[moduleName] = value.default;
 
-/**
- * 自动生成全局getters
- * @param  {Object} state     state对象
- * @param  {String} modelName store模块名称
- * @return {Object}           生成的全局getters
- */
-function autoGetters(state, modelName) {
-    var getters = {};
-    Object.keys(state).forEach((key) => {
-        if (
-            PRE_NAME_EXCEPT.some((item) => {
-                return item === modelName;
-            })
-        ) {
-            getters[key] = (state) => state[modelName][key];
-        } else {
-            getters[`${modelName}_${key}`] = (state) => state[modelName][key];
-        }
-    });
-    return getters;
+            return modules;
+        }, {});
+
+    mixin(moduleIndexs, modules_res);
+
+    return modules_res;
 }
 
-export default {
-    mixin,
-    init: ({ modules }) => {
-        var getters_res = {},
-            modules_res = {};
+export var model = initMainModel();
 
-        modules.forEach((item) => {
-            mixin(item, modules_res);
-            Object.keys(item).forEach((key) => {
-                mixin(autoGetters(item[key].state, key), getters_res);
-            });
-        });
+export function initSub() {
+    var modules_res = {};
 
-        // 注册包中的store和getter
-        const indexFiles = require.context('@sub', true, /\/store\.js$/),
-            moduleIndexs = indexFiles.keys().reduce((modules, modulePath) => {
-                var moduleName = modulePath.split('/').slice(-2, -1)[0];
-                moduleName = moduleName === '.' ? 'sub' : moduleName;
+    // 注册包中的store和getter
+    const indexFiles = require.context('@sub', true, /\/store\.js$/),
+        moduleIndexs = indexFiles.keys().reduce((modules, modulePath) => {
+            var moduleName = modulePath.split('/').slice(-2, -1)[0];
 
-                const value = indexFiles(modulePath);
-                modules[moduleName] = value.default;
+            moduleName = moduleName === '.' ? 'sub' : moduleName;
 
-                mixin(
-                    autoGetters(value.default.state, moduleName),
-                    getters_res
-                );
-                return modules;
-            }, {});
+            const value = indexFiles(modulePath);
+            modules[moduleName] = value.default;
 
-        mixin(moduleIndexs, modules_res);
+            return modules;
+        }, {});
 
-        return {
-            modules: modules_res,
-            getters: getters_res,
-        };
-    },
-    autoGetters,
-};
+    mixin(moduleIndexs, modules_res);
+
+    return modules_res;
+}
+
+export var sub = initSub();

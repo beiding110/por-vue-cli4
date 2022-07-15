@@ -46,7 +46,7 @@ export default {
                 index = state.tagNavList.indexOf(item);
             } else {
                 index = n;
-            };
+            }
 
             state.tagNavList.splice(index, 1);
             innerList.splice(index, 1);
@@ -72,13 +72,13 @@ export default {
         }
     },
     actions: {
-        routeToggleTagNav({ getters, commit }, to) {
+        routeToggleTagNav({ state, commit }, to) {
             if(to.meta.bread) {
-                if(getters.tagNavList.some(navItem => {
+                if(state.tagNavList.some(navItem => {
                     return to.meta.bread.some(breadItem => {
                         return navItem.path === breadItem.path;
                     });
-                }) || getters.tagNavList.some(navItem => {
+                }) || state.tagNavList.some(navItem => {
                     return navItem.meta.bread.some(breadItem => {
                         return to.path === breadItem.path;
                     });

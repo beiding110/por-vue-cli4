@@ -18,6 +18,8 @@
     </div>
 </template>
 <script>
+import {mapState} from 'vuex';
+
 export default {
     props: {
         
@@ -28,9 +30,9 @@ export default {
         }
     },
     computed: {
-        list() {
-            return this.$store.getters.tagNavList;
-        }
+        ...mapState({
+            list: state => state.tagNav.tagNavList,
+        }),
     },
     methods: {
         clickHandler(item) {
@@ -42,8 +44,8 @@ export default {
             this.$store.commit('popTagNav', index);
 
             this.goto(this.list[this.list.length - 1].fullPath);
-        }
-    }
+        },
+    },
 }
 </script>
 <style lang="scss" scoped>

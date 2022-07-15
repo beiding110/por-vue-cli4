@@ -29,5 +29,5 @@ pnpm-debug.log*
 # /yarn.lock
 
 # project Module Files
-# /sub/
-# !/sub/README.md
+# /sub
+!/sub/README.md

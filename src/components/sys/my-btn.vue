@@ -12,8 +12,6 @@ export default {
     data () {
         var that = this;
 
-        console.log(this.$store.state.config.sys.btn);
-
         const CONFIG_BTN = this.$store.state.config.sys.btn,
             CONFIG_MSG = this.$store.state.config.sys.msg;
 
