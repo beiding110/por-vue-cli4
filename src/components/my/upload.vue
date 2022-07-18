@@ -1,33 +1,40 @@
 <template>
     <div
     class="my-upload"
-    v-loading="getListLoading"
+    v-loading="loadingController"
     element-loading-text="附件内容更新中"
     >
         <el-upload
-        multiple
+        ref="upload"
         :drag="drag && !readonly"
-        ref="FileUp"
-        :action="uploadAction"
-        :data="extraData"
+        :action="actionModel.upload"
         :show-file-list="false"
-        :limit="limit"
-        :before-upload="beforeAvatarUpload"
+        :data="extraData"
         :on-exceed="handleExceed"
         :on-success="onSuccess"
         :on-error="onError"
+        :on-change="onChange"
+        :before-upload="beforeAvatarUpload"
+        :limit="limit"
+        :accept="filetype"
         :auto-upload="!lazy"
-        :on-change="onchange"
-        :accept="fileType"
-        v-loading="loading"
-        element-loading-text="上传中"
+        :http-request="httpUploadHandler"
+        multiple
         >
             <slot slot="trigger">
                 <template v-if="!drag">
-                    <el-button size="small" type="primary" v-show="myReadonly"><i class="el-icon-upload"></i> {{title}}</el-button>
+                    <el-button 
+                    v-show="!readonly"
+                    size="small" 
+                    type="primary" 
+                    >
+                        <i class="el-icon-upload"></i>
+                        点击上传
+                    </el-button>
                 </template>
+
                 <template v-else>
-                    <template v-if="myReadonly">
+                    <template v-if="!readonly">
                         <i class="el-icon-upload"></i>
                         <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
                     </template>
@@ -38,28 +45,43 @@
                 <br>
             </template>
 
-            <span :style="{marginLeft:readonly ? '' : '1em'}" v-if="single" class="single__file--name">
+            <span 
+            v-if="single" 
+            :style="{marginLeft:readonly ? '' : '1em'}" 
+            class="single__file--name"
+            >
                 <span v-if="fileList[0]">
                     <a
                     target="_blank"
                     :href="buildDownloadPath(fileList[0])">
                         {{fileList[0].filename}}
                     </a>
-                    <i class="el-icon-circle-close btn-sf-del" @click="singleFileDel(fileList[0])" v-if="!readonly"></i>
+
+                    <i 
+                    v-if="!readonly"
+                    class="el-icon-circle-close btn-sf-del" 
+                    @click="singleFileDel(fileList[0])" 
+                    ></i>
                 </span>
             </span>
-            <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload" v-if="lazy">上传到服务器</el-button>
+
+            <el-button 
+            style="margin-left: 10px;" 
+            size="small" 
+            type="success" 
+            @click="submitUpload" 
+            v-if="lazy"
+            >
+                上传到服务器
+            </el-button>
         </el-upload>
 
         <div 
         slot="tip" 
-        v-if="!readonly && (fileType || fileSize)"
+        v-if="!readonly && tipText"
         class="file-type_tip"
         >
-            <font v-if="fileType">
-                只能上传{{fileType}}文件
-            </font>
-            <font v-if="fileSize">不能超过{{fileSize}}M</font>
+            {{tipText}}
         </div>
 
         <el-table
@@ -79,7 +101,7 @@
             </el-table-column>
             <el-table-column prop="fileuptime" label="上传时间" sortable></el-table-column>
             <el-table-column prop="addusername" label="上传人"></el-table-column>
-            <el-table-column label="操作" width="150px" v-if="myReadonly">
+            <el-table-column label="操作" width="150px" v-if="!readonly">
                 <template slot-scope="scope">
                     <el-button size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
                 </template>
@@ -89,210 +111,27 @@
 </template>
 
 <script>
+import MIXIN from './upload-s/mixins/index.js';
+
 export default {
+    mixins: [MIXIN],
     props: {
-        action: {
-            type: String,
-            default: ''
-        },
-        fileType: {
-            type: String,
-            default: ''
-        },
-        fileguid: {
-            type: String,
-            default: '',
-            required: true
-        },
-        readonly: {
+        drag: {
             type: Boolean,
-            default: false
-        },
-        limit: {
-            type: Number,
-            default: 0,
-        },
-        fileSize: {
-            type: Number,
-            default: 10
-        },
-        single: {
-            type: Boolean,
-            default: false
-        },
-        title: {
-            type: String,
-            default: '点击上传'
+            default: false,
         },
         lazy: {
             type: Boolean,
             default: false
         },
-        drag: {
-            type: Boolean,
-            default: false
-        },
-        type: {
-            type: String,
-            default: 'agenct'
-        },
-        extra: {
-            type: Object,
-            default: () => ({})
-        },
-    },
-    data: function () {
-        return {
-            preview: false,
-            imageurl: "",
-            fileList: [],
-            percent: 0,
-            percentStatus: '',
-            loading: false,
-            getListLoading: false,
-
-            fileTypeObj: {
-                'application/vnd.openxmlformats-officedocument.wordprocessingml.document': '.docx'
-            }
-        }
-    },
-    computed: {
-        uploadAction() {
-            return this.action || `${this.getGetters('fileUrl')}/upload`;
-        },
-        myReadonly: function () {
-            return !this.readonly;
-        },
-        extraData: function () {
-            var extra = {
-                fileguid: this.fileguid,
-                filetype: this.fileType,
-                single: (this.single * 1)
-            };
-
-            mixin(this.extra, extra, true);
-
-            return extra;
-        },
-        pathSupply() {
-            return /micromessenger/i.test(navigator.userAgent) ? '?mp.wexin.qq.com' : ''
-        }
     },
     methods: {
-        bindFileList: function () { //绑定文件列表
-            var that = this;
-
-            if(!this.fileguid) return;
-            if(this.getListLoading) return;
-
-            this.getListLoading = true;
-            var data = {
-                fileguid: this.fileguid
-            };
-            mixin(this.extra, data, true);
-
-            this.$ajax({
-                url: `${this.getGetters('fileUrl')}/filelist`,
-                data,
-                callback: data => {
-                    this.fileList = data || [];
-                    this.$emit('update', this.fileList);
-                },
-                complete: () => {
-                    this.getListLoading = false;
-                }
-            });
-            this.fileListUpdateHandler();
-        },
-        deleteHandler(row, cb) {
-            ShowConfirm('删除附件后无法撤销，请确认是否删除', 'warning', () => {
-                this.getListLoading = true;
-                this.$ajax({
-                    type: 'post',
-                    url: `${this.getGetters('fileUrl')}/filedel`,
-                    data: {
-                        rowguid: row.rowguid
-                    },
-                    callback: data => {
-                        cb && cb();
-                        this.$emit('update', this.fileList);
-                    },
-                    complete: () => {
-                        this.getListLoading = false;
-                    }
-                });
-                this.fileListUpdateHandler();
-            });
-        },
-        handleDelete: function (index, row) { //删除文件
-            this.deleteHandler(row, () => {
-                this.fileList.splice(index, 1);
-            });
-        },
         singleFileDel(row) {
             this.deleteHandler(row, () => {
                 this.fileList = [];
             });
         },
-        beforeAvatarUpload: function (file) {
-            var arr = file.name.split('.');
-            var type = arr[arr.length - 1],     //从最后一个点开始判断文件类型
-                size = file.size / 1024 / 1024;
-            if (!!this.fileType) {
-                var typeArr = this.fileType.split(',');
-                if(!typeArr.some(function(item) {
-                    return ((new RegExp(type)).test(item))
-                })) {
-                    // ShowMsg.call(this, '文件类型应为:' + this.fileTypeObj[this.fileType] || this.fileType.split('/')[1], 'error');
-                    ShowMsg.call(this, '文件类型应为:\n' + this.fileType, 'error');
-                    return false;
-                }
-            };
-
-            var fs = this.fileSize;
-
-            if(size > fs) {
-                ShowMsg.call(this, '文件大小超过:' + fs + 'M', 'error');
-                return false;
-            };
-            this.loading = true;
-            return true;
-        },
-        handleExceed: function (files, fileList) {
-            !!this.limit && ShowMsg.call(this, '限制上传' + this.limit + '个文件', 'error')
-        },
-        onSuccess: function (response, file, fileList) {
-            this.loading = false;
-            var obj = typeof (response) == 'string' ? JSON.parse(response) : response;
-
-            ajaxResCheck.call(this, obj, function () {
-                // this.bindFileList();
-                var file = clone(obj.tdata);
-                file.fileuptime = file.addtime;
-                this.fileList.push(file);
-
-                ShowMsg.call(this, obj.msg ? obj.msg : "上传成功",'success');
-                this.$emit('update', fileList);
-                this.$emit('success', obj);
-            }.bind(this));
-            this.fileListUpdateHandler();
-        },
-        onError: function (err, file, fileList) {
-            var that = this
-            this.loading = false;
-            ShowMsgBox.call(this, err, 'error');
-            this.percent = 100;
-            this.percentStatus = 'exception'
-            this.$nextTick(function () {
-                setTimeout(function () {
-                    that.percentBar = false;
-                }, 500)
-            })
-        },
-        submitUpload: function () {
-            this.$refs.FileUp.submit();
-        },
-        onchange: function (file, filelist) {
+        onChange: function (file, filelist) {
             if (this.lazy) {
                 if (this.single) {
                     this.fileList.splice(0, 1, {
@@ -300,6 +139,7 @@ export default {
                     })
                 } else {
                     var indexArr = [];
+
                     this.fileList.forEach(function (item) {
                         filelist.forEach(function (file, index) {
                             if (item.filename == file.name) {
@@ -314,40 +154,12 @@ export default {
                         });
                     });
                 }
-            };
+            }
+
             this.fileListUpdateHandler();
         },
-        fileListUpdateHandler: function() {
-            this.$emit('update', this.fileList);
-            this.$emit('update:files', this.fileList);
-        },
-        buildDownloadPath(file) {
-            var search = toSearch({
-                rowguid: file.rowguid
-            });
-            return `${this.getGetters('fileUrl')}/download/common.do${search}`
-        }
     },
-    mounted: function () {
-        try {
-            this.bindFileList();
-        } catch (e) {}
-    },
-    watch: {
-        fileguid: function (e) {
-            if (e) {
-                this.bindFileList();
-            }
-        },
-        extra: {
-            handler(n, o) {
-                if(JSON.stringify(n) !== JSON.stringify(o)) {
-                    this.bindFileList();
-                }
-            }, deep: true
-        }
-    }
-}
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
