@@ -30,6 +30,7 @@ var baseConfig = {
             '@views': util.resolve('src/views'),
             
             '@sub': util.resolve('sub'),
+            '@submodules': util.resolve('sub-modules'),
         }, function (key, value) {
             config.resolve.alias.set(key, value);
         });
