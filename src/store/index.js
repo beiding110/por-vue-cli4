@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import createPersistedState from 'vuex-persistedstate';
-import {sub} from './tools.js'
+import {sub, subModules,} from './tools.js'
 
 import user from './modules/user.js'
 import api from './modules/api.js'
@@ -42,6 +42,7 @@ export default new Vuex.Store({
         config,
         layout,
 
+        ...subModules,
         ...sub,
     },
 });

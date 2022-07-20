@@ -53,3 +53,26 @@ export function initSub() {
 }
 
 export var sub = initSub();
+
+export function initSubModules() {
+    var modules_res = {};
+
+    // 注册包中的store和getter
+    const indexFiles = require.context('@submodules', true, /\/store\.js$/),
+        moduleIndexs = indexFiles.keys().reduce((modules, modulePath) => {
+            var moduleName = modulePath.split('/').slice(-2, -1)[0];
+
+            moduleName = moduleName === '.' ? 'sub-modules' : moduleName;
+
+            const value = indexFiles(modulePath);
+            modules[moduleName] = value.default;
+
+            return modules;
+        }, {});
+
+    mixin(moduleIndexs, modules_res);
+
+    return modules_res;
+}
+
+export var subModules = initSubModules();

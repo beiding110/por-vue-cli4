@@ -93,7 +93,12 @@ import TagNav from './components/tag-nav'
 import lessVars from '@css/var.scss'
 
 export default {
-    components: {MyBreadcrumb, UserInfo, LogoImg, TagNav},
+    components: {
+        MyBreadcrumb, 
+        UserInfo, 
+        LogoImg, 
+        TagNav,
+    },
     data () {
         return {
             collapseController: false,
