@@ -12,7 +12,8 @@
         },
         api: {
             twUrl: '/pms/teamwork',
-            sysUrl: '/pms'
+            sysUrl: '/pms',
+            fileUrl: '/pms/sysfile',
         },
         sys: {
             msg: {

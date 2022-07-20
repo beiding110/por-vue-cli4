@@ -13,7 +13,6 @@
         :on-exceed="handleExceed"
         :on-success="onSuccess"
         :on-error="onError"
-        :on-change="onChange"
         :before-upload="beforeAvatarUpload"
         :limit="limit"
         :accept="filetype"
@@ -130,33 +129,6 @@ export default {
             this.deleteHandler(row, () => {
                 this.fileList = [];
             });
-        },
-        onChange: function (file, filelist) {
-            if (this.lazy) {
-                if (this.single) {
-                    this.fileList.splice(0, 1, {
-                        filename: file.name
-                    })
-                } else {
-                    var indexArr = [];
-
-                    this.fileList.forEach(function (item) {
-                        filelist.forEach(function (file, index) {
-                            if (item.filename == file.name) {
-                                indexArr.push(index);
-                            }
-                        })
-                    });
-
-                    indexArr.forEach(function (item) {
-                        this.fileList.push({
-                            filename: filelist[item].name
-                        });
-                    });
-                }
-            }
-
-            this.fileListUpdateHandler();
         },
     },
 };
