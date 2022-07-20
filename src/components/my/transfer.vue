@@ -23,28 +23,34 @@
 <script>
 export default {
     props: {
+        // 双向绑定值
         value: {
             type: [Array, String],
             default: function () {
                 return [];
             },
         },
+        // 右侧标题
         title2: {
             type: String,
             default: "已选择",
         },
+        // 左侧标题
         title1: {
             type: String,
             default: "可选",
         },
-        action: {
+        // 自动请求数据地址
+        url: {
             type: String,
             default: "",
         },
+        // 传入数据
         data: {
             type: Array,
             default: () => []
         },
+        // 配置
         props: {
             type: Object,
             default: function () {
@@ -54,22 +60,32 @@ export default {
                 };
             },
         },
+        // 展示位置
         position: {
             type: String,
             default: "center",
         },
+        // 绑定字符串
         modelStr: {
             type: Boolean,
             default: false
         },
+        // 绑定字符串时，字符串间链接字符
         strSpliter: {
             type: String,
             default: ','
         },
+        /* 
+        使用后的参数，会具备双向绑定功能
+        参数应为数据中的键，如[{label: 'label', value: 'value'}]
+        如 2way="label"
+        :label.sync="form.label"
+        */
         '2way': {
             type: String,
             default: ''
         },
+        // 只读
         readonly: {
             type: Boolean,
             default: false
@@ -79,8 +95,8 @@ export default {
         return {
             innerData: [],
             reprops: {
-                key: !!this.props ? this.props.key : "key",
-                label: !!this.props ? this.props.label : "label",
+                key: this.props ? this.props.key : 'key',
+                label: this.props ? this.props.label : 'label',
             },
             map: {},
 
@@ -146,7 +162,7 @@ export default {
         },
         queryData: function () {
             if(!this.action) return;
-            var that = this;
+            
             this.$get(this.action, data => {
                 this.dataInit(data)
             });

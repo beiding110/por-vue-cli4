@@ -57,6 +57,7 @@
 <script>
 export default {
     props: {
+        // 双向绑定的搜索表单值
         value: {
             type: Object,
             default: () => ({
@@ -64,22 +65,27 @@ export default {
                 title: '',
             }),
         },
+        // 默认title的placeholder
         titlePlaceholder: {
             type: String,
             default: '标题',
         },
+        // 默认starttime的placeholder
         timeStartPlaceholder: {
             type: String,
             default: '添加时间早至',
         },
+        // 默认endtime的placeholder
         timeEndPlaceholder: {
             type: String,
             default: '添加时间晚至',
         },
+        // 是否自动缓存搜搜条件
         alive: {
             type: Boolean,
             default: true,
         },
+        // 是否展示重置按钮
         reset: {
             type: Boolean,
             default: false,

@@ -22,6 +22,7 @@
 <script>
 export default {
     props: {
+        // 图片列表数据
         data: {
             type: Array,
             default: () => [],

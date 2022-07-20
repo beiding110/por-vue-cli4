@@ -18,41 +18,48 @@ import { Loading } from 'element-ui';
 
 export default {
     props: {
+        // 列表数据
         value: {
             type: Array,
             default() {
                 return []
             }
         },
+        // 请求地址
         action: {
             type: String,
             default: ''
         },
+        // 请求参数
         search: {
             type: Object,
             default() {
                 return {}
             }
         },
+        // 请求前方法
         beforeQuery: {
             type: Function,
             default: function(){}
         },
+        // 请求后方法
         afterQuery: {
             type: Function,
             default: function(){}
         },
+        // 不立即请求第一页
         lazy: {
             type: Boolean,
             default: false
         },
+        // 双向绑定的请求状态
         loading: {
             // 用于双向绑定的加载状态
             type: Boolean,
             default: false
         },
+        // 自动在外部table中挂载loading
         useLoading: {
-            // 自动在外部table中挂载loading
             type: Boolean,
             default: true,
         },

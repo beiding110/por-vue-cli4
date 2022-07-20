@@ -25,20 +25,25 @@
 <script>
 export default {
     props: {
+        // 只读
         disabled:{
             type:Boolean,
             default:false
         },
+        // 展示清除按钮
         clearable:{
             type:Boolean,
             default:true
         },
+        // 自动请求地址
         url: {
             type: String
-        }, //导入的url地址
+        },
+        // 双向绑定值
         value: {
             type: [String, Number, Array]
-        }, //接受外部v-model传入的值
+        },
+        // 配置
         props: {
             type: Object,
             default: function () {
@@ -47,35 +52,47 @@ export default {
                     value: "key"
                 }
             }
-        }, //定义数据中作为select的label与value的字段
+        },
+        // placeholder
         placeholder: {
             type: String,
             default: '请选择'
         },
-        filterable: {},
+        // 多选
         multiple: {
             type: Boolean,
             default: false
         },
+        // 默认大小
         size: {
             type: String,
             default: 'small'
         },
+        // 允许自行创建
         allowCreate: {
             type: Boolean,
             default: false
         },
+        /* 
+        使用后的参数，会具备双向绑定功能
+        参数应为数据中的键，如[{label: 'label', value: 'value'}]
+        如 2way="label"
+        :label.sync="form.label"
+        */
         '2way': {
             type: String
         },
+        // 传入的数据
         data: {
             type: Array,
             default: () => []
         },
+        // 绑定字符串，props.multiple为true可用，低版本无props.emitPath可用
         modelStr: {
             type: Boolean,
             default: false
         },
+        // 绑定字符串时，字符串间链接字符
         strSpliter: {
             tyep: String,
             default: ','

@@ -16,6 +16,7 @@
 <script>
 export default {
     props: {
+        // 表单组标题
         title: {
             type: String,
             default: '',

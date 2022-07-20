@@ -26,14 +26,17 @@
 <script>
 export default {
     props: {
+        // placeholder
         placeholder: {
             type: String,
             default: '',
         },
+        // 最小值
         min: {
             type: [String, Number],
             default: '',
         },
+        // 最大值
         max: {
             type: [String, Number],
             default: '',

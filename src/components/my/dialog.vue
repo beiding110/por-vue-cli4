@@ -19,23 +19,28 @@
 <script>
 export default {
     props: {
+        // 弹框标题
         title: {
             type: String,
             default: ''
         },
+        // 显示隐藏控制
         value: {
             type: Boolean,
             default: false
         },
+        // 弹框宽度
         width: {
             type: String,
             default: '50%'
         },
+        // 展示关闭按钮
         showclose: {
             type: Boolean,
             default: true
         },
-        hasBeforeClose:{
+        // 关闭前动作
+        beforeClose:{
             type:[Function, Boolean],
             default:false
         }
@@ -57,8 +62,8 @@ export default {
     },
     methods: {
         beforeClose:function(done){
-            if(typeof(this.hasBeforeClose) == 'function'){
-                this.hasBeforeClose(done);
+            if(typeof(this.beforeClose) == 'function'){
+                this.beforeClose(done);
             }else{
                 done();
             }

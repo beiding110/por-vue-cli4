@@ -9,15 +9,16 @@
 <script>
 export default {
     props: {
+        // 框架地址
         src: {
             type: String,
             default: ''
-        }
+        },
     },
     data () {
         return {
             innerSrc: ''
-        }
+        };
     },
     watch: {
         src(n, o) {

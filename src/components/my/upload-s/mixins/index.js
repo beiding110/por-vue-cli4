@@ -5,48 +5,52 @@ import Chain from '../assets/js/Chain';
 
 export default {
     props: {
+        // 附件上传后存放的位置
         folder: {
-            // 附件上传后存放的位置
             type: String,
             default: 'manage'
         },
+        // 文件类型
         filetype: {
             type: String,
             default: ''
         },
+        // 文件主键
         fileguid: {
             type: String,
             default: '',
             required: true
         },
+        // 只读
         readonly: {
             type: Boolean,
             default: false
         },
+        // 最大允许上传个数
         limit: {
-            // 最大允许上传个数
             type: Number,
         },
+        // 文件大小，M
         filesize: {
             type: Number,
             default: 0
         },
+        // 单文件
         single: {
             type: Boolean,
             default: false
         },
+        // 额外上传参数
         extra: {
             type: Object,
             default: () => ({})
         },
+        // 双向绑定文件列表
         value: {
             type: Array,
             default: () => [],
         },
-        size: {
-            type: [String,Number],
-            default: 178,
-        },
+        // 选中文件时回调
         onFileSelect: {
             type: [Boolean, Function],
             default: false,
@@ -140,9 +144,6 @@ export default {
             }
 
             return true;
-        },
-        sizeModel() {
-            return /px/.test(this.size) ? this.size : `${this.size}px`;
         },
         exist() {
             return (this.fileList.length > 0 && !this.loadingBarShowController);

@@ -18,59 +18,77 @@
 export default {
     mixins: [],
     props: {
+        // 双向绑定
         value: {
             type: [Array, String, Number],
             default: ''
         },
+        // 只读
         disabled:{
             type:Boolean,
             default:false
         },
+        // 展示清空按钮
         clearable:{
             type:Boolean,
             default:true
         },
+        // placeholder内容
         placeholder: {
             type: String,
             default: ''
         },
+        // 配置选项
         props: {
             type: Object,
             default: function () {
                 return {};
             }
         },
+        // 传入的data
         data: {
             type: Array,
             default: () => []
         },
+        // 自动请求的接口地址
         url: {
             type: String
         },
+        // 绑定字符串，props.multiple为true可用，低版本无props.emitPath可用
         modelStr: {
-            // 绑定字符串，props.multiple为true可用，低版本无props.emitPath可用
             type: Boolean,
             default: false,
         },
+        // 绑定字符串时，字符串间链接字符
         strSpliter: {
             type: String,
             default: ','
         },
+        /* 
+        使用后的参数，会具备双向绑定功能
+        参数应为数据中的键，如[{label: 'label', value: 'value'}]
+        如 2way="label"
+        :label.sync="form.label"
+        */
         '2way': {
             type: String
         },
+        // 2way字符串间链接字符
         '2wayStrSpliter': {
             type: String,
             default: '-'
         },
+        // 是否可搜索选项	
         filterable: {
             type: Boolean,
             default: false,
         },
+        // 多选模式下是否折叠Tag	
         collapseTags: {
             type: Boolean,
             default: false,
         },
+        // 输入框中是否显示选中值的完整路径	
         showAllLevels: {
             type: Boolean,
             default: true,

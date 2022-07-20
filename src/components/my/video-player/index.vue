@@ -31,14 +31,17 @@ export default {
         VideoController,
     },
     props: {
+        // 视频地址
         src: {
             type: String,
             default: '',
         },
+        // 已看记录
         watched: {
             type: Array,
             default: () => [],
         },
+        // 展示已看记录
         showWatch: {
             type: Boolean,
             default: false,

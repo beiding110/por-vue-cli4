@@ -5,6 +5,7 @@
 <script>
 export default {
     props: {
+        // 是否隐藏
         hide: {
             type: Boolean,
             default: false

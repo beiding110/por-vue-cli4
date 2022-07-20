@@ -36,12 +36,14 @@
 <script>
 export default {
     props: {
+        // 导航数据
         list: {
             type: Array,
             default: function() {
                 return []
             }
         },
+        // 配置
         props: {
             type: Object,
             default: function() {

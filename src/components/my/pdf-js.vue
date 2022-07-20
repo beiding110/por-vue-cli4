@@ -10,10 +10,11 @@
 <script>
 export default {
     props: {
+        // pdf文件地址
         src: {
             type: String,
             default: ''
-        }
+        },
     },
     data () {
         return {

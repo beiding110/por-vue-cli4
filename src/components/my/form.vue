@@ -25,70 +25,86 @@ import { Loading } from 'element-ui';
 
 export default {
     props: {
+        // label宽度
         labelWidth: {
             type: String,
             default: '120px'
         },
+        // 表单对象值
         value: {
             type: Object,
             default: () => ({})
         },
+        // 自动提交地址
         submitUrl: {
             type: String,
             default: ''
         },
+        // 获取详情地址
         detailUrl: {
             type: String,
             default: ''
         },
+        // 默认表单项大小
         size: {
             type: String,
             default: 'small'
         },
+        // label位置
         labelPosition: {
             type: String,
             default: 'right'
         },
+        // 只读
         disabled: {
             type: Boolean,
             default: false
         },
+        // 只读
         readonly: {
             type: Boolean,
             default: false
         },
+        // 提交前操作
         beforeSend: {
             type: [Function, Boolean],
             default: false
         },
+        // 提交后操作
         afterSend: {
             type: [Function, Boolean],
             default: false
         },
+        // 获取详情后操作
         afterDetail: {
             type: [Function, Boolean],
             default: false
         },
+        // 获取详情参数
         detailExtra: {
             type: Object,
             default: () => ({})
         },
+        // 提交格式为json的请求
         sendStr: {
             type: Boolean,
             default: false
         },
+        // 表单中是否有文件，有则会忽略detailExtra的值，先请求一次detail
         file: {
             type: Boolean,
             default: false
         },
+        // 行内形式
         inline: {
             type: Boolean,
             default: false
         },
+        // 表格形式
         table: {
             type: Boolean,
             default: false
-        }
+        },
     },
     data() {
         return {

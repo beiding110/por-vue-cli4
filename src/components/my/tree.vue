@@ -22,7 +22,47 @@
 
 <script>
 export default {
-    props: ['value', 'disabled', 'url', 'checkbox', 'top', 'props', 'filtertext', 'data', 'defaultExpandAll'],
+    props: {
+        // 双向绑定
+        value: {
+            type: Array,
+            default: () => [],
+        },
+        // 只读
+        disabled: {
+            type: Boolean,
+            default: false,
+        },
+        // 自动请求地址
+        url: {
+            type: String,
+            default: '',
+        },
+        // 可否选中
+        checkbox: {
+            type: Boolean,
+            default: false,
+        },
+        // 自动添加一个顶级
+        top: {
+            type: Boolean,
+            default: false,
+        },
+        props: {
+            type: [Object, Boolean],
+            default: false,
+        },
+        // 传入的数据
+        data: {
+            type: Array,
+            default: () => [],
+        },
+        // 默认展开
+        defaultExpandAll: {
+            type: Boolean,
+            default: false,
+        },
+    },
     data: function () {
         return {
             treeData: [],
@@ -84,9 +124,9 @@ export default {
         }
     },
     mounted: function () {
-        this.treeProps.id = !!this.props ? this.props.id || 'id' : 'id';
-        this.treeProps.label = !!this.props ? this.props.label || 'text' : 'text';
-        this.treeProps.children = !!this.props ? this.props.children || 'children' : 'children';
+        this.treeProps.id = this.props ? this.props.id || 'id' : 'id';
+        this.treeProps.label = this.props ? this.props.label || 'text' : 'text';
+        this.treeProps.children = this.props ? this.props.children || 'children' : 'children';
 
         this.getData();
     }

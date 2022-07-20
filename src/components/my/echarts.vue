@@ -6,7 +6,18 @@
 import * as echarts from 'echarts';
 
 export default {
-    props: ["data", "height"],
+    props: {
+        // 图表数据
+        data: {
+            type: Object,
+            default: () => ({}),
+        },
+        // 图表高度
+        height: {
+            type: String,
+            default: '300px',
+        }
+    },
     data () {
         return {
             myChart: null,
@@ -505,7 +516,7 @@ export default {
     },
     methods: {
         init() {
-            this.$refs._echatr.style.height = this.height || "300px";
+            this.$refs._echatr.style.height = this.height;
             echarts.registerTheme('customed', this.style);
             this.myChart = echarts.init(this.$refs._echatr, 'customed');
             // 指定图表的配置项和数据

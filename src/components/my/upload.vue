@@ -115,10 +115,12 @@ import MIXIN from './upload-s/mixins/index.js';
 export default {
     mixins: [MIXIN],
     props: {
+        // 拖拽上传形式
         drag: {
             type: Boolean,
             default: false,
         },
+        // 不立即上传
         lazy: {
             type: Boolean,
             default: false

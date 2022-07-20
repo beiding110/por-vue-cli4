@@ -28,26 +28,31 @@
 <script>
 export default {
     props: {
+        // 列表数据
         data: {
             type: Array,
             default() {
                 return []
-            }
+            },
         },
+        // 表格支持选中时，选中的值
         value: {
             type: Array,
             default() {
                 return []
-            }
+            },
         },
+        // 自动请求数据地址
         url: {
             type: String,
-            default: ''
+            default: '',
         },
+        // 请求结束方法
         afterQuery: {
             type: [Boolean, Function],
             default: false,
         },
+        // 自动请求搜索条件
         search: {
             type: Object,
             default() {
@@ -57,42 +62,51 @@ export default {
                 }
             }
         },
+        // 合计方法
         summaryMethod: {
             type: Function,
             default: function() {}
         },
+        // 展示合计行
         showSummary: {
             type: Boolean,
             default: false
         },
+        // 展示边框
         border: {
             type: Boolean,
             default: true
         },
+        // 表格高度
         height: {
             type: [String, Number]
         },
+        // 最大高度
         maxHeight: {
             type: [String, Number]
         },
+        // 展示选中列
         select: {
             type: Boolean,
             default: false
         },
+        // 选中列可选条件
         selectable: {
             type: Function,
             default: function() {
                 return true;
-            }
+            },
         },
+        // 合并行列方法
         spanMethod: {
             type: Function,
             default: function() {}
         },
+        // 树形格式组件
         rowKey: {
             type: String,
             default: '',
-        }
+        },
     },
     data () {
         return {

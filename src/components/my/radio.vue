@@ -18,20 +18,24 @@
 <script>
 export default {
     props: {
+        // 双向绑定值
         value: {
             // type: [String, Number],
             default: ''
         },
-        action: {
+        // 自动请求地址
+        url: {
             type: String,
             default: ''
         },
+        // 选项数据
         data: {
             type: Array,
             default() {
                 return []
             }
         },
+        // 配置
         props: {
             type: Object,
             default() {
@@ -41,10 +45,17 @@ export default {
                 }
             }
         },
+        // 只读
         readonly: {
             type: [Boolean, String, Number],
             default: false
         },
+        /* 
+        使用后的参数，会具备双向绑定功能
+        参数应为数据中的键，如[{label: 'label', value: 'value'}]
+        如 2way="label"
+        :label.sync="form.label"
+        */
         '2way': {
             type: String
         },

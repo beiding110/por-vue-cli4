@@ -8,6 +8,7 @@
 <script>
 export default {
     props: {
+        // word地址，需外网可访问
         src: {
             type: String,
             default: '',

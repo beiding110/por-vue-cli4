@@ -8,6 +8,7 @@
 <script>
 export default {
     props: {
+        // 预览图片地址
         src: {
             type: String,
             default: ''

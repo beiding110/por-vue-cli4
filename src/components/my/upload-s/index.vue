@@ -66,6 +66,18 @@ export default {
     components: {
         FileList
     },
+    props: {
+        // 组件大小
+        size: {
+            type: [String,Number],
+            default: 178,
+        },
+    },
+    computed: {
+        sizeModel() {
+            return /px/.test(this.size) ? this.size : `${this.size}px`;
+        },
+    },
 };
 </script>
 

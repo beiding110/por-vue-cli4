@@ -20,10 +20,12 @@
 <script>
 export default {
     props: {
+        // 双向绑定
         value: {
             type: String,
             default: ''
         },
+        // 功能配置
         config: {
             type: Object,
             default: () => ({
@@ -38,10 +40,11 @@ export default {
                 elementPathEnabled: false,
             })
         },
+        // 只读
         readonly: {
             type: Boolean,
             default: false
-        }
+        },
     },
     data () {
         return {
@@ -56,7 +59,7 @@ export default {
                 try{
                     this.ue.setContent(n);
                 } catch(e) {}
-            };
+            }
         }
     },
     computed: {
@@ -186,8 +189,8 @@ export default {
     },
     beforeDestroy() {
         this.ue && this.ue.destroy();
-    }
-}
+    },
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
