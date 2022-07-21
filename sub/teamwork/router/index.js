@@ -1,5 +1,5 @@
-import project from './modules/project'
-import login from './modules/login'
+import project from './modules/project';
+import login from './modules/login';
 
 export default {
     path: 'teamwork',
@@ -14,4 +14,4 @@ export default {
             ]
         }
     ]
-}
+};

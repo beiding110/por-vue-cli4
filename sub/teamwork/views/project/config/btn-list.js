@@ -10,15 +10,14 @@ export default [
             this.goto({
                 path: 'detail',
                 query: {
-                    rowguid: row.procode
-                }
-            })
-        }
-    }, {
+                    rowguid: row.procode,
+                },
+            });
+        },
+    },
+    {
         show(row, extra) {
-            return (
-                row.shbj !== '1'
-            );
+            return row.shbj !== '1';
         },
         tag: 'el-button',
         type: 'text',
@@ -27,9 +26,9 @@ export default [
             this.goto({
                 path: 'form',
                 query: {
-                    rowguid: row.procode
-                }
-            })
-        }
-    }
-]
+                    rowguid: row.procode,
+                },
+            });
+        },
+    },
+];

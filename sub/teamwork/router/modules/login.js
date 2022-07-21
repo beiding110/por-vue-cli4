@@ -5,4 +5,4 @@ export default {
     meta: {
         title: '子项目登录'
     }
-}
+};
