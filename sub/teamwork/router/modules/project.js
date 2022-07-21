@@ -43,6 +43,18 @@ export default {
                     }
                 ]
             }
-        }
+        }, {
+            path: 'detailfromsub',
+            component: () => import(/*webpackChunkName: 'pc-tw-project'*/ '@submodules/example/detail'),
+            meta: {
+                title: '依赖项目表单',
+                bread: [
+                    ...B_1, {
+                        title: '依赖项目表单',
+                        path: '/teamwork/project/detailfromsub'
+                    }
+                ]
+            }
+        },
     ]
 }
