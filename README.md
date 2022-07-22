@@ -5,7 +5,7 @@
 集成了appjs、常用组件库、等:
 
 * `ui库`：element-ui、mint-ui、
-* `工具库`：jquery、echarts、axios、nprogress、postcss-pxtorem、
+* `工具库`：jquery、echarts、axios、nprogress、postcss-pxtorem、cryptojs、
 * `css预处理`：~~node-sass~~、sass(dart-sass)、
 * `运维及统计`：sentry、cnzz、
 * `vue插件`：vue-mate-info、vuex-persistedstate、

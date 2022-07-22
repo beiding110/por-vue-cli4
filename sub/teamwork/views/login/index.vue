@@ -63,6 +63,8 @@
 </template>
 
 <script>
+import CryptoJS from 'crypto-js';
+
 export default {
     data: () => ({
         form: {
@@ -75,7 +77,12 @@ export default {
     methods: {
         /*登录函数*/
         login: function () {
-            this.$store.dispatch('teamwork/login', this.form);
+            var pwd = CryptoJS.SHA256(this.form.pwd).toString();
+
+            this.$store.dispatch('teamwork/login', {
+                ...this.form,
+                pwd,
+            });
         },
     },
     mounted() {},
