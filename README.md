@@ -9,6 +9,7 @@
 * `css预处理`：~~node-sass~~、sass(dart-sass)、
 * `运维及统计`：sentry、cnzz、
 * `vue插件`：vue-mate-info、vuex-persistedstate、
+* `富文本`：~~ueditor~~、tinymce、
 
 常用配置修改；
 

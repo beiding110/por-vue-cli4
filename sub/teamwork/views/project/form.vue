@@ -180,6 +180,16 @@
                     <my-upload-s :fileguid="form.fileguid"></my-upload-s>
                 </el-form-item>
             </my-form-item-group>
+
+            <my-form-item-group title="富文本">
+                <el-form-item
+                    label="tinymce"
+                    prop="tinymce"
+                    class="table-full-row"
+                >
+                    <tinymce v-model="form.tinymce"></tinymce>
+                </el-form-item>
+            </my-form-item-group>
         </my-form>
     </div>
 </template>
@@ -202,6 +212,9 @@ export default {
             datepicker: '',
             daterange: [],
             rate: 0,
+
+            tinymce: '',
+            tinymce2: '',
         },
 
         options: [
