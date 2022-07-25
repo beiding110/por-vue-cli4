@@ -1,5 +1,5 @@
 <template>
-    <el-card>
+    <div>
         <my-search
             v-model="pgData"
             @search="searchHandler"
@@ -179,7 +179,7 @@
             ref="page"
             :loading.sync="loadingController"
         ></my-pagination>
-    </el-card>
+    </div>
 </template>
 
 <script>

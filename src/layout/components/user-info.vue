@@ -37,7 +37,7 @@ export default {
     computed: {
         ...mapState({
             navDeopDownList: state => state.layout.navDropDown,
-            user: state => state.user.user,
+            user: state => state.userinfo.user,
         }),
         dwname() {
             return this.user.dwname || '游客';

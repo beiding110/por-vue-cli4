@@ -12,9 +12,9 @@
     v-loading.sync="submitLoadingController">
         <slot></slot>
         <el-form-item label-width="0" class="btn-row" v-if="!readonly">
-            <slot name="btn" :submit-handler="onSubmit" :cancel-handler="onCancle" :submit-loading="submitLoadingController">
+            <slot name="btn" :submit-handler="onSubmit" :cancel-handler="onCancel" :submit-loading="submitLoadingController">
                 <el-button type="primary" @click="onSubmit" :style="btn_styl" :loading="submitLoadingController">保存</el-button>
-                <el-button @click="onCancle" :style="btn_styl">取消</el-button>
+                <el-button @click="onCancel" :style="btn_styl">取消</el-button>
             </slot>
         </el-form-item>
     </el-form>
@@ -216,12 +216,12 @@ export default {
                 });
             }).run(this);
         },
-        onCancle: function () {
+        onCancel: function () {
             this.$emit('cancel');
         },
         close: function () {
             try {
-                this.onCancle();
+                this.onCancel();
 
                 this.submitEnd();
             } catch (e) {}
@@ -351,7 +351,7 @@ $tableBorderColor: #E8E8E8;
 
             .el-form-item__error{
                 top:auto; 
-                bottom:0; 
+                bottom:-6px; 
                 left:5px;
             }
         }

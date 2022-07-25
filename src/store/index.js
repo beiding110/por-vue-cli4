@@ -1,18 +1,18 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
+import Vue from 'vue';
+import Vuex from 'vuex';
 import createPersistedState from 'vuex-persistedstate';
-import {sub, subModules,} from './tools.js'
+import { sub, subModules } from './tools.js';
 
-import user from './modules/user.js'
-import api from './modules/api.js'
-import dictionary from './modules/dictionary.js'
-import system from './modules/system.js'
-import tagNav from './modules/tag-nav.js'
-import bread from './modules/bread.js'
-import config from './modules/config.js'
-import layout from './modules/layout.js'
+import userinfo from './modules/userinfo.js';
+import api from './modules/api.js';
+import dictionary from './modules/dictionary.js';
+import system from './modules/system.js';
+import tagNav from './modules/tag-nav.js';
+import bread from './modules/bread.js';
+import config from './modules/config.js';
+import layout from './modules/layout.js';
 
-Vue.use(Vuex)
+Vue.use(Vuex);
 
 export default new Vuex.Store({
     plugins: [
@@ -20,20 +20,12 @@ export default new Vuex.Store({
             storage: window.sessionStorage,
         }),
     ],
-    state: {
-
-    },
-    getters: {
-
-    },
-    mutations: {
-        
-    },
-    actions: {
-
-    },
+    state: {},
+    getters: {},
+    mutations: {},
+    actions: {},
     modules: {
-        user,
+        userinfo,
         api,
         dictionary,
         system,

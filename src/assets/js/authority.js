@@ -2,13 +2,13 @@ import Vue from 'vue'
 import store from '@store'
 
 function isAdmin() {
-    return store.state.user.isadmin === '1';
+    return store.state.userinfo.isadmin === '1';
 };
 
 const $au = {
     isAdmin,
     isAdder(row) {
-        return store.state.user.userid === row.adduserid;
+        return store.state.userinfo.userid === row.adduserid;
     }
 };
 Vue.prototype.$au = $au;

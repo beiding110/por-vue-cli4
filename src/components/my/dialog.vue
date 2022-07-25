@@ -1,14 +1,14 @@
 <template>
     <el-dialog
-    :title="title"
-    @opened="opened"
-    :width="width"
-    :visible.sync="model"
-    :append-to-body="true"
-    :close-on-click-modal="false"
-    @close = "close"
-    :show-close="showclose"
-    :before-close="beforeClose"
+        :title="title"
+        @opened="opened"
+        :width="width"
+        :visible.sync="model"
+        :append-to-body="true"
+        :close-on-click-modal="false"
+        @close="close"
+        :show-close="showclose"
+        :before-close="_beforeClose"
     >
 
         <slot></slot>
@@ -22,33 +22,31 @@ export default {
         // 弹框标题
         title: {
             type: String,
-            default: ''
+            default: '',
         },
         // 显示隐藏控制
         value: {
             type: Boolean,
-            default: false
+            default: false,
         },
         // 弹框宽度
         width: {
             type: String,
-            default: '50%'
+            default: '50%',
         },
         // 展示关闭按钮
         showclose: {
             type: Boolean,
-            default: true
+            default: true,
         },
         // 关闭前动作
-        beforeClose:{
-            type:[Function, Boolean],
-            default:false
-        }
+        beforeClose: {
+            type: [Function, Boolean],
+            default: false,
+        },
     },
-    data () {
-        return {
-
-        }
+    data() {
+        return {};
     },
     computed: {
         model: {
@@ -57,31 +55,28 @@ export default {
             },
             set(n, o) {
                 this.$emit('input', n);
-            }
-        }
+            },
+        },
     },
     methods: {
-        beforeClose:function(done){
-            if(typeof(this.beforeClose) == 'function'){
+        _beforeClose: function (done) {
+            if (typeof this.beforeClose == 'function') {
                 this.beforeClose(done);
-            }else{
+            } else {
                 done();
             }
         },
-        close(){
-            this.$emit('close')
+        close() {
+            this.$emit('close');
         },
         opened() {
-            this.$emit('show')
+            this.$emit('show');
         },
     },
-    mounted: function() {
-
-    }
-}
+    mounted: function () {},
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-
 </style>
