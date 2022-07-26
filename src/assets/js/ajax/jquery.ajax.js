@@ -1,85 +1,41 @@
 import Vue from 'vue';
+import argsCheck from './args-check';
 import resCheck from './res-check';
+import interceptorsReq from './interceptors-req';
 
 import util from './util';
 
 Vue.prototype.$ajax = function(obj) {
-    AjaxRequest.call(this, obj);
+    ajaxRequest.call(this, obj);
 };
 
 Vue.prototype.$get = function (a, b, c, d) {
-    var url, data, callback, fztype;
+    var settings = argsCheck(a, b, c, d);
 
-    url = a;
-    data = '';
-    callback = callback || function () {};
-    fztype = false;
-
-    if (arguments.length == 2 && typeof (b) == 'function') {
-        callback = b;
-    } else if (arguments.length == 2 && typeof (b) != 'function') {
-        data = b;
-    } else if (arguments.length == 3) {
-        if (typeof (arguments[arguments.length - 1]) == 'boolean') {
-            data = b;
-            fztype = c;
-        } else {
-            data = b;
-            callback = c;
-        }
-    } else if (arguments.length == 4) {
-        data = b;
-        callback = c;
-        fztype = d;
-    }
-
-    AjaxRequest.call(this, {
-        url: url,
-        data: data,
+    ajaxRequest.call(this, {
+        url: settings.url,
+        data: settings.data,
         type: 'get',
         callback: function (data, res) {
-            callback.call(this, data, res)
+            settings.callback.call(this, data, res)
         }.bind(this),
-        fztype: fztype
-    })
-}
+        fztype: settings.fztype
+    });
+};
 
 Vue.prototype.$post = function (a, b, c, d) {
-    var url, data, callback, fztype;
+    var settings = argsCheck(a, b, c, d);
 
-    url = a;
-    data = '';
-    callback = callback || function () {};
-    fztype = false;
-
-    if (arguments.length == 2 && typeof (b) == 'function') {
-        callback = b;
-    } else if (arguments.length == 2 && typeof (b) != 'function') {
-        data = b;
-    } else if (arguments.length == 3) {
-        if (typeof (arguments[arguments.length - 1]) == 'boolean') {
-            data = b;
-            fztype = c;
-        } else {
-            data = b;
-            callback = c;
-        }
-    } else if (arguments.length == 4) {
-        data = b;
-        callback = c;
-        fztype = d;
-    }
-
-    AjaxRequest.call(this, {
-        url: url,
-        data: data,
+    ajaxRequest.call(this, {
+        url: settings.url,
+        data: settings.data,
         type: 'post',
         callback: function (data, res) {
-            callback.call(this, data, res)
+            settings.callback.call(this, data, res)
         }.bind(this),
-        fztype: fztype
-    })
-}
+        fztype: settings.fztype
+    });
+};
 
 /***************************************
  ***发送ajax请求
@@ -89,30 +45,26 @@ Vue.prototype.$post = function (a, b, c, d) {
  ****** callback 请求成功回调//c\d
  *fztype 是否复杂回调
  ***************************************/
-function AjaxRequest(settings) {
+function ajaxRequest(settings) {
     try {
         this.loadingController = true;
     } catch (e) {}
 
-    var c_data = clone(settings.data),
-        that = this;
+    var that = this;
 
-    c_data = !!settings.fztype ? JSON.stringify(c_data) : c_data;
-    var contentType = !!settings.fztype ? 'application/json;charset=UTF-8' : 'application/x-www-form-urlencoded;charset=UTF-8';
-    var callback = settings.callback || function () {}
+    settings = interceptorsReq(settings);
 
     $.ajax({
-        url: /\?/.test(settings.url) ? settings.url + '&random=' + getTimeStrmp() : settings.url + '?random=' + getTimeStrmp(),
-        type: settings.type || 'get',
-        data: c_data,
-        contentType: contentType,
+        url: settings.url,
+        type: settings.type,
+        data: settings.data,
+        contentType: settings.headers['Content-Type'],
         headers: {
             pageuser: getSession('user') ? getSession('user').userid : '',
             usetool: 'wechat',
             pageurl: window.location.href.replace(window.location.search, '')
         },
         success: function (data) {
-
             var obj = (typeof (data) == 'string' && /{|}/.test(data)) ? JSON.parse(data) : data;
 
             //反编码
@@ -133,32 +85,25 @@ function AjaxRequest(settings) {
             }
             decode(obj);
 
-
-            ajaxResCheck.call(that, obj, settings, callback);
+            ajaxResCheck.call(that, obj, settings, settings.callback);
         },
         //AJAX请求结束后，
         complete: function (xhr, status) {
             try {
                 that.loadingController = false;
-            } catch (e) {}
-            try {
-                if (xhr.responseJSON.result == "login-index") {
-                    if (window.parent != window) {
-                        window.top.location.href = htmlUrl + "/login.html";
-                    } else {
-                        location.href = htmlUrl + "/login.html";
-                    }
-                }
             } catch (e) {
-                // TODO: handle exception
-            };
-
-            !!settings.complete && settings.complete();
+                // e
+            }
+            
+            settings.complete();
         },
         error: function(XHR, textStatus, errorThrown){
             try {
                 that.loadingController = false;
-            } catch (e) {}
+            } catch (e) {
+                // e
+            }
+
             var switchObj = {
                 '0': '请求发生错误，请检查网络及登录状态',
                 '401': '访问被拒绝',
@@ -179,7 +124,8 @@ function AjaxRequest(settings) {
                 '503': '服务不可用',
                 '504': '请求超时，请检查网络'
             };
-            ShowMsg.call(that, (XHR.status && switchObj[XHR.status]) ? (XHR.status + '：' + switchObj[XHR.status]) : '请求失败，请重试');
+            
+            showMsg.call(that, (XHR.status && switchObj[XHR.status]) ? (XHR.status + '：' + switchObj[XHR.status]) : '请求失败，请重试');
 
             !!settings.error && settings.error();
 
@@ -189,7 +135,7 @@ function AjaxRequest(settings) {
                 msg: 'ajax-error'
             });
         }
-    })
+    });
 }
 
 /**
@@ -199,4 +145,4 @@ function AjaxRequest(settings) {
  * @param  {Function} callback 回调函数
  * @return {null}            [description]
  */
- window.ajaxResCheck = resCheck
+window.ajaxResCheck = resCheck;

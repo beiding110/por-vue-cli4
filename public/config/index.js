@@ -11,6 +11,7 @@
             show: 'pic1'
         },
         api: {
+            globalUrl: '',
             twUrl: '/pms/teamwork',
             sysUrl: '/pms',
             fileUrl: '/pms/sysfile',

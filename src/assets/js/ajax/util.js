@@ -5,8 +5,9 @@ export default {
             req: settings,
             res: obj
         };
+
         setTimeout(() => {
             throw new Error(JSON.stringify(json));
         }, 0);
     }
-}
+};

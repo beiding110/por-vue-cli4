@@ -1,15 +1,21 @@
 <template>
-    <el-button :type="map.type" :icon="map.icon" @click="map.click"><slot>{{map.text}}</slot></el-button>
+    <el-button
+        :type="map.type"
+        :icon="map.icon"
+        @click="map.click"
+    >
+        <slot>{{map.text}}</slot>
+    </el-button>
 </template>
 
 <script>
 export default {
     props: {
         type: {
-            type: String
-        }
+            type: String,
+        },
     },
-    data () {
+    data() {
         var that = this;
 
         const CONFIG_BTN = this.$store.state.config.sys.btn,
@@ -23,7 +29,7 @@ export default {
                     icon: 'el-icon-edit-outline',
                     click() {
                         that.$emit('click');
-                    }
+                    },
                 },
                 del: {
                     type: 'text',
@@ -33,7 +39,7 @@ export default {
                         showConfirm(CONFIG_MSG.del_warning, 'warning', () => {
                             that.$emit('click');
                         });
-                    }
+                    },
                 },
                 detail: {
                     type: 'text',
@@ -41,16 +47,16 @@ export default {
                     icon: 'el-icon-document',
                     click() {
                         that.$emit('click');
-                    }
+                    },
                 },
 
                 new: {
                     type: 'success',
-                    text: CONFIG_BTN.add,
+                    text: CONFIG_BTN.new,
                     icon: 'el-icon-plus',
                     click() {
                         that.$emit('click');
-                    }
+                    },
                 },
                 gdel: {
                     type: 'danger',
@@ -60,19 +66,19 @@ export default {
                         showConfirm(CONFIG_MSG.del_warning, 'warning', () => {
                             that.$emit('click');
                         });
-                    }
-                }
-            }
-        }
+                    },
+                },
+            },
+        };
     },
     computed: {
         map() {
             var type = this.type || '';
 
-            return this.switchObj[type]
-        }
-    }
-}
+            return this.switchObj[type];
+        },
+    },
+};
 </script>
 
 <style scoped lang="scss">

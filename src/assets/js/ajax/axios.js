@@ -10,13 +10,14 @@ $axios.defaults.withCredentials = true;
 
 //request拦截器
 $axios.interceptors.request.use(config => {
-    return new Promise((resolve) => {
-        config.url += (/\?/.test(config.url) ? `&ts=${new Date().getTime()}` : `?ts=${new Date().getTime()}`);
 
+    return new Promise((resolve) => {
         resolve(config);
     });
+
 }, function (error) {
     // 对请求错误做些什么
+    // 请求拦截统一在方法中处理
     return Promise.reject(error);
 });
 // response拦截器
