@@ -88,10 +88,10 @@ export default {
             type: Boolean,
             default: false,
         },
-        // 输入框中是否显示选中值的完整路径	
+        // 输入框中是否显示选中值的完整路径，同时作用于2way的字段
         showAllLevels: {
             type: Boolean,
-            default: true,
+            default: false,
         },
     },
     data() {
@@ -287,8 +287,12 @@ export default {
                 return nodeItem.data[key];
             });
 
-            if (!this.mixedProps.emitPath) {
-                item = item.join(this['2wayStrSpliter']);
+            if (this.showAllLevels) {
+                if (!this.mixedProps.emitPath) {
+                    item = item.join(this['2wayStrSpliter']);
+                } 
+            } else {
+                item = item[item.length - 1];
             }
 
             return item;
