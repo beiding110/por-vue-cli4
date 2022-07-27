@@ -12,6 +12,11 @@ export default function request(config) {
         ts = new Date().getTime(),
         headers = {
             'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
+            'Authorization': '',
+            'bidding-auth': '',
+            pageuser: getSession('user') ? getSession('user').userid : '',
+            usetool: 'wechat',
+            pageurl: window.location.href.replace(window.location.search, ''),
         };
 
     if (api.globalUrl) {

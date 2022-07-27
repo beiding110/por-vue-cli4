@@ -2,6 +2,7 @@ import Vue from 'vue';
 import resCheck from './res-check';
 import argsCheck from './args-check';
 import interceptorsReq from './interceptors-req';
+import resError from './res-error';
 
 /**
 * 判断是否为服务器端
@@ -34,11 +35,15 @@ var ajaxKeyMap = function(type) {
             var settings = argsCheck(a, b, c, d);
 
             settings = interceptorsReq(settings);
+            settings.type = 'get';
 
             axios.get(settings.url, {
-                params: settings.data
+                params: settings.data,
+                headers: settings.headers,
             }).then(([data, res]) => {
                 settings.callback.call(this, data, res);
+            }).catch(err => {
+                resError(err.response, settings);
             });
         }
 
@@ -46,11 +51,14 @@ var ajaxKeyMap = function(type) {
             var settings = argsCheck(a, b, c, d);
 
             settings = interceptorsReq(settings);
+            settings.type = 'post';
 
             axios.post(settings.url, settings.data, {
                 headers: settings.headers,
             }).then(([data, res]) => {
                 settings.callback.call(this, data, res);
+            }).catch(err => {
+                resError(err.response, settings);
             });
         }
 
@@ -66,7 +74,9 @@ var ajaxKeyMap = function(type) {
 
             axios(axiosSetting).then(([data, res]) => {
                 axiosSetting.callback && axiosSetting.callback.call(this, data, res);
-            }).catch(e => {}).finally(() => {
+            }).catch(err => {
+                resError(err.response, settings);
+            }).finally(() => {
                 axiosSetting.complete && axiosSetting.complete.call(this);
             });
         }

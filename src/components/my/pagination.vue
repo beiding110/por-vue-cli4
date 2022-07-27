@@ -3,7 +3,7 @@
         <el-pagination
             layout="prev, pager, next, total"
             :total="total"
-            :page-size="!!search ? search.pagesize || defaultSearch.pagesize : defaultSearch.pagesize"
+            :page-size="!!search ? search[props.pagesize] || defaultSearch[props.pagesize] : defaultSearch[props.pagesize]"
             :current-page.sync="currentPage"
             @current-change="handleCurrentChange"
         ></el-pagination>
@@ -11,8 +11,8 @@
 </template>
 
 <script>
-import NProgress from 'nprogress'
-import 'nprogress/nprogress.css'
+import NProgress from 'nprogress';
+import 'nprogress/nprogress.css';
 
 import { Loading } from 'element-ui';
 
@@ -63,44 +63,56 @@ export default {
             type: Boolean,
             default: true,
         },
+        props: {
+            type: Object,
+            default: () => ({
+                pagesize: 'pagesize',
+                pageindex: 'pageindex',
+                total: 'total',
+                rows: 'rows',
+            }),
+        },
     },
     data () {
+        var props = this.props;
+
         return {
             total: 1,
             currentPage: 1,
             defaultSearch: {
                 sortname: 'addtime',
                 sortorder: 'desc',
-                pagesize: 20
+                [props.pagesize]: 20
             },
 
             elLoading: null
-        }
+        };
     },
     computed: {
         pageData: {
             get: function () {
-                return this.value
+                return this.value;
             },
             set: function (e) {
-                this.$emit('input', e)
+                this.$emit('input', e);
             }
         }
     },
     methods: {
         queryData: function (page) {
             var that = this;
+
             NProgress.start();
 
-            if(this.useLoading) {
-                var table = this.$parent.$children.filter(item => {
-                    return /el-table/.test(item.$el.className)
-                })[0],
+            if (this.useLoading) {
+                let table = this.$parent.$children.filter(item => {
+                        return /el-table/.test(item.$el.className)
+                    })[0],
                     target = table ? table.$el : '#view-content';
 
-                try{
+                try {
                     this.elLoading.close();
-                } catch(e) {
+                } catch (e) {
                     // e
                 }
                 
@@ -113,7 +125,7 @@ export default {
 
             this.$emit('update:loading', true);
 
-            this.$nextTick(function () {
+            this.$nextTick(() => {
                 if (!that.action) {
                     console.error('请绑定action属性（数据api请求地址）');
 
@@ -126,7 +138,7 @@ export default {
                 page = queryPage ? queryPage : (page || 1);
 
                 this.currentPage = page;
-                searchData.pageindex = page;
+                searchData[this.props.pageindex] = page;
 
                 window.mixin(this.defaultSearch, searchData);
 
@@ -136,18 +148,18 @@ export default {
                     url: that.action,
                     data: searchData,
                     callback: (data, res) => {
-                        if (data.rows.length === 0 && this.currentPage !== 1) {
+                        if (data[this.props.rows].length === 0 && this.currentPage !== 1) {
                             this.queryData(--this.currentPage);
                             return;
                         }
 
-                        !!this.afterQuery && this.afterQuery(data.rows, data);
+                        !!this.afterQuery && this.afterQuery(data[this.props.rows], data);
 
                         that.$emit('update:loading', false);
-                        that.pageData = data.rows;
+                        that.pageData = data[this.props.rows];
 
-                        that.$nextTick(function() {
-                            that.total = data.total;
+                        that.$nextTick(() => {
+                            that.total = data[this.props.total];
                         });
 
                         this.$emit('update:statistics', data.statistics);
@@ -155,12 +167,12 @@ export default {
                     complete() {
                         NProgress.done();
 
-                        if(that.useLoading) {
+                        if (that.useLoading) {
                             that.elLoading.close();
                         }
                     }
                 });
-            })
+            });
         },
         handleCurrentChange: function (e) {
             this.$emit('currentChange', e);
