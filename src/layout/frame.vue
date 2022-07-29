@@ -1,62 +1,61 @@
 <template>
-    <div 
-    class="layout" 
-    :class="{mobile:mobile, 'view-only':viewOnly}"
+    <div
+        class="layout"
+        :class="{mobile:mobile, 'view-only':viewOnly}"
     >
-        <div 
+        <div
             v-if="showController"
-            class="left-nav-cover" 
+            class="left-nav-cover"
             @click="toggleShowController"
         ></div>
-        
-        <div 
-        v-if="!viewOnly"
-        class="left-nav" 
-        :class="{collapse:collapseController, show:showController}" 
+
+        <div
+            v-if="!viewOnly"
+            class="left-nav"
+            :class="{collapse:collapseController, show:showController}"
         >
-            <logo-img 
-                :small="collapseController"
-            ></logo-img>
+            <logo-img :small="collapseController"></logo-img>
 
             <div class="menu-con">
                 <el-menu
-                router
-                :collapse="collapseController"
-                :background-color="colors.navBgColor"
-                :text-color="colors.navTextColor"
-                :active-text-color="colors.navTextActiveColor"
-                default-active="2">
+                    router
+                    :collapse="collapseController"
+                    :background-color="colors.navBgColor"
+                    :text-color="colors.navTextColor"
+                    :active-text-color="colors.navTextActiveColor"
+                    default-active="2"
+                >
                     <my-nav-menu :list="menuList"></my-nav-menu>
                 </el-menu>
             </div>
         </div>
 
-        <div 
-        v-if="!viewOnly"
-        class="top-nav" 
-        :class="{collapse:collapseController,'with-tag-nav':tagNav}" 
+        <div
+            v-if="!viewOnly"
+            class="top-nav"
+            :class="{collapse:collapseController,'with-tag-nav':tagNav}"
         >
             <div class="nav-row">
                 <div class="left">
-                    <div 
-                    v-if="!mobile"
-                    class="btn-coll btn_top-nav" 
-                    @click="toggleCollapse" 
+                    <div
+                        v-if="!mobile"
+                        class="btn-coll btn_top-nav"
+                        @click="toggleCollapse"
                     >
                         <i :class="{'el-icon-s-fold':!collapseController,'el-icon-s-unfold':collapseController}"></i>
                     </div>
 
-                    <div 
-                    v-else
-                    class="btn-coll btn_top-nav" 
-                    @click="toggleCollapse" 
+                    <div
+                        v-else
+                        class="btn-coll btn_top-nav"
+                        @click="toggleCollapse"
                     >
                         <i class="el-icon-s-unfold"></i>
                     </div>
-                    
-                    <div 
-                    class="btn-back btn_top-nav circle" 
-                    @click="goBack"
+
+                    <div
+                        class="btn-back btn_top-nav circle"
+                        @click="goBack"
                     >
                         <i class="el-icon-back"></i>
                     </div>
@@ -72,10 +71,10 @@
             <tag-nav v-if="tagNav"></tag-nav>
         </div>
 
-        <div 
-        class="view" 
-        :class="{collapse:collapseController,'with-tag-nav':tagNav}" 
-        id="view-content"
+        <div
+            class="view"
+            :class="{collapse:collapseController,'with-tag-nav':tagNav}"
+            id="view-content"
         >
             <router-view :key="$route.fullPath" />
         </div>
@@ -83,23 +82,23 @@
 </template>
 
 <script>
-import {mapState} from 'vuex';
+import { mapState } from 'vuex';
 
-import MyBreadcrumb from './components/breadcrumb'
-import UserInfo from './components/user-info'
-import LogoImg from './components/logo-img'
-import TagNav from './components/tag-nav'
+import MyBreadcrumb from './components/breadcrumb';
+import UserInfo from './components/user-info';
+import LogoImg from './components/logo-img';
+import TagNav from './components/tag-nav';
 
-import lessVars from '@css/var.scss'
+import lessVars from '@css/var.scss';
 
 export default {
     components: {
-        MyBreadcrumb, 
-        UserInfo, 
-        LogoImg, 
+        MyBreadcrumb,
+        UserInfo,
+        LogoImg,
         TagNav,
     },
-    data () {
+    data() {
         return {
             collapseController: false,
             showController: false,
@@ -108,21 +107,21 @@ export default {
             viewOnly: false,
             tagNav: false,
 
-            colors: lessVars
-        }
+            colors: lessVars,
+        };
     },
     computed: {
         ...mapState({
-            menuList: state => state.layout.nav,
+            menuList: (state) => state.layout.nav,
         }),
     },
     methods: {
         toggleCollapse() {
-            if(this.mobile) {
+            if (this.mobile) {
                 this.toggleShowController();
                 return;
             }
-            
+
             this.collapseController = !this.collapseController;
         },
         toggleShowController() {
@@ -132,14 +131,14 @@ export default {
             this.$router.go(-1);
         },
         resizeHandler() {
-            if(window.innerWidth < 1000) {
+            if (window.innerWidth < 1000) {
                 this.mobile = true;
             } else {
                 this.mobile = false;
             }
         },
         checkFrameChild() {
-            if(window !== window.top) {
+            if (window !== window.top) {
                 this.viewOnly = true;
             }
         },
@@ -150,13 +149,17 @@ export default {
 
         this.checkFrameChild();
     },
-    mounted: function() {
+    mounted: function () {
+        // 请求用户信息
         // this.$store.dispatch('queryUserInfo');
+
+        // 请求用户菜单
+        this.$store.dispatch('getMenu');
     },
     beforeDestroy() {
         window.removeEventListener('resize', this.resizeHandler);
     },
-}
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
