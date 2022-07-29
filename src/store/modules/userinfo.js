@@ -27,6 +27,13 @@ export default {
                 router.replace('/teamwork/project/list');
             });
         },
+        logout() {
+            Vue.prototype.$get(`/pms/logout`, () => {                
+                store.commit('setUser', {});
+
+                router.push('/login');
+            });
+        },
         queryUserInfo({ state, dispatch }, requery) {
             // if(!requery) {
             //     var userInfo = store.getters.user;

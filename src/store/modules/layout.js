@@ -1,5 +1,3 @@
-import Vue from 'vue';
-import router from '@router/index';
 import store from '@store/index';
 
 export default {
@@ -9,12 +7,8 @@ export default {
                 text: '退出登录',
                 icon: 'el-icon-switch-button',
                 command: () => {
-                    Vue.prototype.$get(`${store.getters.sysUrl}/logout`, () => {
-                        router.push('/login');
-                        
-                        store.commit('setUser', {});
-                    });
-                }
+                    store.dispatch('logout');
+                },
             },
         ],
         nav: [
