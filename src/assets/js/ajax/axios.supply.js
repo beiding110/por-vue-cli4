@@ -43,7 +43,14 @@ var ajaxKeyMap = function(type) {
             }).then(([data, res]) => {
                 settings.callback.call(this, data, res);
             }).catch(err => {
-                resError(err.response, settings);
+                if (err.response) {
+                    resError(err.response, settings);
+                } else {
+                    console.error({
+                        err,
+                        settings,
+                    });
+                }
             });
         }
 
@@ -58,7 +65,14 @@ var ajaxKeyMap = function(type) {
             }).then(([data, res]) => {
                 settings.callback.call(this, data, res);
             }).catch(err => {
-                resError(err.response, settings);
+                if (err.response) {
+                    resError(err.response, settings);
+                } else {
+                    console.error({
+                        err,
+                        settings,
+                    });
+                }
             });
         }
 
@@ -75,7 +89,14 @@ var ajaxKeyMap = function(type) {
             axios(axiosSetting).then(([data, res]) => {
                 axiosSetting.callback && axiosSetting.callback.call(this, data, res);
             }).catch(err => {
-                resError(err.response, settings);
+                if (err.response) {
+                    resError(err.response, axiosSetting);
+                } else {
+                    console.error({
+                        err,
+                        settings,
+                    });
+                }
             }).finally(() => {
                 axiosSetting.complete && axiosSetting.complete.call(this);
             });
