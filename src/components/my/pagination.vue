@@ -140,7 +140,10 @@ export default {
                 this.currentPage = page;
                 searchData[this.props.pageindex] = page;
 
-                window.mixin(this.defaultSearch, searchData);
+                searchData = {
+                    ...this.defaultSearch,
+                    ...searchData,
+                };
 
                 !!this.beforeQuery && this.beforeQuery(searchData);
 
