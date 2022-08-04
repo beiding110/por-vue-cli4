@@ -84,6 +84,7 @@ var ajaxKeyMap = function(type) {
                 axiosSetting[item[1]] = settings[item[0]];
             });
 
+            axiosSetting.type = settings.type;
             axiosSetting = interceptorsReq(axiosSetting);
 
             axios(axiosSetting).then(([data, res]) => {

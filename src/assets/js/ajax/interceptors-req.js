@@ -25,11 +25,13 @@ export default function request(config) {
 
     url = /\?/.test(url) ? url + '&random=' + ts : url + '?random=' + ts;
 
-    if (fztype) {
-        headers['Content-Type'] = 'application/json;charset=UTF-8';
-        data = JSON.stringify(data);
-    } else {
-        data = qs.stringify(data);
+    if (type === 'post') {
+        if (fztype) {
+            headers['Content-Type'] = 'application/json;charset=UTF-8';
+            data = JSON.stringify(data);
+        } else {
+            data = qs.stringify(data);
+        }
     }
 
     callback = callback || function () {};
