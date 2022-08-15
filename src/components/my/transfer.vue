@@ -161,9 +161,9 @@ export default {
             return item[this.reprops["label"]].indexOf(query) > -1;
         },
         queryData: function () {
-            if(!this.action) return;
+            if(!this.url) return;
             
-            this.$get(this.action, data => {
+            this.$get(this.url, data => {
                 this.dataInit(data)
             });
         },

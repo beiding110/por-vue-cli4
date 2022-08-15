@@ -95,8 +95,8 @@ export default {
     },
     methods: {
         queryData: function () {
-            if (this.action) {
-                this.$get(this.action, function (data) {
+            if (this.url) {
+                this.$get(this.url, function (data) {
                     this.list = data;
                     this.options = this.list2map(data || []);
                 })
