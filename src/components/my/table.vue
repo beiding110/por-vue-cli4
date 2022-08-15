@@ -10,7 +10,7 @@
     :show-summary="showSummary"
     :span-method="spanMethod"
     :row-key="rowKey"
-    default-expand-all
+    :default-expand-all="defaultExpandAll"
     @selection-change="handleSelectionChange"
     @sort-change="sortChange"
     >
@@ -32,14 +32,14 @@ export default {
         data: {
             type: Array,
             default() {
-                return []
+                return [];
             },
         },
         // 表格支持选中时，选中的值
         value: {
             type: Array,
             default() {
-                return []
+                return [];
             },
         },
         // 自动请求数据地址
@@ -58,8 +58,8 @@ export default {
             default() {
                 return {
                     sortname: 'addtime',
-                    sortorder: 'desc'
-                }
+                    sortorder: 'desc',
+                };
             }
         },
         // 合计方法
@@ -107,13 +107,20 @@ export default {
             type: String,
             default: '',
         },
+        // 默认展开
+        defaultExpandAll: {
+            type: Boolean,
+            default: true,
+        },
     },
     data () {
         return {
             innerData: [],
 
             valueWatchLock: false,
-        }
+
+            ordinary: {},
+        };
     },
     computed: {
         tableData() {
@@ -123,13 +130,13 @@ export default {
     watch: {
         value: {
             handler(n, o) {
-                if(n === o || !n) return;
-                if(!this.tableData.length) return;
-                if(this.valueWatchLock) return;
+                if (n === o || !n) return;
+                if (!this.tableData.length) return;
+                if (this.valueWatchLock) return;
 
                 this.$nextTick(() => {
                     this.setRowSelection(n);
-                })
+                });
             }, deep: true
         },
         data: {
@@ -158,22 +165,22 @@ export default {
         sortorder(str) {
             try {
                 if (str.indexOf('asc') > -1) {
-                    return 'asc'
+                    return 'asc';
                 } else if (str.indexOf('desc') > -1) {
-                    return 'desc'
+                    return 'desc';
                 }
             } catch (e) {
-                return str
+                return str;
             }
         },
         queryData: function () {
             if (!this.url) return;
             
-            this.$get(this.url, this.search, function (data) {
+            this.$get(this.url, this.search, (data) => {
                 this.afterQuery && this.afterQuery(data);
 
                 this.innerData = data;
-            })
+            });
         },
         setRowSelection(rows) {
             if (rows) {
@@ -193,10 +200,13 @@ export default {
             this.$refs.table.doLayout();
         },
     },
+    created() {
+        this.ordinary = this.search;
+    },
     mounted: function() {
         this.queryData();
     },
-}
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
