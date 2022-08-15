@@ -18,7 +18,6 @@
                 class="uploader"
                 :action="actionModel.upload"
                 :show-file-list="false"
-                :data="extraData"
                 :on-exceed="handleExceed"
                 :on-success="onSuccess"
                 :on-error="onError"
@@ -26,7 +25,7 @@
                 :limit="limit"
                 :accept="filetype"
                 :http-request="httpUploadHandler"
-                multiple
+                :multiple="multipleSelect"
                 >
                     <i 
                         class="el-icon-plus uploader-icon"

@@ -55,6 +55,16 @@ export default {
             type: [Boolean, Function],
             default: false,
         },
+        // 选择文件时，是否多选
+        multipleSelect: {
+            type: Boolean,
+            default: false,
+        },
+        // 提示信息
+        tip: {
+            type: String,
+            default: '',
+        },
     },
     data: function () {
         return {
@@ -115,17 +125,11 @@ export default {
                 str.push(`最多上传${this.limit}个`);
             }
 
+            if (this.tip) {
+                str.push(this.tip);
+            }
+
             return str.join('，');
-        },
-        extraData: function () {
-            var extra = {
-                fileguid: this.fileguid,
-                single: (this.single * 1),
-            };
-
-            mixin(this.extra, extra, true);
-
-            return extra;
         },
         pathSupply() {
             return /micromessenger/i.test(navigator.userAgent) ? '?mp.wexin.qq.com' : '';
@@ -381,10 +385,14 @@ export default {
          * 上传接口
          */
         submitUpload: function () {
-            this.$refs.FileUp.submit();
+            this.$refs.upload.submit();
         },
         fileListUpdateHandler: function() {
-            this.$refs.upload.clearFiles();
+            try {
+                this.$refs.upload.clearFiles();
+            } catch (e) {
+                // e
+            }
 
             this.$emit('update', this.fileList);
             this.$emit('update:files', this.fileList);
@@ -419,25 +427,43 @@ export default {
          * 上传操作
          */
         httpUploadHandler(options) {
-            if (options.file.size <= this.chunkSize) {
-                const req = ajax(options);
+            new Chain()
+                .link(next => {
+                    // 混入请求参数
+                    options.data = {
+                        ...options.data,
+                        ...this.extra,
 
-                if (req && req.then) {
-                    req.then(options.onSuccess, options.onError);
-                }
-            } else {
-                this.loadingBarShowController = true;
+                        fileguid: this.fileguid,
+                        single: (this.single * 1),
+                    };
 
-                new BigFilePipeline(options).setAction(this.actionModel.uploadL).cheapReq((itemOptions) => {
-                    const req = ajax(itemOptions);
+                    next();
+                })
+                .link(() => {
 
-                    if (req && req.then) {
-                        req.then(itemOptions.onSuccess, itemOptions.onError);
+                    if (options.file.size <= this.chunkSize) {
+                        const req = ajax(options);
+        
+                        if (req && req.then) {
+                            req.then(options.onSuccess, options.onError);
+                        }
+                    } else {
+                        this.loadingBarShowController = true;
+        
+                        new BigFilePipeline(options).setAction(this.actionModel.uploadL).cheapReq((itemOptions) => {
+                            const req = ajax(itemOptions);
+        
+                            if (req && req.then) {
+                                req.then(itemOptions.onSuccess, itemOptions.onError);
+                            }
+                        }).onProgress(val => {
+                            this.percent = val;
+                        }).run();
                     }
-                }).onProgress(val => {
-                    this.percent = val;
-                }).run();
-            }
+
+                })
+                .run();            
         },
         /**
          * 更新防抖弹窗变量
@@ -447,16 +473,16 @@ export default {
 
             this.debounceDialogs = {
                 filetype: debounce(() => {
-                    showMsg(`文件类型应为:${that.filetype}`, 'error');
+                    showMsgBox(`文件类型应为:${that.filetype}`, 'error');
                 }, 1000 / 24),
                 limit: debounce(() => {
-                    showMsg(`总文件数量超过${that.computeLimit}个`, 'error');
+                    showMsgBox(`总文件数量超过${that.computeLimit}个`, 'error');
                 }, 1000 / 24),
                 filesize: debounce(() => {
-                    showMsg(`文件大小超过:${that.filesize}M`, 'error');
+                    showMsgBox(`文件大小超过:${that.filesize}M`, 'error');
                 }, 1000 / 24),
                 avcmp4: debounce(() => {
-                    showMsg(`您上传的视频文件不是avc编码格式的mp4文件，请修改后重新上传`, 'error');
+                    showMsgBox(`您上传的视频文件不是avc编码格式的mp4文件，请修改后重新上传`, 'error');
                 }, 1000 / 24),
             };
         },

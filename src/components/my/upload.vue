@@ -9,7 +9,6 @@
         :drag="drag && !readonly"
         :action="actionModel.upload"
         :show-file-list="false"
-        :data="extraData"
         :on-exceed="handleExceed"
         :on-success="onSuccess"
         :on-error="onError"
@@ -18,7 +17,7 @@
         :accept="filetype"
         :auto-upload="!lazy"
         :http-request="httpUploadHandler"
-        multiple
+        :multiple="multipleSelect"
         >
             <slot slot="trigger">
                 <template v-if="!drag">
@@ -26,6 +25,7 @@
                     v-show="!readonly"
                     size="small" 
                     type="primary" 
+                    :disabled="loadingBarShowController"
                     >
                         <i class="el-icon-upload"></i>
                         点击上传
@@ -64,6 +64,14 @@
                 </span>
             </span>
 
+            <el-collapse-transition>
+                <el-progress 
+                    v-if="loadingBarShowController"
+                    class="bigfile-percent"
+                    :percentage="percent"
+                ></el-progress>
+            </el-collapse-transition>
+
             <el-button 
             style="margin-left: 10px;" 
             size="small" 
@@ -92,15 +100,16 @@
             <el-table-column label="文件名称" sortable>
                 <template slot-scope="scope">
                     <a
+                    class="file-link"
                     target="_blank"
                     :href="buildDownloadPath(scope.row)">
                         {{scope.row.filename}}
                     </a>
                 </template>
             </el-table-column>
-            <el-table-column prop="fileuptime" label="上传时间" sortable></el-table-column>
-            <el-table-column prop="addusername" label="上传人"></el-table-column>
-            <el-table-column label="操作" width="150px" v-if="!readonly">
+            <el-table-column prop="fileuptime" label="上传时间" sortable width="160"></el-table-column>
+            <el-table-column prop="addusername" label="上传人" width="140"></el-table-column>
+            <el-table-column label="操作" width="80px" v-if="!readonly">
                 <template slot-scope="scope">
                     <el-button size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
                 </template>
@@ -148,6 +157,10 @@ export default {
             margin: 4px 0 6px;
         }
         .btn-sf-del{cursor:pointer;}
-        .btn-sf-del:hover{color:red;}
+        .btn-sf-del:hover{color: $dangerColor;}
+
+        .file-link{
+            color: $primaryColor;
+        }
     }
 </style>
