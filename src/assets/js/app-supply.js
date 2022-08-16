@@ -107,7 +107,9 @@ import Vue from 'vue'
     */
     owner.newRule = function () {
         let arg = [], rules = [];
+
         arg = Array.prototype.slice.apply(arguments);
+
         let label = arg.splice(0, 1),
             changeState = false;
 
@@ -137,7 +139,7 @@ import Vue from 'vue'
             if (item === 'required') {
                 rules.push.apply(rules, [{
                     required: true,
-                    message: '请输入' + label,
+                    message: '请完善' + label,
                     trigger: ['blur']
                 }, {
                     validator(rules, value, callback) {
@@ -149,26 +151,28 @@ import Vue from 'vue'
                         callback();
                     },
                     trigger: ['blur']
-                }])
-            };
+                }]);
+            }
 
             if (/min/.test(item)) {
                 let length = item.split('min')[1];
+
                 rules.push({
                     min: parseInt(length),
                     message: '至少输入' + length + '个字符',
                     trigger: 'blur'
                 });
-            };
+            }
 
             if (/max/.test(item)) {
                 let length = item.split('max')[1];
+
                 rules.push({
                     max: parseInt(length),
                     message: '至多输入' + length + '个字符',
                     trigger: ['blur']
                 });
-            };
+            }
 
             if (item === 'mobile') {
                 rules.push({
@@ -179,8 +183,8 @@ import Vue from 'vue'
                         callback();
                     },
                     trigger: ['blur']
-                })
-            };
+                });
+            }
 
             if (item === 'ucc') {
                 rules.push({
@@ -216,13 +220,25 @@ import Vue from 'vue'
                             if (logiccheckcode != checkcode) {
                                 return callback(new Error('不是有效的统一社会信用编码'));
                             };
-                        };
+                        }
 
                         callback();
                     },
                     trigger: ['blur', 'change']
-                })
-            };
+                });
+            }
+
+            if (item === 'idcard') {
+                rules.push({
+                    validator(rules, value, callback) {
+                        if (!/(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/.test(value)) {
+                            return callback(new Error('身份证号格式错误'));
+                        }
+                        callback();
+                    },
+                    trigger: ['blur']
+                });
+            }
 
             Object.keys(typeMap).forEach(function (key, index) {
                 if (item === key) {
@@ -230,7 +246,7 @@ import Vue from 'vue'
                         type: key,
                         message: '请输入正确的' + typeMap[key] + '格式',
                         trigger: ['blur']
-                    })
+                    });
                 }
             });
         });
@@ -238,11 +254,11 @@ import Vue from 'vue'
         if (changeState) {
             rules.forEach((item) => {
                 item.trigger.push('change');
-            })
+            });
         }
 
-        return rules
-    }
+        return rules;
+    };
 
     owner.timeRangeComputeFactory = function(startkey, endkey) {
         return {
