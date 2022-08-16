@@ -111,7 +111,7 @@
             <el-table-column prop="addusername" label="上传人" width="140"></el-table-column>
             <el-table-column label="操作" width="80px" v-if="!readonly">
                 <template slot-scope="scope">
-                    <el-button size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+                    <el-button size="mini" type="danger" @click="handleDelete(scope.row, scope.$index)">删除</el-button>
                 </template>
             </el-table-column>
         </el-table>
