@@ -32,6 +32,21 @@ export function showMB (msg, type, callback) {
     }
 }
 
+export function unlockMB() {
+    donotShowAgain = false;
+}
+
 export function lockMB() {
     donotShowAgain = true;
+
+    if (window) {
+        // 如果页面发生了切换，则取消lock
+        function hashChangeHandler() {
+            unlockMB();
+
+            window.removeEventListener('hashchange', hashChangeHandler);
+        }
+
+        window.addEventListener('hashchange', hashChangeHandler, false);
+    }
 }

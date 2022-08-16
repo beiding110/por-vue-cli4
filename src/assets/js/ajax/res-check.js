@@ -1,7 +1,7 @@
 import router from '@router/index';
 
 import util from './util';
-import {showMB, lockMB,} from './showMB';
+import {showMB, lockMB, unlockMB} from './showMB';
 
 const LOGIN_URL = '/login';
 
@@ -40,6 +40,8 @@ export default function(obj, settings, callback){
                 } else {
                     router.push(LOGIN_URL);
                 }
+
+                unlockMB();
             });
             
             lockMB();
