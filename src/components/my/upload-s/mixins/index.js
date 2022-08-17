@@ -432,10 +432,11 @@ export default {
                     // 混入请求参数
                     options.data = {
                         ...options.data,
-                        ...this.extra,
 
                         fileguid: this.fileguid,
                         single: (this.single * 1),
+                        
+                        ...this.extra,
                     };
 
                     next();
