@@ -29,7 +29,7 @@ export default function(obj, settings, callback){
             }
 
             util.throwError({settings, obj});
-            return [obj];
+            return false;
         },
         'login-index': function() {
             showMB(obj.msg, 'error', function(){
@@ -46,13 +46,13 @@ export default function(obj, settings, callback){
             
             lockMB();
 
-            return [obj];
+            return false;
         },
         'jump-url': function () {
             showMB(obj.msg, 'info', function () {
                 router.push(obj.url);
             });
-            return [obj];
+            return false;
         },
         'wechat': function() {
             var url = obj.url;
@@ -65,7 +65,7 @@ export default function(obj, settings, callback){
                 }
             }
 
-            return [obj];
+            return false;
         },
         'error': function() {
             if (/(40163)|(40029)/.test(obj.msg)) {
@@ -78,7 +78,7 @@ export default function(obj, settings, callback){
             }
 
             util.throwError({settings, obj});
-            return [obj];
+            return false;
         }
     };
 
