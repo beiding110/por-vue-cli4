@@ -32,7 +32,7 @@ export default {
     data () {
         return {
 
-        }
+        };
     },
     computed: {
         ...mapState({
@@ -48,13 +48,17 @@ export default {
     },
     methods: {
         handleCommand(command) {
-            command && command();
+            if (!command) {
+                return;
+            }
+
+            this.$store.dispatch(command);
         }
     },
     mounted: function() {
 
     }
-}
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

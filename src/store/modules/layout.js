@@ -6,9 +6,7 @@ export default {
             {
                 text: '退出登录',
                 icon: 'el-icon-switch-button',
-                command: () => {
-                    store.dispatch('logout');
-                },
+                command: 'logout',
             },
         ],
         nav: [
