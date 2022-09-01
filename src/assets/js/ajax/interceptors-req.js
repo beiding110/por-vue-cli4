@@ -8,7 +8,7 @@ var { api } = window.$_plat_config;
  * @returns
  */
 export default function request(config) {
-    var { url, fztype, data, callback, complete, type } = config,
+    var { url, fztype, data, callback, complete, type, method } = config,
         ts = new Date().getTime(),
         headers = {
             'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
@@ -18,6 +18,10 @@ export default function request(config) {
             usetool: 'wechat',
             pageurl: window.location.href.replace(window.location.search, ''),
         };
+
+    if (method) {
+        type = method;
+    }
 
     if (api.globalUrl) {
         url = api.globalUrl + url;
