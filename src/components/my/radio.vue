@@ -2,7 +2,13 @@
     <span class="my-radio">
         <el-radio-group v-model="model" v-if="!readonly" @change="selectChange">
             <template v-for="item in list">
-               <el-radio :label="item[props.value]" :key="item[props.value]">{{item[props.label]}}</el-radio>
+                <component
+                :is="`el-radio${button ? '-button' : ''}`"
+                :label="item[props.value]" 
+                :key="item[props.value]"
+                >
+                    {{item[props.label]}}
+                </component>
             </template>
             <slot>
 
@@ -32,7 +38,7 @@ export default {
         data: {
             type: Array,
             default() {
-                return []
+                return [];
             }
         },
         // 配置
@@ -42,7 +48,7 @@ export default {
                 return {
                     value: 'key',
                     label: 'value'
-                }
+                };
             }
         },
         // 只读
@@ -59,12 +65,16 @@ export default {
         '2way': {
             type: String
         },
+        button: {
+            type: Boolean,
+            default: false,
+        },
     },
     data: function () {
         return {
             list: [],
             options: []
-        }
+        };
     },
     computed: {
         model: {
@@ -77,15 +87,18 @@ export default {
         },
         selectedLabel() {
             return this.list.reduce((res, item) => {
-                if(item[this.props.value] === this.value) res = item[this.props.label];
-                return res
+                if (item[this.props.value] === this.value) {
+                    res = item[this.props.label];
+                }
+
+                return res;
             }, '');
         }
     },
     watch: {
         data: {
             handler: function (n, o) {
-                if (n != o) {
+                if (n !== o) {
                     this.list = n;
                     this.options = this.list2map(n || []);
                 }
@@ -96,37 +109,37 @@ export default {
     methods: {
         queryData: function () {
             if (this.url) {
-                this.$get(this.url, function (data) {
+                this.$get(this.url, (data) => {
                     this.list = data;
                     this.options = this.list2map(data || []);
-                })
+                });
             } else {
                 this.list = this.data;
                 this.options = this.list2map(this.data || []);
             }
         },
         selectChange: function (item) {
-            if(this['2way']) {
+            if (this['2way']) {
                 var modelArr = this['2way'].split(',');
-                modelArr.forEach(function(key) {
-                    this.$emit('update:'+key, (this.options[item] || {})[key])
-                }.bind(this));
-            };
 
-            this.$emit("select", this.options[item] || {});
+                modelArr.forEach(function(key) {
+                    this.$emit('update:'+key, (this.options[item] || {})[key]);
+                }.bind(this));
+            }
+
+            this.$emit('select', this.options[item] || {});
         },
         list2map: function (list) {
-            var that = this;
-            return list.reduce(function (map, item) {
-                map[item[that.props.value]] = item;
+            return list.reduce((map, item) => {
+                map[item[this.props.value]] = item;
                 return map;
-            }, {})
+            }, {});
         }
     },
     mounted: function () {
         this.queryData();
     }
-}
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
