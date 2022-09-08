@@ -1,4 +1,8 @@
+import vue from '@/main';
+
+import router from '@router/index';
 import store from '@store/index';
+import {getKeyFromAllState} from '../tools.js';
 
 export default {
     state: {
@@ -19,7 +23,11 @@ export default {
         ],
     },
     getters: {
-        
+        subLayout() {
+            var subLayout = getKeyFromAllState('$layout', store);
+
+            return subLayout;
+        },
     },
     mutations: {
         setNavDeopDown(state, val) {
@@ -31,11 +39,42 @@ export default {
     },
     actions: {
         getMenu({commit, state}) {
-            // Vue.prototype.$get(`${store.getters.sysUrl}/menu/list`, data => {
-            //     commit('setNavList', data);
+            // vue.$get(`${store.getters.userUrl}/login-info/menu`, (data) => {
+            //     commit('setNav', data);
+
+            //     if (!data.length) {
+            //         var msg = vue.$t(
+            //             'your_org_admin_has_not_assigned_you_permission'
+            //         );
+
+            //         showMsgBox(msg);
+
+            //         return;
+            //     }
+
+            //     if (goto) {
+            //         // 立刻跳转
+
+            //         function getFirst(arr) {
+            //             let first = arr[0];
+
+            //             if (first.children) {
+            //                 return getFirst(first.children);
+            //             }
+
+            //             return first;
+            //         }
+
+            //         var firstUrl = getFirst(data).menuUrl;
+
+            //         router.replace(firstUrl);
+            //     }
             // });
         },
-        updateNavDropDown({commit, state}, {user}) {
+        clearMenu({ commit }) {
+            commit('setNav', []);
+        },
+        updateNavDropDown({ commit, state }, { user }) {
             // commit('setNavDropDown', []);
         },
     },

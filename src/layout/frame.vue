@@ -64,6 +64,8 @@
                 </div>
 
                 <div class="right">
+                    <top-right-nav></top-right-nav>
+                    
                     <user-info></user-info>
                 </div>
             </div>
@@ -88,6 +90,7 @@ import MyBreadcrumb from './components/breadcrumb';
 import UserInfo from './components/user-info';
 import LogoImg from './components/logo-img';
 import TagNav from './components/tag-nav';
+import TopRightNav from './components/top-right-nav';
 
 import lessVars from '@css/var.scss';
 
@@ -97,6 +100,7 @@ export default {
         UserInfo,
         LogoImg,
         TagNav,
+        TopRightNav,
     },
     data() {
         return {

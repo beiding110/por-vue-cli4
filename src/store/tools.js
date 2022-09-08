@@ -76,3 +76,56 @@ export function initSubModules() {
 }
 
 export var subModules = initSubModules();
+
+/**
+ * 获取所有命名空间下的关键字state，并将结果合并
+ * @param {String} target 键名
+ * @param {Object} store vuex实例
+ * @returns 合并好的对象
+ */
+export function getKeyFromAllState(target, store) {
+    var state = store.state,
+        cache = [],
+        res = {};
+
+    function getType(val) {
+        return Object.prototype.toString.call(val).toLowerCase().slice(8, -1);
+    }
+
+    // 获取到所有命名空间中的关键字
+    Object.keys(state).forEach(key => {
+        let item = state[key][target];
+
+        if (item) {
+            cache.push(item);
+        }
+    });
+
+    // 对关键字进行合并
+    cache.forEach(cacheItem => {
+        Object.keys(cacheItem).forEach(cacheItemKey => {
+            var currentInRes = res[cacheItemKey],
+                current = cacheItem[cacheItemKey];
+
+            if (currentInRes) {
+                if (getType(current) === 'array') {
+                    res[cacheItemKey] = [
+                        ...currentInRes,
+                        ...current,
+                    ];
+                } else if (getType(current) === 'object') {
+                    res[cacheItemKey] = {
+                        ...currentInRes,
+                        ...current,
+                    };
+                } else {
+                    res[cacheItemKey] = current;
+                }
+            } else {
+                res[cacheItemKey] = cacheItem[cacheItemKey];
+            }
+        });
+    });
+
+    return res;
+};
