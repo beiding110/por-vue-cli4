@@ -34,8 +34,8 @@ var ajaxKeyMap = function(type) {
         function $get(a, b, c, d) {
             var settings = argsCheck(a, b, c, d);
 
-            settings = interceptorsReq(settings);
             settings.type = 'get';
+            settings = interceptorsReq(settings);
 
             axios.get(settings.url, {
                 params: settings.data,
@@ -57,8 +57,8 @@ var ajaxKeyMap = function(type) {
         function $post(a, b, c, d) {
             var settings = argsCheck(a, b, c, d);
 
-            settings = interceptorsReq(settings);
             settings.type = 'post';
+            settings = interceptorsReq(settings);
 
             axios.post(settings.url, settings.data, {
                 headers: settings.headers,
