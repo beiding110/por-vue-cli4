@@ -28,7 +28,7 @@ import '@css/common.scss';
 
 Vue.config.productionTip = false;
 
-new Vue({
+export default new Vue({
     render: (h) => h(App),
     router,
     store,
