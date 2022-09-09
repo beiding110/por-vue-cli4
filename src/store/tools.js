@@ -107,6 +107,22 @@ export function getKeyFromAllState(target, store) {
             var currentInRes = res[cacheItemKey],
                 current = cacheItem[cacheItemKey];
 
+            if (getType(current) === 'array') {
+                current = current.filter(item => {
+                    if (item.show) {
+                        var f = new Function(item.show);
+        
+                        if (f.call(store)) {
+                            return true;
+                        }
+
+                        return false;
+                    }
+
+                    return true;
+                });
+            }
+
             if (currentInRes) {
                 if (getType(current) === 'array') {
                     res[cacheItemKey] = [
@@ -122,7 +138,7 @@ export function getKeyFromAllState(target, store) {
                     res[cacheItemKey] = current;
                 }
             } else {
-                res[cacheItemKey] = cacheItem[cacheItemKey];
+                res[cacheItemKey] = current;
             }
         });
     });
