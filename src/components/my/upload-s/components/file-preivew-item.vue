@@ -15,7 +15,7 @@
                 <div class="tool-item download">
                     <i class="el-icon-download" @click="downloadHandler"></i>
                 </div>
-                <div class="tool-item del">
+                <div class="tool-item del" v-if="!readonly">
                     <i class="el-icon-delete"  @click="delHandler"></i>
                 </div>
             </div>
@@ -67,6 +67,10 @@ export default {
         btnLayout: {
             type: String,
             default: ''
+        },
+        readonly: {
+            type: Boolean,
+            default: false
         },
     },
     data() {

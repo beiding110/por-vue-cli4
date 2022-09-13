@@ -7,6 +7,7 @@
             :action="action"
             @del="$emit('del', {data: $event, index})"
             :size="size"
+            :readonly="readonly"
         ></file-item>
 
         <slot></slot>
@@ -32,6 +33,10 @@ export default {
         size: {
             type: [String,Number],
             default: 178,
+        },
+        readonly: {
+            type: Boolean,
+            default: false
         },
     },
     data() {

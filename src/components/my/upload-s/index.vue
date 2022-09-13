@@ -11,6 +11,7 @@
             :action="actionModel"
             @del="handleDelete($event.data, $event.index)"
             :size="sizeModel"
+            :readonly="readonly"
             >
                 <el-upload
                 ref="upload"
