@@ -261,15 +261,13 @@ import storage from './storage'
         }
     }
 
-
-
     /**
     * 责任链类
     * @constructor
     */
     owner.Chain = function () {
         this.chain_arr = [];
-    }
+    };
     owner.Chain.prototype = {
         /**
         * 链的内容
@@ -277,29 +275,32 @@ import storage from './storage'
         * @return {this}     返回自身，可链式调用
         */
         link: function (fun) {
-            var that = this;
-            if (typeof (fun) == 'function') {
+            if (typeof (fun) === 'function') {
                 this.chain_arr.push(fun);
-            };
+            }
+
             return this;
         },
         /**
         * 执行责任链
-        * @param  {Object} obj 责任链中的通用参数
+        * @param  {Object} obj 责任链中的通用参数，非必要
         * @return {null}     [description]
         */
         run: function (obj) {
             var that = this,
-            index = 0,
-            obj = obj;
+                index = 0,
+                loop = function () {
+                    var this_node = that.chain_arr[index];
 
-            var loop = function () {
-                var this_node = that.chain_arr[index];
-                index++;
-                if (!!this_node) {
-                    return this_node(obj, loop)
-                }
-            };
+                    index++;
+                    if (this_node) {
+                        if (obj) {
+                            return this_node(obj, loop);
+                        }
+
+                        return this_node(loop);
+                    }
+                };
 
             loop();
         }
