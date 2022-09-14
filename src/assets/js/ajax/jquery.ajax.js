@@ -81,7 +81,11 @@ function ajaxRequest(settings) {
             }
             decode(obj);
 
-            ajaxResCheck.call(that, obj, settings, settings.callback);
+            if (settings.success) {
+                resCheck.call(that, obj, settings, settings.success);
+            } else if (settings.callback) {
+                resCheck.call(that, obj, settings, settings.callback);
+            }
         },
         //AJAX请求结束后，
         complete: function (xhr, status) {
@@ -91,7 +95,7 @@ function ajaxRequest(settings) {
                 // e
             }
             
-            settings.complete();
+            settings.complete && settings.complete();
         },
         error: function(XHR, textStatus, errorThrown){
             try {

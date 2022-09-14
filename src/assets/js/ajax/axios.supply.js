@@ -88,7 +88,11 @@ var ajaxKeyMap = function(type) {
             axiosSetting = interceptorsReq(axiosSetting);
 
             axios(axiosSetting).then(([data, res]) => {
-                axiosSetting.callback && axiosSetting.callback.call(this, data, res);
+                if (axiosSetting.success) {
+                    axiosSetting.success && axiosSetting.success.call(this, data, res);
+                } else if (axiosSetting.callback) {
+                    axiosSetting.callback && axiosSetting.callback.call(this, data, res);
+                }
             }).catch(err => {
                 if (err.response) {
                     resError(err.response, axiosSetting);
