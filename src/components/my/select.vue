@@ -17,7 +17,7 @@
         :key="options[pName][props.value]"
         :label="options[pName][props.label]"
         :value="options[pName][props.value]">
-        	<slot v-bind:row="options[pName]"></slot>
+            <slot v-bind:row="options[pName]"></slot>
         </el-option>
     </el-select>
 </template>
@@ -48,9 +48,9 @@ export default {
             type: Object,
             default: function () {
                 return {
-                    label: "value",
-                    value: "key"
-                }
+                    label: 'value',
+                    value: 'key',
+                };
             }
         },
         // placeholder
@@ -101,31 +101,33 @@ export default {
     data () {
         return {
             options: [],
-        }
+        };
     },
     computed: {
         svalue: {
             get: function () {
-                if(this.modelStr) {
+                if (this.modelStr) {
                     var valueArr = [];
-                    if(getType(this.value) === 'string') {
+
+                    if (getType(this.value) === 'string') {
                         valueArr = this.value.split(this.strSpliter);
-                    };
-                    if(valueArr[0] === '') {
+                    }
+
+                    if (valueArr[0] === '') {
                         return valueArr.slice(1);
-                    } else {
-                        return valueArr;
-                    };
-                } else {
-                    return this.value;
-                };
+                    }
+                    
+                    return valueArr;
+                }
+                
+                return this.value;
             },
             set: function (e) {
-                if(this.modelStr) {
+                if (this.modelStr) {
                     this.$emit('input', e.join(this.strSpliter));
                 } else {
                     this.$emit('input', e);
-                };
+                }
             }
         }
     },
@@ -139,7 +141,7 @@ export default {
         queryData: function () {
             new Chain().link(next => {
                 if (this.url) {
-                    this.$get(this.url, function (data) {
+                    this.$get(this.url, data => {
                         try {
                             this.options = this.list2map(data || []);
                         } catch (e) {
@@ -164,47 +166,48 @@ export default {
             }).run();
         },
         list2map: function (list) {
-            var that = this;
-            return list.reduce(function (map, item) {
-                map[item[that.props.value]] = item;
+            return list.reduce((map, item) => {
+                map[item[this.props.value]] = item;
                 return map;
-            }, {})
+            }, {});
         },
         selectChange: function (item) {
-            var that = this;
             if (this['2way']) {
                 var modelArr = this['2way'].split(',');
-                if(this.multiple) {
-                    modelArr.forEach(function (key) {
-                        var updateData = item.reduce(function(arr, i) {
-                            arr.push(that.options[i][key])
+
+                if (this.multiple) {
+                    modelArr.forEach((key) => {
+                        var updateData = item.reduce((arr, i) => {
+                            arr.push(this.options[i][key]);
                             return arr;
                         }, []);
 
-                        if(that.modelStr) {
-                            updateData = updateData.join(that.strSpliter);
-                        };
+                        if (this.modelStr) {
+                            updateData = updateData.join(this.strSpliter);
+                        }
 
-                        that.$emit('update:' + key, updateData);
-                    }.bind(this));
+                        this.$emit('update:' + key, updateData);
+                    });
                 } else {
-                    modelArr.forEach(function (key) {
-                        this.$emit('update:' + key, (this.options[item] || {})[key])
-                    }.bind(this));
-                };
-            };
+                    modelArr.forEach((key) => {
+                        this.$emit('update:' + key, (this.options[item] || {})[key]);
+                    });
+                }
+            }
 
             if (this.multiple) {
                 var arr = [];
+
                 if (Array.isArray(item) && item.length > 0) {
-                    item.forEach(function (selkey) {
-                        arr.push(this.options[selkey])
-                    }.bind(this));
-                    this.$emit("select", arr);
+                    item.forEach((selkey) => {
+                        arr.push(this.options[selkey]);
+                    });
+
+                    this.$emit('select', arr);
                 }
             } else {
-                this.$emit("select", this.options[item] || {});
-            };
+                this.$emit('select', this.options[item] || {});
+            }
         }
     },
     watch: {
@@ -218,7 +221,7 @@ export default {
     mounted: function () {
         this.queryData();
     }
-}
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
