@@ -11,6 +11,7 @@
         :filterable="filterable"
         :collapse-tags="collapseTags"
         :show-all-levels="showAllLevels"
+        :disabled="disabled"
 	></el-cascader>
 </template>
 
@@ -195,16 +196,25 @@ export default {
     },
     methods: {
         queryData() {
-            if (this.url) {
-                this.$get(this.url, data => {
-                    this.options = data;
-                    this.dataRebuild(data, this.mixedProps.value);
-                });
-            }
-            if (this.data.length) {
-                this.options = this.data;
-                this.dataRebuild(this.data, this.mixedProps.value);
-            }
+            new Chain().link(next => {
+                if (this.url) {
+                    this.$get(this.url, data => {
+                        this.options = data;
+                        this.dataRebuild(data, this.mixedProps.value);
+
+                        next();
+                    });
+                } else if (this.data.length) {
+                    this.options = this.data;
+                    this.dataRebuild(this.data, this.mixedProps.value);
+                    
+                    next();
+                }
+            }).link(() => {
+                if (!this.disabled && this.value) {
+                    this.changeHandler();
+                }
+            }).run();
         },
         changeHandler() {
             this.$nextTick(() => {

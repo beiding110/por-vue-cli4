@@ -137,39 +137,31 @@ export default {
             this.$emit('visiblechange');
         },
         queryData: function () {
-            var that = this;
+            new Chain().link(next => {
+                if (this.url) {
+                    this.$get(this.url, function (data) {
+                        try {
+                            this.options = this.list2map(data || []);
+                        } catch (e) {
+                            throw new Error(e);
+                        }
 
-            if (this.url) {
-                that.$get(that.url, function (data) {
+                        next();
+                    });
+                } else {
                     try {
-                        that.options = that.list2map(data || []);
+                        this.options = this.list2map(this.data || []);
                     } catch (e) {
                         throw new Error(e);
                     }
 
-                    if (that.value) {
-                        if (that.multiple && that.modelStr) {
-                            that.selectChange(that.value.split(that.strSpliter));
-                        } else {
-                            that.selectChange(that.value);
-                        }
-                    }
-                });
-            } else {
-                try {
-                    that.options = that.list2map(this.data || []);
-                } catch (e) {
-                    throw new Error(e);
+                    next();
                 }
-
-                if (that.value) {
-                    if (that.multiple && that.modelStr) {
-                        that.selectChange(that.value.split(that.strSpliter));
-                    } else {
-                        that.selectChange(that.value);
-                    }
+            }).link(() => {
+                if (!this.disabled && this.value) {
+                    this.selectChange(this.svalue);
                 }
-            }
+            }).run();
         },
         list2map: function (list) {
             var that = this;

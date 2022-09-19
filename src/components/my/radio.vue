@@ -108,15 +108,25 @@ export default {
     },
     methods: {
         queryData: function () {
-            if (this.url) {
-                this.$get(this.url, (data) => {
-                    this.list = data;
-                    this.options = this.list2map(data || []);
-                });
-            } else {
-                this.list = this.data;
-                this.options = this.list2map(this.data || []);
-            }
+            new Chain().link(next => {
+                if (this.url) {
+                    this.$get(this.url, (data) => {
+                        this.list = data;
+                        this.options = this.list2map(data || []);
+
+                        next();
+                    });
+                } else {
+                    this.list = this.data;
+                    this.options = this.list2map(this.data || []);
+
+                    next();
+                }
+            }).link(() => {
+                if (!this.readonly && this.value) {
+                    this.selectChange(this.model);
+                }
+            }).run();
         },
         selectChange: function (item) {
             if (this['2way']) {
