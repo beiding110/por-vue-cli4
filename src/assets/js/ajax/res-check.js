@@ -35,11 +35,7 @@ export default function(obj, settings, callback){
             showMB(obj.msg, 'error', function(){
                 sessionStorage.clear();
 
-                if (IS_MOBILE) {
-                    router.push(LOGIN_URL);
-                } else {
-                    router.push(LOGIN_URL);
-                }
+                router.push(LOGIN_URL);
 
                 unlockMB();
             });
