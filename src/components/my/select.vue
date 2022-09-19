@@ -137,20 +137,37 @@ export default {
             this.$emit('visiblechange');
         },
         queryData: function () {
-            var that = this
-            if (!!this.url) {
+            var that = this;
+
+            if (this.url) {
                 that.$get(that.url, function (data) {
                     try {
                         that.options = that.list2map(data || []);
                     } catch (e) {
-                        throw new Error(e)
+                        throw new Error(e);
                     }
-                })
+
+                    if (that.value) {
+                        if (that.multiple && that.modelStr) {
+                            that.selectChange(that.value.split(that.strSpliter));
+                        } else {
+                            that.selectChange(that.value);
+                        }
+                    }
+                });
             } else {
                 try {
                     that.options = that.list2map(this.data || []);
                 } catch (e) {
-                    throw new Error(e)
+                    throw new Error(e);
+                }
+
+                if (that.value) {
+                    if (that.multiple && that.modelStr) {
+                        that.selectChange(that.value.split(that.strSpliter));
+                    } else {
+                        that.selectChange(that.value);
+                    }
                 }
             }
         },
