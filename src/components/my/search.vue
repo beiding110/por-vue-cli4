@@ -37,7 +37,7 @@
                 icon="el-icon-search"
                 @click="searchHandler"
                 >
-                    {{$store.state.config.sys.btn.search}}
+                    {{$store.state.config.i18n['zh-CN'].btn.search}}
                 </el-button>
 
                 <el-button

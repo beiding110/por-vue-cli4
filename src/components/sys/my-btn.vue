@@ -18,8 +18,8 @@ export default {
     data() {
         var that = this;
 
-        const CONFIG_BTN = this.$store.state.config.sys.btn,
-            CONFIG_MSG = this.$store.state.config.sys.msg;
+        const CONFIG_BTN = this.$store.state.config.i18n['zh-CN'].btn,
+            CONFIG_MSG = this.$store.state.config.i18n['zh-CN'].msg;
 
         return {
             switchObj: {
