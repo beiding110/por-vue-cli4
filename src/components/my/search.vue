@@ -122,8 +122,13 @@ export default {
                 return [];
             },
             set(val) {
-                var starttime = val[0],
+                var starttime = '',
+                    endtime = '';
+
+                if (val) {
+                    starttime = val[0];
                     endtime = val[1];
+                }
 
                 this.pgData.starttime = starttime || '';
                 this.pgData.endtime = endtime || '';
