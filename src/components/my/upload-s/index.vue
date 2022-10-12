@@ -29,6 +29,13 @@
                 :multiple="multipleSelect"
                 >
                     <i 
+                        v-if="fileUploadingState"
+                        class="el-icon-loading uploader-icon"
+                        :style="{width:sizeModel,height:sizeModel,lineHeight:sizeModel}"
+                    ></i>
+
+                    <i 
+                        v-else
                         class="el-icon-plus uploader-icon"
                         :style="{width:sizeModel,height:sizeModel,lineHeight:sizeModel}"
                     ></i>

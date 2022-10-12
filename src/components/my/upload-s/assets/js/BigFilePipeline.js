@@ -45,7 +45,7 @@ BigFilePipeline.prototype = {
     },
 
     updateProcess(val) {
-        this.$progress = Math.floor(val);
+        this.$progress = val;
 
         this._onprogress(this.$progress);
     },

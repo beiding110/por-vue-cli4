@@ -27,7 +27,16 @@
                     type="primary" 
                     :disabled="loadingBarShowController"
                     >
-                        <i class="el-icon-upload"></i>
+                        <i 
+                            v-if="fileUploadingState"
+                            class="el-icon-loading"
+                        ></i>
+
+                        <i 
+                            v-else
+                            class="el-icon-upload"
+                        ></i>
+                        
                         点击上传
                     </el-button>
                 </template>

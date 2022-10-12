@@ -2,6 +2,7 @@ import ajax from '../ajax';
 import BigFilePipeline from '../assets/js/BigFilePipeline';
 import debounce from '../assets/js/debounce';
 import Chain from '../assets/js/Chain';
+import readFileSha1 from '../assets/js/readFileSha1.js';
 
 export default {
     props: {
@@ -74,6 +75,9 @@ export default {
             // 上传进度
             percent: 0,
             percentStatus: '',
+
+            // 附件上传
+            fileUploadingState: false,
 
             // 附件加载进度
             loadingController: false,
@@ -421,6 +425,7 @@ export default {
         loadingHide() {
             this.loadingController = false;
             this.loadingBarShowController = false;
+            this.fileUploadingState = false;
             this.percent = 0;
         },
         /**
@@ -441,6 +446,20 @@ export default {
 
                     next();
                 })
+                .link(next => {
+                    this.fileUploadingState = true;
+
+                    // 参数增加sha1校验码
+
+                    readFileSha1(options.file, sha1 => {
+                        options.data = {
+                            ...options.data,
+                            fileCheckCode: sha1,
+                        };
+
+                        next();
+                    });
+                })
                 .link(() => {
 
                     if (options.file.size <= this.chunkSize) {
@@ -459,7 +478,7 @@ export default {
                                 req.then(itemOptions.onSuccess, itemOptions.onError);
                             }
                         }).onProgress(val => {
-                            this.percent = val;
+                            this.percent = Math.floor(val);
                         }).run();
                     }
 
