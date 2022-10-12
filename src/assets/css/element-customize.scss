@@ -1,0 +1,83 @@
+@import "./var.scss";
+
+$--color-primary: $primaryColor;
+$--color-success: $successColor;
+$--color-warning: $warningColor;
+$--color-danger: $dangerColor;
+$--color-info: $infoColor;
+
+/* 改变 icon 字体路径变量，必需 */
+$--font-path: '~element-ui/lib/theme-chalk/fonts';
+
+@import "~element-ui/packages/theme-chalk/src/index";
+
+.el-table{
+    width:100%;
+
+    .el-table__header{
+        min-width: 100% !important;
+    }
+
+    .el-table__body{
+        min-width: 100% !important;
+    }
+
+    td, th{
+        padding:10px 0 !important;
+    }
+
+    .cell{
+        line-height:1.5em;
+    }
+
+    .el-button{
+        margin-right: 10px;
+        margin-left: 0px;
+
+        &:last-child{
+            margin-right: 0;
+        }
+    }
+
+    .el-button--text{
+        text-align:left;
+        padding:0;
+
+        span{
+            word-break:break-all; 
+            white-space:normal; 
+        }
+    }
+
+    .el-tag{
+        height: auto;
+        white-space: break-spaces;
+    }
+}
+
+.el-form{
+    .el-radio{
+        margin-top: 4px;
+        margin-bottom: 4px;
+    }
+
+    .el-checkbox-group {
+        display: inline-block;
+        line-height: 1;
+        vertical-align: middle;
+        font-size: 0;
+
+        .el-checkbox {
+            margin-top: 4px;
+            margin-bottom: 4px;
+        }
+    }
+
+    .el-rate{
+        height: auto;
+        
+        .el-rate__icon{
+            font-size: 32px;
+        }
+    }
+}

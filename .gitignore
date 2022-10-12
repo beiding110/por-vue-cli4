@@ -29,11 +29,8 @@ pnpm-debug.log*
 # /yarn.lock
 
 # project Module Files
-# /src/views/
-# !/src/views/css
-# !/src/views/layout
-# !/src/views/login
-# !/src/views/mixins
-# !/src/views/router.js
-# !/src/views/store.js
-# !/src/views/README.md
+# /sub/*
+!/sub/README.md
+
+# /sub-modules/*
+!/sub-modules/README.md

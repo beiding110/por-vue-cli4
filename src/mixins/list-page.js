@@ -133,8 +133,8 @@ export default {
         /**
          * 取消方法
          */
-        cancleHandler() {
-            this.$emit('cancle');
+        cancelHandler() {
+            this.$emit('cancel');
         },
         /**
          * 使用pagination组件自动重新加载

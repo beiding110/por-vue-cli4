@@ -1,56 +1,36 @@
-import Vue from 'vue'
-import Router from 'vue-router'
-import guards from './guards'
+import Vue from 'vue';
+import Router from 'vue-router';
 
-import CONFIG from '../config'
+import store from '../store/index.js';
 
-import { initRouter } from '@router/tools'
+import guards from './utils/guards';
+import { indexs } from './utils/tools';
+
+import login from './modules/login.js';
+import iframe from './modules/iframe.js';
+import demoVcm from './modules/demo-vcm.js';
 
 Vue.use(Router);
 
-const indexs = initRouter();
-
 var router = new Router({
     routes: [
+        demoVcm,
+
         {
-            path: '/demo/vcm',
-            component: () => import(/*webpackChunkName: 'demo-vcm'*/ '@components/example')
-        },
-        {
-            path: `/${CONFIG.router['base-name']}`,
+            path: `/`,
             component: () => import(/*webpackChunkName: 'pc'*/ '@layout/empty'),
             meta: {
-                title: CONFIG.router['title']
+                title:store.state.config.title,
             },
-            children: indexs
-        }
-
-        // {
-        //     path: '/login',
-        //     component: () => import(/*webpackChunkName: 'pc-login'*/ '@views/login/index'),
-        //     meta: {
-        //         title: `${CONFIG.router['title']}·登录`
-        //     }
-        // },
-        // {
-        //     path: `/${CONFIG.router['base-name']}`,
-        //     component: () => import(/*webpackChunkName: 'pc'*/ '@views/layout/index'),
-        //     meta: {
-        //         title: CONFIG.router['title']
-        //     },
-        //     children: [
-        //         {
-        //             path: 'iframe',
-        //             component: () => import(/*webpackChunkName: 'iframe'*/ '@views/iframe'),
-        //             meta: {
-        //                 title: '',
-        //                 bread: []
-        //             }
-        //         },
-
-        //         ...indexs
-        //     ]
-        // }
+            children: [
+                // iframe,
+        
+                // 子系统自动生成的路由
+                ...indexs,
+                
+                login,
+            ],
+        },
     ]
 });
 

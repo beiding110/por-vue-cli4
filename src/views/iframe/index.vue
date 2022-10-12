@@ -1,5 +1,5 @@
 <template>
-    <my-frame :src="src"></my-frame>
+    <frame-view :src="src"></frame-view>
 </template>
 
 <script>

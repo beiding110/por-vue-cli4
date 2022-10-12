@@ -76,31 +76,48 @@ $topNavWithTagNavHeight: 80px;
             height: $topNavWithTagNavHeight;
         }
 
-        .btn_top-nav {
-            cursor: pointer;
-            height: 100%;
-            display: inline-block;
-            line-height: $topNavHeight;
-            padding: 0 1em;
-            float: left;
-            transition: .2s all;
+        .nav-row{
+            height: $topNavHeight;
+            overflow: hidden;
 
-            &:hover {
-                background: #efefef;
+            .left{
+                float: left;
+                overflow: hidden;
+                height: 100%;
+
+                .btn_top-nav {
+                    cursor: pointer;
+                    height: 100%;
+                    display: block;
+                    line-height: $topNavHeight;
+                    padding: 0 1em;
+                    float: left;
+                    transition: .2s all;
+        
+                    &:hover {
+                        background: #efefef;
+                    }
+        
+                    i {
+                        font-size: 22px;
+                    }
+        
+                    &.circle {
+                        border-radius: 50%;
+                        width: 2em;
+                        height: 2em;
+                        line-height: 2em;
+                        text-align: center;
+                        padding: 0;
+                        margin-top: 9px;
+                    }
+                }
             }
-
-            i {
-                font-size: 22px;
-            }
-
-            &.circle {
-                border-radius: 50%;
-                width: 2em;
-                height: 2em;
-                line-height: 2em;
-                text-align: center;
-                padding: 0;
-                margin-top: 9px;
+    
+            .right{
+                float: right;
+                overflow: hidden;
+                height: 100%;
             }
         }
     }

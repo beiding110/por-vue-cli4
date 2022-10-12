@@ -47,8 +47,8 @@ export default {
         /**
          * 取消操作方法
          */
-        cancleHandler() {
-            this.$emit('cancle');
+        cancelHandler() {
+            this.$emit('cancel');
         },
         /**
          * 关闭dialog方法
