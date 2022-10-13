@@ -218,7 +218,7 @@ export default {
 
             this.queryData();
         },
-        data() {
+        data(n, o) {
             if (JSON.stringify(n) === JSON.stringify(o)) {
                 return;
             }
