@@ -211,10 +211,18 @@ export default {
         }
     },
     watch: {
-        url: function () {
+        url: function (n, o) {
+            if (n === o) {
+                return;
+            }
+
             this.queryData();
         },
         data() {
+            if (JSON.stringify(n) === JSON.stringify(o)) {
+                return;
+            }
+
             this.queryData();
         }
     },

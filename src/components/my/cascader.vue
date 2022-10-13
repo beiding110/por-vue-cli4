@@ -185,7 +185,11 @@ export default {
         },
     },
     watch: {
-        url() {
+        url(n, o) {
+            if (n === o) {
+                return;
+            }
+
             this.queryData();
         },
         data: {
