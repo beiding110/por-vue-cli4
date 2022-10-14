@@ -13,8 +13,9 @@ import '@js/app-supply.js';
 // 兼容补丁包
 import '@js/js-polyfill.js';
 
-//权限
-import '@js/authority';
+//自定义指令
+import directives from '@/directives/index';
+Vue.use(directives);
 
 //配置项预处理
 import '@js/preset.js';
