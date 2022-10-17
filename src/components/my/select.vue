@@ -2,7 +2,6 @@
     <el-select
     v-model="svalue"
     filterable
-    @change="selectChange"
     @visible-change="visibleChange"
     @focus="focus"
     :placeholder="placeholder"
@@ -224,7 +223,14 @@ export default {
             }
 
             this.queryData();
-        }
+        },
+        svalue(n, o) {
+            if (n === o) {
+                return;
+            }
+
+            this.selectChange(n);
+        },
     },
     mounted: function () {
         this.queryData();
