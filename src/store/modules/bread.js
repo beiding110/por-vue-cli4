@@ -26,6 +26,11 @@ export default {
                 return;
             }
 
+            if (to.meta.noBread) {
+                // 判断noBread关键字，不在面包屑中展示；
+                return;
+            }
+
             const path = to.path;
             const fullPath = to.fullPath;
             const meta = to.meta || {};
