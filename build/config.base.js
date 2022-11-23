@@ -63,6 +63,10 @@ var baseConfig = {
             },
         },
     },
+    transpileDependencies: [
+        /[/\\]node_modules[/\\](.+?)?vue-lazyload(.*)[/\\]/,
+        /[/\\]node_modules[/\\](.+?)?crypto-js(.*)[/\\]/,
+    ],
 };
 
 if (CONFIG['project-type'] === 'mobile') {
