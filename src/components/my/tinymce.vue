@@ -9,6 +9,7 @@
         ></editor>
 
         <div
+            class="richtext"
             v-else
             v-html="model"
         ></div>
@@ -81,7 +82,7 @@ export default {
                 images_upload_handler: this.imagesUploadHandler,
             },
 
-            imageUploadUrl: 'postAcceptor.php',
+            imageUploadUrl: `${this.getGetters('fileUrl')}/file-upload/editor`,
         };
     },
     computed: {
@@ -124,12 +125,12 @@ export default {
 
                 json = JSON.parse(xhr.responseText);
 
-                if (!json || typeof json.location !== 'string') {
+                if (!json || typeof json.data !== 'string') {
                     failure('Invalid JSON: ' + xhr.responseText);
                     return;
                 }
 
-                success(json.location);
+                success(json.data);
             };
 
             xhr.onerror = function () {
@@ -139,6 +140,7 @@ export default {
             };
 
             formData = new FormData();
+            formData.append('fileTypeClass', '');
             formData.append('file', blobInfo.blob(), blobInfo.filename());
 
             xhr.send(formData);
@@ -149,4 +151,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.tinymce {
+    .richtext{
+        word-break: break-all;
+    }
+}
 </style>
