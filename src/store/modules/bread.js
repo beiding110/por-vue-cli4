@@ -96,6 +96,18 @@ export default {
             });
 
             setData.call(state, bread);
-        }
+        },
+        // 清除面包屑中某项
+        popBread(state, index) {
+            var bread = state.bread;
+
+            if (index !== undefined) {
+                bread.splice(index, 1);
+            } else {
+                bread.pop();
+            }
+
+            setData.call(state, bread);
+        },
     }
 };
