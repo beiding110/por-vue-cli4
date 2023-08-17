@@ -44,10 +44,15 @@ export default {
         assign() {
             if(!this.src) return;
 
-            var pdfWin = this.$refs.frame.contentWindow;
+            var pdfWin = this.$refs.frame.contentWindow,
+                fileSrc = this.src;
+
+            if (/\?/.test(fileSrc)) {
+                fileSrc = encodeURIComponent(fileSrc);
+            }
 
             if(this.innerSrc !== this.src) {
-                pdfWin.location.replace(`./static/plugin/pdfjs/index.html?file=${this.src}${this.ts}`);
+                pdfWin.location.replace(`./static/plugin/pdfjs/index.html?file=${fileSrc}${this.ts}`);
             }
         },
         reload() {
