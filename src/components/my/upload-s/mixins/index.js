@@ -1,3 +1,4 @@
+import ajaxResCheck from '@/assets/js/ajax/res-check';
 import ajax from '../ajax';
 import BigFilePipeline from '../assets/js/BigFilePipeline';
 import debounce from '../assets/js/debounce';
