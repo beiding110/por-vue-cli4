@@ -49,6 +49,7 @@
 import pdf from '../assets/pdf.png';
 import word from '../assets/word.png';
 import excel from '../assets/excel.png';
+import file from '../assets/file.png';
 
 export default {
     props: {
@@ -152,7 +153,7 @@ export default {
             if (!config) {
                 res = {
                     type: 'illegal',
-                    preview: '',
+                    preview: file,
                     btns: [],
                     previewTag: 'el-image',
                 };
