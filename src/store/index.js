@@ -11,6 +11,7 @@ import tagNav from './modules/tag-nav.js';
 import bread from './modules/bread.js';
 import config from './modules/config.js';
 import layout from './modules/layout.js';
+import theme from './modules/theme.js';
 
 Vue.use(Vuex);
 
@@ -33,6 +34,7 @@ export default new Vuex.Store({
         bread,
         config,
         layout,
+        theme,
 
         ...subModules,
         ...sub,
