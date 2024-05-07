@@ -284,4 +284,30 @@ import Vue from 'vue'
         }
     }
 
+    /**
+     * 生成文件预览地址
+     * @param  {String} fileurl 文件地址，应为外网可访问的地址
+     * @param  {String} watermark 水印内容，默认为空
+     * @param  {Boolean} autoOpen 是否自动打开页签，默认为否
+     * @return {String}     预览地址
+     * 示例：filePreview('http://www.bhtong.cn/bhtong/bhtong_client_bht/202301/91ef728fe3c142ab9e0a4bb9fa64d684.png')
+     */
+    owner.filePreview = function(fileurl, watermark = '', autoOpen = false) {
+        var reEncodeUrl = unescape(encodeURIComponent(fileurl)),
+            url = btoa(reEncodeUrl),
+            previewUrl = `//fileview.zhbykj.com/onlinePreview?url=${url}`;
+    
+        if (watermark) {
+            // 水印信息
+            previewUrl = previewUrl + `&watermarkTxt=${watermark}`;
+        }
+    
+        if (autoOpen) {
+            // 新开页面
+            window.open(previewUrl);
+        }
+    
+        return previewUrl;
+    };
+
 })(Vue.prototype)

@@ -39,5 +39,6 @@ export default {
         Vue.component('pdf-view', function(){return import(/*webpackChunkName: 'coms'*/ './pdf-js');});
         Vue.component('photo-view', function(){return import(/*webpackChunkName: 'coms'*/ './picture-view');});
         Vue.component('word-view', function(){return import(/*webpackChunkName: 'coms'*/ './word-view');});
+        Vue.component('file-preview', function(){return import(/*webpackChunkName: 'coms'*/ './file-preview');});
     }
 }
