@@ -9,6 +9,7 @@ import '@js/ajax/index';
 //方法库
 import '@js/app.js';
 import '@js/app-supply.js';
+import '@js/app-proto.js';
 
 // 兼容补丁包
 import '@js/js-polyfill.js';
