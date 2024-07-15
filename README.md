@@ -69,6 +69,17 @@ npm install
 yarn install
 ```
 
+```
+# 查询当前使用的镜像源
+npm get registry
+
+# 设置为淘宝镜像源
+npm config set registry https://registry.npmmirror.com/
+
+# 还原为官方镜像源
+npm config set registry https://registry.npmjs.org/
+```
+
 > 安装过程中可能发生错误
 
 ```
@@ -80,7 +91,7 @@ Downloading from https://downloads.sentry-cdn.com/sentry-cli/x.xx.x/sentry-cli-W
 Error: Unable to download sentry-cli binary from https://downloads.sentry-cdn.com/sentry-cli/1.67.1/sentry-cli-Windows-x86_64.exe. Error code: ECONNRESET
 
 解决方法：
-npm config set sentrycli_cdnurl https://npm.taobao.org/mirrors/sentry-cli/
+npm config set sentrycli_cdnurl https://registry.npmmirror.com/sentry-cli/
 ```
 
 ### Compiles and hot-reloads for development
