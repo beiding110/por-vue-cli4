@@ -95,6 +95,25 @@ export default {
                 this.$emit('input', val);
             },
         },
+        // 内容为空
+        empty() {
+            if (!this.value || !this.value.length) {
+                return true;
+            }
+
+            var strTrim = this.model
+                .replace(/<[^<p>]+>/g, '') // 将所有<p>标签 replace ''
+                .replace(/<[</p>$]+>/g, '') // 将所有</p>标签 replace ''
+                .replace(/&nbsp;/gi, '') // 将所有 空格 replace ''
+                .replace(/<[^<br/>]+>/g, '') // 将所有 换行符 replace ''
+                .replace(/\n/gi, ''); // 将所有 换行符 replace ''
+
+            if (!strTrim.length) {
+                return true;
+            }
+
+            return /^[ ]+$/.test(strTrim);
+        },
     },
     methods: {
         // 图片上传操作
