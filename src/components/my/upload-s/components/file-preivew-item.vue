@@ -259,6 +259,12 @@ export default {
 
     .file-preview-dialog {
         ::v-deep {
+            .el-dialog__header {
+                text-overflow: ellipsis;
+                overflow: hidden;
+                white-space: nowrap;
+            }
+            
             .el-dialog__body{
                 text-align: center;
             }
