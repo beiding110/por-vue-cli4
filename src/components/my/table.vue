@@ -19,6 +19,7 @@
             type="selection" 
             width="55" 
             :selectable="selectable"
+            reserve-selection
         ></el-table-column>
 
         <slot></slot>
