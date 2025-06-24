@@ -201,9 +201,9 @@ export default {
                     item.forEach((selkey) => {
                         arr.push(this.options[selkey]);
                     });
-
-                    this.$emit('select', arr);
                 }
+                
+                this.$emit('select', arr);
             } else {
                 this.$emit('select', this.options[item] || {});
             }

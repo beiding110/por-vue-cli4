@@ -534,8 +534,11 @@ export default {
         });
     },
     watch: {
-        data: function (e) {
-            this.myChart.setOption(e);
+        data: {
+            handler(e) {
+                this.myChart.setOption(e);
+            },
+            deep: true,
         }
     }
 }
