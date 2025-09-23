@@ -24,6 +24,7 @@ var ajaxKeyMap = function(type) {
             ['url', 'url'],
             ['data', (type === 'post' ? 'data' : 'params')],
             ['callback', 'callback'],
+            ['success', 'callback'],
             ['complete', 'complete'],
             ['fztype', 'fztype'],
             ['headers', 'headers'],
@@ -81,7 +82,9 @@ var ajaxKeyMap = function(type) {
                 axiosSetting = {};
 
             keyMap.forEach(item => {
-                axiosSetting[item[1]] = settings[item[0]];
+                if (settings[item[0]]) {
+                    axiosSetting[item[1]] = settings[item[0]];
+                }
             });
 
             axiosSetting.type = settings.type;
