@@ -175,7 +175,7 @@ export default {
                     }
 
                     // 默认选中首个
-                    if (this.defaultFirst && this.options[0]) {
+                    if (!this.svalue && this.defaultFirst && this.options[0]) {
                         this.svalue = this.options[0][this.props.value];
                         this.selectChange(this.options[0][this.props.value]);
                     }
