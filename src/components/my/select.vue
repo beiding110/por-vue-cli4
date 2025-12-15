@@ -1,21 +1,22 @@
 <template>
     <el-select
-    v-model="svalue"
-    filterable
-    @visible-change="visibleChange"
-    @focus="focus"
-    :placeholder="placeholder"
-    :clearable="clearable"
-    :size="size"
-    :disabled="disabled"
-    :allow-create="allowCreate"
-    :multiple="multiple"
+        v-model="svalue"
+        filterable
+        @visible-change="visibleChange"
+        @focus="focus"
+        :placeholder="placeholder"
+        :clearable="clearable"
+        :size="size"
+        :disabled="disabled"
+        :allow-create="allowCreate"
+        :multiple="multiple"
     >
         <el-option
-        v-for="pName in Object.keys(options)"
-        :key="options[pName][props.value]"
-        :label="options[pName][props.label]"
-        :value="options[pName][props.value]">
+            v-for="pName in Object.keys(options)"
+            :key="options[pName][props.value]"
+            :label="options[pName][props.label]"
+            :value="options[pName][props.value]"
+        >
             <slot v-bind:row="options[pName]"></slot>
         </el-option>
     </el-select>
@@ -25,22 +26,22 @@
 export default {
     props: {
         // 只读
-        disabled:{
-            type:Boolean,
-            default:false
+        disabled: {
+            type: Boolean,
+            default: false,
         },
         // 展示清除按钮
-        clearable:{
-            type:Boolean,
-            default:true
+        clearable: {
+            type: Boolean,
+            default: true,
         },
         // 自动请求地址
         url: {
-            type: String
+            type: String,
         },
         // 双向绑定值
         value: {
-            type: [String, Number, Array]
+            type: [String, Number, Array],
         },
         // 配置
         props: {
@@ -50,27 +51,27 @@ export default {
                     label: 'value',
                     value: 'key',
                 };
-            }
+            },
         },
         // placeholder
         placeholder: {
             type: String,
-            default: '请选择'
+            default: '请选择',
         },
         // 多选
         multiple: {
             type: Boolean,
-            default: false
+            default: false,
         },
         // 默认大小
         size: {
             type: String,
-            default: 'small'
+            default: 'small',
         },
         // 允许自行创建
         allowCreate: {
             type: Boolean,
-            default: false
+            default: false,
         },
         /* 
         使用后的参数，会具备双向绑定功能
@@ -79,25 +80,30 @@ export default {
         :label.sync="form.label"
         */
         '2way': {
-            type: String
+            type: String,
         },
         // 传入的数据
         data: {
             type: Array,
-            default: () => []
+            default: () => [],
         },
         // 绑定字符串，props.multiple为true可用，低版本无props.emitPath可用
         modelStr: {
             type: Boolean,
-            default: false
+            default: false,
         },
         // 绑定字符串时，字符串间链接字符
         strSpliter: {
             tyep: String,
-            default: ','
-        }
+            default: ',',
+        },
+        // 默认选中第一个
+        defaultFirst: {
+            type: Boolean,
+            default: false,
+        },
     },
-    data () {
+    data() {
         return {
             options: [],
         };
@@ -115,10 +121,10 @@ export default {
                     if (valueArr[0] === '') {
                         return valueArr.slice(1);
                     }
-                    
+
                     return valueArr;
                 }
-                
+
                 return this.value;
             },
             set: function (e) {
@@ -127,42 +133,54 @@ export default {
                 } else {
                     this.$emit('input', e);
                 }
-            }
-        }
+            },
+        },
     },
     methods: {
-        focus:function(){
+        focus: function () {
             this.$emit('focus');
         },
-        visibleChange:function(){
+        visibleChange: function () {
             this.$emit('visiblechange');
         },
         queryData: function () {
-            new Chain().link(next => {
-                if (this.url) {
-                    this.$get(this.url, data => {
+            new Chain()
+                .link((next) => {
+                    if (this.url) {
+                        this.$get(this.url, (data) => {
+                            try {
+                                this.options = this.list2map(data || []);
+                            } catch (e) {
+                                throw new Error(e);
+                            }
+
+                            next();
+                        });
+                    } else {
                         try {
-                            this.options = this.list2map(data || []);
+                            this.options = this.list2map(this.data || []);
                         } catch (e) {
                             throw new Error(e);
                         }
 
                         next();
-                    });
-                } else {
-                    try {
-                        this.options = this.list2map(this.data || []);
-                    } catch (e) {
-                        throw new Error(e);
+                    }
+                })
+                .link(() => {
+                    // 有默认值
+                    if (!this.disabled && this.value) {
+                        this.selectChange(this.svalue);
+
+                        return;
                     }
 
-                    next();
-                }
-            }).link(() => {
-                if (!this.disabled && this.value) {
-                    this.selectChange(this.svalue);
-                }
-            }).run();
+                    // 默认选中首个
+                    if (this.defaultFirst && this.options[0]) {
+                        this.svalue = this.options[0][this.props.value];
+                        this.selectChange(this.options[0][this.props.value]);
+                    }
+                })
+                .run();
         },
         list2map: function (list) {
             return list.reduce((map, item) => {
@@ -202,12 +220,12 @@ export default {
                         arr.push(this.options[selkey]);
                     });
                 }
-                
+
                 this.$emit('select', arr);
             } else {
                 this.$emit('select', this.options[item] || {});
             }
-        }
+        },
     },
     watch: {
         url: function (n, o) {
@@ -234,11 +252,9 @@ export default {
     },
     mounted: function () {
         this.queryData();
-    }
+    },
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-
-</style>
+<style scoped></style>
